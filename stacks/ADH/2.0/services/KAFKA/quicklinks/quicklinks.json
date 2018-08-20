@@ -1,0 +1,35 @@
+{
+  "name": "default",
+  "description": "default quick links configuration",
+  "configuration": {
+    "protocol":
+    {
+      "type":"https",
+      "checks":[
+        {
+          "property":"ssl_enable",
+          "desired":"true",
+          "site":"kafka-manager-env"
+        }
+      ]
+    },
+
+    "links": [
+      {
+        "name": "kafka_ui",
+        "label": "Kafka Admin",
+        "requires_user_name": "false",
+        "component_name": "KAFKA_MANAGER",
+        "url":"%@://%@:%@/",
+        "port":{
+          "http_property": "kafka.manager.port",
+          "http_default_port": "9898",
+          "https_property": "kafka.manager.port",
+          "https_default_port": "9898",
+          "regex": "^(\\d+)$",
+          "site": "kafka-manager-env"
+        }
+      }
+    ]
+  }
+}

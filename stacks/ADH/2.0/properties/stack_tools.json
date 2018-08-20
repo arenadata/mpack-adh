@@ -1,0 +1,14 @@
+{
+  "ADH": {
+    "stack_selector": [
+      "adh-select",
+      "/usr/bin/adh-select",
+      "adh-select"
+    ],
+    "conf_selector": [
+      "conf-select",
+      "/usr/bin/conf-select",
+      "conf-select"
+    ]
+  }
+}
