@@ -72,7 +72,7 @@
           <osFamily>redhat7,amazonlinux2,redhat6,suse11,suse12</osFamily>
           <packages>
             <package>
-              <name>sqoop</name>
+              <name>sqoop_${stack_version}</name>
             </package>
           </packages>
         </osSpecific>
@@ -80,7 +80,7 @@
           <osFamily>debian7,debian9,ubuntu12,ubuntu14,ubuntu16</osFamily>
           <packages>
             <package>
-              <name>sqoop</name>
+              <name>sqoop-${stack_version}</name>
             </package>
           </packages>
         </osSpecific>

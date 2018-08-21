@@ -37,7 +37,7 @@
         "scope": "HOST",
         "source": {
           "type": "SCRIPT",
-          "path": "HDP/3.0/services/SPARK2/package/scripts/alerts/alert_spark2_livy_port.py",
+          "path": "ADH/2.0/services/SPARK2/package/scripts/alerts/alert_spark2_livy_port.py",
           "parameters": [
             {
               "name": "check.command.timeout",
@@ -61,7 +61,7 @@
         "scope": "HOST",
         "source": {
           "type": "SCRIPT",
-          "path": "HDP/3.0/services/SPARK2/package/scripts/alerts/alert_spark2_thrift_port.py",
+          "path": "ADH/2.0/services/SPARK2/package/scripts/alerts/alert_spark2_thrift_port.py",
           "parameters": [
             {
               "name": "check.command.timeout",

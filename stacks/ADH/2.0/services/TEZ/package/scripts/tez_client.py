@@ -33,6 +33,7 @@ from resource_management.libraries.functions import StackFeature
 from resource_management.libraries.functions.stack_features import check_stack_feature
 from resource_management.libraries.functions.get_stack_version import get_stack_version
 from resource_management.libraries.script.script import Script
+from resource_management.core.resources.system import Execute, File
 from resource_management.libraries.functions.default import default
 from resource_management.core.logger import Logger
 
@@ -89,6 +90,8 @@ class TezClientLinux(TezClient):
     import params
     self.install_packages(env)
     self.configure(env, config_dir=params.config_dir)
+    Execute('tar -czf /tmp/tez.tar.gz -C /usr/lib/tez ./ --exclude=conf')
+    Execute('mv /tmp/tez.tar.gz /usr/lib/tez/lib/')
 
 @OsFamilyImpl(os_family=OSConst.WINSRV_FAMILY)
 class TezClientWindows(TezClient):

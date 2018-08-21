@@ -22,13 +22,13 @@
             <name>TEZ</name>
             <displayName>Tez</displayName>
             <comment>Tez is the next generation Hadoop Query Processing framework written on top of YARN.</comment>
-            <version>0.9.0</version>
+            <version>0.9.1</version>
             <components>
                 <component>
                     <name>TEZ_CLIENT</name>
                     <displayName>Tez Client</displayName>
                     <cardinality>1+</cardinality>
-                    <versionAdvertised>true</versionAdvertised>
+                    <versionAdvertised>false</versionAdvertised>
                     <category>CLIENT</category>
                     <commandScript>
                         <script>scripts/tez_client.py</script>

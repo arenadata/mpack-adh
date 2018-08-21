@@ -124,14 +124,17 @@ hive_server2_hive_dir = None
 hive_server2_hive_lib = None
 
 if check_stack_feature(StackFeature.HIVE_SERVER_INTERACTIVE, version_for_stack_feature_checks):
+  # the name of the hiveserver2-hive2 component
+  hive_server2_hive_component = status_params.SERVER_ROLE_DIRECTORY_MAP["HIVE_SERVER"]
+
   # when using the version, we can just specify the component as "hive2"
   hive_schematool_ver_bin = format('{stack_root}/{version}/hive/bin')
 
   # use the schematool which ships with hive2
-  hive_schematool_bin = format('{stack_root}/current/hive/bin')
+  hive_schematool_bin = format('{stack_root}/current/{hive_server2_hive_component}/bin')
 
   # <stack-root>/<version>/hive2 (as opposed to <stack-root>/<version>/hive)
-  hive_server2_hive_dir = format('{stack_root}/current/hive')
+  hive_server2_hive_dir = format('{stack_root}/current/{hive_server2_hive_component}')
 
   # <stack-root>/<version>/hive2 (as opposed to <stack-root>/<version>/hive)
   hive_server2_hive_version_dir = format('{stack_root}/{version}/hive')
@@ -143,8 +146,8 @@ if check_stack_feature(StackFeature.HIVE_SERVER_INTERACTIVE, version_for_stack_f
   hive_server2_hive_version_lib = format('{hive_server2_hive_version_dir}/lib')
 
 
-hive_interactive_bin = format('{stack_root}/current/hive/bin')
-hive_interactive_lib = format('{stack_root}/current/hive/lib')
+hive_interactive_bin = format('{stack_root}/current/{hive_server2_hive_component}/bin')
+hive_interactive_lib = format('{stack_root}/current/{hive_server2_hive_component}/lib')
 
 # Heap dump related
 heap_dump_enabled = default('/configurations/hive-env/enable_heap_dump', None)

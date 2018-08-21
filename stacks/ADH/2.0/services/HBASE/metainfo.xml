@@ -197,18 +197,6 @@
             </package>
           </packages>
         </osSpecific>
-        <osSpecific>
-          <osFamily>debian7,debian9,ubuntu12,ubuntu14,ubuntu16</osFamily>
-          <packages>
-            <package>
-              <name>hbase</name>
-            </package>
-            <package>
-              <name>phoenix</name>
-              <condition>should_install_phoenix</condition>
-            </package>
-          </packages>
-        </osSpecific>
       </osSpecifics>
 
       <themes>

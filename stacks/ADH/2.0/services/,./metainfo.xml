@@ -19,56 +19,53 @@
   <schemaVersion>2.0</schemaVersion>
   <services>
     <service>
-      <name>SOLR</name>
-      <displayName>Solr</displayName>
-      <comment>Solr is the popular, blazing fast open source enterprise search platform from the Apache Lucene project
-      </comment>
-      <version>7.3.1</version>
-
+      <name>ARENADATA_TOOLS</name>
+      <displayName>Arenadata Tools</displayName>
+      <comment>Tools for deployment and configuration Arenadata Stack.</comment>
+      <version>1.0.0</version>
       <components>
         <component>
-          <name>SOLR</name>
-          <displayName>Solr</displayName>
-          <category>MASTER</category>
+          <name>ADH_TOOLS</name>
+          <displayName>Arenadata Tools</displayName>
+          <category>CLIENT</category>
           <cardinality>1+</cardinality>
           <commandScript>
-            <script>scripts/solr_server.py</script>
+            <script>scripts/arenadata_tools.py</script>
             <scriptType>PYTHON</scriptType>
-	    <timeout>600</timeout>
+            <timeout>1200</timeout>
           </commandScript>
           <configFiles>
             <configFile>
-              <type>xml</type>
-              <fileName>solr-site.xml</fileName>
-              <dictionaryName>solr-site</dictionaryName>
+              <type>env</type>
+              <fileName>arenadata-env.sh</fileName>
+              <dictionaryName>arenadata-env</dictionaryName>
             </configFile>
           </configFiles>
         </component>
       </components>
+
       <osSpecifics>
         <osSpecific>
-          <osFamily>any</osFamily>
+          <osFamily>redhat7,suse12</osFamily>
           <packages>
             <package>
-              <name>solr</name>
+              <name>adh-select</name>
+            </package>
+            <package>
+              <name>conf-select</name>
+            </package>
+            <package>
+              <name>java</name>
             </package>
           </packages>
         </osSpecific>
       </osSpecifics>
 
-      <commandScript>
-        <script>scripts/service_check.py</script>
-        <scriptType>PYTHON</scriptType>
-        <timeout>300</timeout>
-      </commandScript>
-
-      <requiredServices>
-        <service>HDFS</service>
-      </requiredServices>
 
       <configuration-dependencies>
-        <config-type>solr-log4j</config-type>
+        <config-type>arenadata-env</config-type>
       </configuration-dependencies>
+
     </service>
   </services>
 </metainfo>

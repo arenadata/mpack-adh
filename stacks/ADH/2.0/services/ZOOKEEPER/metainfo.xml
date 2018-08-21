@@ -30,22 +30,13 @@
           <displayName>ZooKeeper Server</displayName>
           <category>MASTER</category>
           <cardinality>1+</cardinality>
-          <versionAdvertised>false</versionAdvertised>
+          <versionAdvertised>true</versionAdvertised>
           <rollingRestartSupported>true</rollingRestartSupported>
           <commandScript>
             <script>scripts/zookeeper_server.py</script>
             <scriptType>PYTHON</scriptType>
             <timeout>1200</timeout>
           </commandScript>
-          <dependencies>
-            <dependency>
-              <name>ARENADATA_TOOLS/AD_TOOLS</name>
-              <scope>cluster</scope>
-              <auto-deploy>
-                <enabled>true</enabled>
-              </auto-deploy>
-            </dependency>
-          </dependencies>
           <logs>
             <log>
               <logId>zookeeper</logId>
@@ -59,7 +50,7 @@
           <displayName>ZooKeeper Client</displayName>
           <category>CLIENT</category>
           <cardinality>1+</cardinality>
-          <versionAdvertised>false</versionAdvertised>
+          <versionAdvertised>true</versionAdvertised>
           <commandScript>
             <script>scripts/zookeeper_client.py</script>
             <scriptType>PYTHON</scriptType>
@@ -91,22 +82,7 @@
             </package>
           </packages>
         </osSpecific>
-        <osSpecific>
-          <osFamily>debian7,debian9,ubuntu12,ubuntu14,ubuntu16</osFamily>
-          <packages>
-            <package>
-              <name>zookeeper</name>
-            </package>
-            <package>
-              <name>zookeeper-server</name>
-            </package>
-          </packages>
-        </osSpecific>
       </osSpecifics>
-
-      <requiredServices>
-        <service>ARENADATA_TOOLS</service>
-      </requiredServices>
 
       <commandScript>
         <script>scripts/service_check.py</script>
@@ -120,6 +96,10 @@
         <config-type>zoo.cfg</config-type>
       </configuration-dependencies>
       <restartRequiredAfterChange>true</restartRequiredAfterChange>
+
+      <requiredServices>
+        <service>ARENADATA_TOOLS</service>
+      </requiredServices>
 
       <themes>
         <theme>

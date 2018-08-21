@@ -134,9 +134,9 @@ has_phoenix = len(phoenix_hosts) > 0
 underscored_version = stack_version_unformatted.replace('.', '_')
 dashed_version = stack_version_unformatted.replace('.', '-')
 if OSCheck.is_redhat_family() or OSCheck.is_suse_family():
-  phoenix_package = format("phoenix")
+  phoenix_package = format("phoenix_{underscored_version}_*")
 elif OSCheck.is_ubuntu_family():
-  phoenix_package = format("phoenix")
+  phoenix_package = format("phoenix-{dashed_version}-.*")
 
 pid_dir = status_params.pid_dir
 tmp_dir = config['configurations']['hbase-site']['hbase.tmp.dir']

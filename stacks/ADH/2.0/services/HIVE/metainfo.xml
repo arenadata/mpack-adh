@@ -285,24 +285,6 @@
             <package>
               <name>hive-hcatalog</name>
             </package>
-            <package>
-              <name>hive-hcatalog-server</name>
-            </package>
-           <package>
-              <name>hive-metastore</name>
-            </package>
-           <package>
-              <name>hive-server2</name>
-            </package>
-            <package>
-              <name>hive-webhcat</name>
-            </package>
-            <package>
-              <name>hive-webhcat-server</name>
-            </package>
-            <package>
-              <name>hive-hbase</name>
-            </package>
           </packages>
         </osSpecific>
         <osSpecific>
@@ -322,17 +304,6 @@
               <name>mariadb-server</name>
               <skipUpgrade>true</skipUpgrade>
               <condition>should_install_mysql</condition>
-            </package>
-          </packages>
-        </osSpecific>
-        <osSpecific>
-          <osFamily>debian7,debian9,ubuntu12,ubuntu14,ubuntu16</osFamily>
-          <packages>
-            <package>
-              <name>hive-${stack_version}</name>
-            </package>
-            <package>
-              <name>hive-${stack_version}-hcatalog</name>
             </package>
           </packages>
         </osSpecific>

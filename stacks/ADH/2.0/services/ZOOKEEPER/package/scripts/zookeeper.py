@@ -38,11 +38,11 @@ from ambari_commons.os_family_impl import OsFamilyFuncImpl, OsFamilyImpl
 def zookeeper(type = None, upgrade_type=None):
   import params
 
-#  Directory(params.config_dir,
-#            owner=params.zk_user,
-#            create_parents = True,
-#            group=params.user_group
-#  )
+  Directory(params.config_dir,
+            owner=params.zk_user,
+            create_parents = True,
+            group=params.user_group
+  )
 
   File(os.path.join(params.config_dir, "zookeeper-env.sh"),
        content=InlineTemplate(params.zk_env_sh_template),

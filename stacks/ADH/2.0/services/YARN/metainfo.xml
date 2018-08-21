@@ -28,7 +28,7 @@
 
         <component>
           <name>APP_TIMELINE_SERVER</name>
-          <displayName>Timeline Service V1.5</displayName>
+          <displayName>Timeline Service</displayName>
           <category>MASTER</category>
           <cardinality>1</cardinality>
           <versionAdvertised>true</versionAdvertised>
@@ -205,17 +205,6 @@
             </package>
           </packages>
         </osSpecific>
-        <osSpecific>
-          <osFamily>debian7,debian9,ubuntu12,ubuntu14,ubuntu16</osFamily>
-          <packages>
-            <package>
-              <name>hadoop-${stack_version}-yarn</name>
-            </package>
-            <package>
-              <name>hadoop-${stack_version}-mapreduce</name>
-            </package>
-          </packages>
-        </osSpecific>
       </osSpecifics>
 
       <commandScript>
@@ -351,14 +340,6 @@
       <osSpecifics>
         <osSpecific>
           <osFamily>amazonlinux2,redhat6,redhat7,suse11,suse12</osFamily>
-          <packages>
-            <package>
-              <name>hadoop-mapreduce</name>
-            </package>
-          </packages>
-        </osSpecific>
-        <osSpecific>
-          <osFamily>ubuntu12</osFamily>
           <packages>
             <package>
               <name>hadoop-mapreduce</name>

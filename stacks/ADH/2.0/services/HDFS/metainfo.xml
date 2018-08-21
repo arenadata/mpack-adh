@@ -31,7 +31,7 @@
           <displayName>NameNode</displayName>
           <category>MASTER</category>
           <cardinality>1+</cardinality>
-          <versionAdvertised>true</versionAdvertised>
+          <versionAdvertised>false</versionAdvertised>
           <reassignAllowed>true</reassignAllowed>
           <dependencies>
             <dependency>
@@ -137,7 +137,7 @@
           <displayName>DataNode</displayName>
           <category>SLAVE</category>
           <cardinality>1+</cardinality>
-          <versionAdvertised>true</versionAdvertised>
+          <versionAdvertised>false</versionAdvertised>
           <decommissionAllowed>true</decommissionAllowed>
           <commandScript>
             <script>scripts/datanode.py</script>
@@ -162,7 +162,7 @@
           <displayName>SNameNode</displayName>
           <!-- TODO:  cardinality is conditional on HA usage -->
           <cardinality>1</cardinality>
-          <versionAdvertised>true</versionAdvertised>
+          <versionAdvertised>false</versionAdvertised>
           <reassignAllowed>true</reassignAllowed>
           <category>MASTER</category>
           <commandScript>
@@ -183,7 +183,7 @@
           <displayName>HDFS Client</displayName>
           <category>CLIENT</category>
           <cardinality>1+</cardinality>
-          <versionAdvertised>true</versionAdvertised>
+          <versionAdvertised>false</versionAdvertised>
           <commandScript>
             <script>scripts/hdfs_client.py</script>
             <scriptType>PYTHON</scriptType>
@@ -218,7 +218,7 @@
           <displayName>JournalNode</displayName>
           <category>SLAVE</category>
           <cardinality>0+</cardinality>
-          <versionAdvertised>true</versionAdvertised>
+          <versionAdvertised>false</versionAdvertised>
           <commandScript>
             <script>scripts/journalnode.py</script>
             <scriptType>PYTHON</scriptType>
@@ -251,7 +251,7 @@
           <category>SLAVE</category>
           <!-- TODO: cardinality is conditional on HA topology -->
           <cardinality>0+</cardinality>
-          <versionAdvertised>true</versionAdvertised>
+          <versionAdvertised>false</versionAdvertised>
           <commandScript>
             <script>scripts/zkfc_slave.py</script>
             <scriptType>PYTHON</scriptType>
@@ -279,7 +279,7 @@
           <name>NFS_GATEWAY</name>
           <displayName>NFSGateway</displayName>
           <cardinality>0+</cardinality>
-          <versionAdvertised>true</versionAdvertised>
+          <versionAdvertised>false</versionAdvertised>
           <category>SLAVE</category>
           <commandScript>
             <script>scripts/nfsgateway.py</script>
@@ -350,7 +350,6 @@
             </package>
           </packages>
         </osSpecific>
-
       </osSpecifics>
 
       <commandScript>
@@ -377,16 +376,16 @@
       </configuration-dependencies>
       <restartRequiredAfterRackChange>true</restartRequiredAfterRackChange>
 
-      <requiredServices>
-        <service>ARENADATA_TOOLS</service>
-      </requiredServices>
-
       <quickLinksConfigurations>
         <quickLinksConfiguration>
           <fileName>quicklinks.json</fileName>
           <default>true</default>
         </quickLinksConfiguration>
       </quickLinksConfigurations>
+
+      <requiredServices>
+        <service>ARENADATA_TOOLS</service>
+      </requiredServices>
 
       <themes>
         <theme>

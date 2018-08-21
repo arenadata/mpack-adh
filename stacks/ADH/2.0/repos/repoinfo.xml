@@ -16,7 +16,7 @@
    limitations under the License.
 -->
 <reposinfo>
-  <latest>http://public-repo-1.hortonworks.com/HDP/hdp_urlinfo.json</latest>
+  <latest></latest>
   <os family="redhat7">
     <repo>
       <baseurl>https://ci.arenadata.io/artifactory/list/adh16-centos7-x64-adh/</baseurl>

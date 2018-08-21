@@ -27,6 +27,7 @@ from resource_management.libraries.functions.stack_features import check_stack_f
 from resource_management.core.exceptions import ClientComponentHasNoStatus
 from yarn import yarn
 from ambari_commons import OSConst
+from resource_management.core.resources.system import Execute, File
 from ambari_commons.os_family_impl import OsFamilyImpl
 
 
@@ -34,6 +35,7 @@ class YarnClient(Script):
   def install(self, env):
     self.install_packages(env)
     self.configure(env)
+    Execute('tar -czf /usr/lib/hadoop-yarn/lib/service-dep.tar.gz -C /usr/lib/hadoop-yarn/lib/ . --exclude=service-dep.tar.gz --ignore-failed-read')
 
   def configure(self, env):
     import params

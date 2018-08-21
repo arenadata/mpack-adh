@@ -178,6 +178,47 @@
             </configFile>
           </configFiles>
         </component>
+        <component>
+          <name>LIVY2_SERVER</name>
+          <displayName>Livy for Spark2 Server</displayName>
+          <category>SLAVE</category>
+          <cardinality>0+</cardinality>
+          <versionAdvertised>true</versionAdvertised>
+          <dependencies>
+            <dependency>
+              <name>SPARK2/SPARK2_CLIENT</name>
+              <scope>host</scope>
+              <auto-deploy>
+                <enabled>true</enabled>
+              </auto-deploy>
+            </dependency>
+            <dependency>
+              <name>HDFS/HDFS_CLIENT</name>
+              <scope>host</scope>
+              <auto-deploy>
+                <enabled>true</enabled>
+              </auto-deploy>
+            </dependency>
+            <dependency>
+              <name>YARN/YARN_CLIENT</name>
+              <scope>host</scope>
+              <auto-deploy>
+                <enabled>true</enabled>
+              </auto-deploy>
+            </dependency>
+          </dependencies>
+          <commandScript>
+            <script>scripts/livy2_server.py</script>
+            <scriptType>PYTHON</scriptType>
+            <timeout>600</timeout>
+          </commandScript>
+          <logs>
+            <log>
+              <logId>livy2_server</logId>
+              <primary>true</primary>
+            </log>
+          </logs>
+        </component>
       </components>
 
       <configuration-dependencies>
@@ -189,6 +230,10 @@
         <config-type>spark2-hive-site-override</config-type>
         <config-type>spark2-thrift-fairscheduler</config-type>
 
+        <config-type>livy2-conf</config-type>
+        <config-type>livy2-env</config-type>
+        <config-type>livy2-log4j-properties</config-type>
+        <config-type>livy2-spark-blacklist</config-type>
       </configuration-dependencies>
 
       <commandScript>
@@ -208,22 +253,13 @@
           <osFamily>redhat7,amazonlinux2,redhat6,suse11,suse12</osFamily>
           <packages>
             <package>
-              <name>spark-master</name>
+              <name>spark2_${stack_version}</name>
             </package>
             <package>
-              <name>spark-python</name>
+              <name>spark2_${stack_version}-python</name>
             </package>
             <package>
-              <name>spark-history-server</name>
-            </package>
-            <package>
-              <name>spark-worker</name>
-            </package>
-            <package>
-              <name>spark-yarn-shuffle</name>
-            </package>
-            <package>
-              <name>spark-thriftserver</name>
+              <name>livy2_${stack_version}</name>
             </package>
           </packages>
         </osSpecific>
@@ -231,10 +267,13 @@
           <osFamily>debian7,debian9,ubuntu12,ubuntu14,ubuntu16</osFamily>
           <packages>
             <package>
-              <name>spark2-master</name>
+              <name>spark2-${stack_version}</name>
             </package>
             <package>
-              <name>spark2-python</name>
+              <name>spark2-${stack_version}-python</name>
+            </package>
+            <package>
+              <name>livy2-${stack_version}</name>
             </package>
           </packages>
         </osSpecific>

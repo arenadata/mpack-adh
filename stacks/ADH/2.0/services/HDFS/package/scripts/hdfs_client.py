@@ -27,6 +27,7 @@ from resource_management.libraries.functions.security_commons import build_expec
 from hdfs import hdfs
 from ambari_commons.os_family_impl import OsFamilyImpl
 from ambari_commons import OSConst
+from resource_management.core.resources.system import Execute, File
 from resource_management.core.exceptions import ClientComponentHasNoStatus
 
 class HdfsClient(Script):
@@ -36,6 +37,7 @@ class HdfsClient(Script):
     env.set_params(params)
     self.install_packages(env)
     self.configure(env)
+    Execute('tar -czf /usr/lib/hadoop/mapreduce.tar.gz -C /usr/lib/ ./hadoop --exclude=mapreduce.tar.gz --ignore-failed-read')
 
   def configure(self, env):
     import params
