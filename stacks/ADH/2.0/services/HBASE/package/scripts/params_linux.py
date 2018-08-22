@@ -134,9 +134,9 @@ has_phoenix = len(phoenix_hosts) > 0
 underscored_version = stack_version_unformatted.replace('.', '_')
 dashed_version = stack_version_unformatted.replace('.', '-')
 if OSCheck.is_redhat_family() or OSCheck.is_suse_family():
-  phoenix_package = format("phoenix_{underscored_version}_*")
+  phoenix_package = format("phoenix")
 elif OSCheck.is_ubuntu_family():
-  phoenix_package = format("phoenix-{dashed_version}-.*")
+  phoenix_package = format("phoenix")
 
 pid_dir = status_params.pid_dir
 tmp_dir = config['configurations']['hbase-site']['hbase.tmp.dir']
@@ -192,7 +192,7 @@ else:
 if 'datanode_hosts' in config['clusterHostInfo']:
   rs_hosts = default('/clusterHostInfo/hbase_regionserver_hosts', '/clusterHostInfo/datanode_hosts') #if hbase_regionserver_hosts not given it is assumed that region servers on same nodes as slaves
 else:
-  rs_hosts = default('/clusterHostInfo/hbase_regionserver_hosts', '/clusterHostInfo/all_hosts') 
+  rs_hosts = default('/clusterHostInfo/hbase_regionserver_hosts', '/clusterHostInfo/all_hosts')
 
 smoke_test_user = config['configurations']['cluster-env']['smokeuser']
 smokeuser_principal =  config['configurations']['cluster-env']['smokeuser_principal_name']
@@ -234,7 +234,7 @@ if (('hbase-log4j' in config['configurations']) and ('content' in config['config
   log4j_props = config['configurations']['hbase-log4j']['content']
 else:
   log4j_props = None
-  
+
 hbase_env_sh_template = config['configurations']['hbase-env']['content']
 
 hbase_hdfs_root_dir = config['configurations']['hbase-site']['hbase.rootdir']
