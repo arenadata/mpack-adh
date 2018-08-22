@@ -35,7 +35,8 @@ class YarnClient(Script):
   def install(self, env):
     self.install_packages(env)
     self.configure(env)
-    Execute('tar -czf /usr/lib/hadoop-yarn/lib/service-dep.tar.gz -C /usr/lib/hadoop-yarn/lib/ . --exclude=service-dep.tar.gz --ignore-failed-read')
+    Execute('tar -czf /tmp/service-dep.tar.gz -C /usr/lib/hadoop-yarn/lib/ .')
+    Execute('mv /tmp/service-dep.tar.gz /usr/lib/hadoop-yarn/lib/')
 
   def configure(self, env):
     import params

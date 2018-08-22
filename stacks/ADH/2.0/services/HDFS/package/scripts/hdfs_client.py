@@ -37,7 +37,8 @@ class HdfsClient(Script):
     env.set_params(params)
     self.install_packages(env)
     self.configure(env)
-    Execute('tar -czf /usr/lib/hadoop/mapreduce.tar.gz -C /usr/lib/ ./hadoop --exclude=mapreduce.tar.gz --ignore-failed-read')
+    Execute('tar -czf /tmp/mapreduce.tar.gz -C /usr/lib/ ./hadoop')
+    Execute('mv /tmp/mapreduce.tar.gz /usr/lib/hadoop/')
 
   def configure(self, env):
     import params
