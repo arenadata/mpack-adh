@@ -50,6 +50,8 @@ class TezClient(Script):
     """
     import params
     env.set_params(params)
+    Execute('tar -czf /tmp/tez.tar.gz -C /usr/lib/tez ./ --exclude=conf')
+    Execute('mv /tmp/tez.tar.gz /usr/lib/tez/lib/')
     tez(config_dir)
 
   def status(self, env):
@@ -90,8 +92,6 @@ class TezClientLinux(TezClient):
     import params
     self.install_packages(env)
     self.configure(env, config_dir=params.config_dir)
-    Execute('tar -czf /tmp/tez.tar.gz -C /usr/lib/tez ./ --exclude=conf')
-    Execute('mv /tmp/tez.tar.gz /usr/lib/tez/lib/')
 
 @OsFamilyImpl(os_family=OSConst.WINSRV_FAMILY)
 class TezClientWindows(TezClient):
