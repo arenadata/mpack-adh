@@ -37,12 +37,14 @@ class HdfsClient(Script):
     env.set_params(params)
     self.install_packages(env)
     self.configure(env)
-    Execute('tar -czf /tmp/mapreduce.tar.gz -C /usr/lib/ ./hadoop')
-    Execute('mv /tmp/mapreduce.tar.gz /usr/lib/hadoop/')
 
   def configure(self, env):
     import params
     env.set_params(params)
+    Execute('tar -czf /tmp/mapreduce.tar.gz -C /usr/lib/ ./hadoop')
+    Execute('mv /tmp/mapreduce.tar.gz /usr/lib/hadoop/')
+    Execute('ln -sf /usr/lib/hadoop-hdfs/bin/hdfs /usr/lib/hadoop/bin/hdfs')
+    Execute('ln -sf /usr/lib/hadoop/libexec /usr/lib/hadoop-hdfs/libexec')
     hdfs()
 
   def save_configs(self, env):
