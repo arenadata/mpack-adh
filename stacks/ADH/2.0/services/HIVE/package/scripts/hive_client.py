@@ -39,8 +39,6 @@ class HiveClient(Script):
     import params
     self.install_packages(env)
     self.configure(env)
-    Execute('tar -czf /tmp/hive.tar.gz -C /usr/lib/hive/lib/ .')
-    Execute('mv /tmp/hive.tar.gz /usr/lib/hive/')
 
   def status(self, env):
     raise ClientComponentHasNoStatus()
@@ -48,6 +46,8 @@ class HiveClient(Script):
   def configure(self, env):
     import params
     env.set_params(params)
+    Execute('tar -czf /tmp/hive.tar.gz -C /usr/lib/hive/lib/ .')
+    Execute('mv /tmp/hive.tar.gz /usr/lib/hive/')
     hive(name='client')
 
   def pre_upgrade_restart(self, env, upgrade_type=None):
