@@ -72,15 +72,7 @@
           <osFamily>redhat7,amazonlinux2,redhat6,suse11,suse12</osFamily>
           <packages>
             <package>
-              <name>sqoop_${stack_version}</name>
-            </package>
-          </packages>
-        </osSpecific>
-        <osSpecific>
-          <osFamily>debian7,debian9,ubuntu12,ubuntu14,ubuntu16</osFamily>
-          <packages>
-            <package>
-              <name>sqoop-${stack_version}</name>
+              <name>sqoop</name>
             </package>
           </packages>
         </osSpecific>
@@ -90,11 +82,11 @@
         <scriptType>PYTHON</scriptType>
         <timeout>300</timeout>
       </commandScript>
-      
+
       <requiredServices>
         <service>HDFS</service>
       </requiredServices>
-      
+
       <configuration-dependencies>
         <config-type>sqoop-env</config-type>
         <config-type>sqoop-site</config-type>
