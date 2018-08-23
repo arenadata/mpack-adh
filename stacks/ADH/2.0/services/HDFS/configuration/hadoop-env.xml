@@ -396,13 +396,17 @@
       # Add libraries to the hadoop classpath - some may not need a colon as they already include it
       export HADOOP_CLASSPATH=${HADOOP_CLASSPATH}${JAVA_JDBC_LIBS}
 
+      if [ -d "/usr/lib/tez" ]; then
+      export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:/usr/lib/tez/*:/usr/lib/tez/lib/commons-cli-1.2.jar:/usr/lib/tez/lib/commons-codec-1.4.jar:/usr/lib/tez/lib/commons-collections-3.2.2.jar:/usr/lib/tez/lib/commons-collections4-4.1.jar:/usr/lib/tez/lib/commons-io-2.4.jar:/usr/lib/tez/lib/commons-lang-2.6.jar:/usr/lib/tez/lib/commons-math3-3.1.1.jar::/etc/tez/conf
+      fi
+
       # Setting path to hdfs command line
       export HADOOP_LIBEXEC_DIR={{hadoop_libexec_dir}}
 
       # Mostly required for hadoop 2.0
       export JAVA_LIBRARY_PATH=${JAVA_LIBRARY_PATH}:{{hadoop_lib_home}}/native/Linux-{{architecture}}-64
 
-      export HADOOP_OPTS="-Dhdp.version=$HDP_VERSION $HADOOP_OPTS"
+      export HADOOP_OPTS="-Dhdp.version=2.0.0.0-1$HADOOP_OPTS"
 
 
       # Fix temporary bug, when ulimit from conf files is not picked up, without full relogin.
