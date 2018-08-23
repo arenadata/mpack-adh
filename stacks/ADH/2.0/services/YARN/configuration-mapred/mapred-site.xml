@@ -378,7 +378,7 @@
   </property>
   <property>
     <name>mapreduce.application.framework.path</name>
-    <value>/hdp/apps/${hdp.version}/mapreduce/mapreduce.tar.gz#mr-framework</value>
+    <value>/adh/apps/${hdp.version}/mapreduce/mapreduce.tar.gz#mr-framework</value>
     <description/>
     <on-ambari-upgrade add="false"/>
   </property>
