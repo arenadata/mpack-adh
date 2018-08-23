@@ -209,7 +209,7 @@ class Master(Script):
                           recursive_chmod=True
                           )
 
-      # hdfs dfs -put /usr/hdp/current/zeppelin-server/notebook/ {notebook_directory}
+      # hdfs dfs -put /usr/adh/current/zeppelin-server/notebook/ {notebook_directory}
       params.HdfsResource(format("{notebook_directory}"),
                             type="directory",
                             action="create_on_execute",
@@ -623,14 +623,14 @@ class Master(Script):
       elif interpreter['group'] == 'spark' and interpreter['name'] == 'spark':
         if 'spark-env' in params.config['configurations']:
           self.storePropertyToInterpreter(interpreter, 'master', 'string', "yarn-client")
-          self.storePropertyToInterpreter(interpreter, 'SPARK_HOME', 'string', "/usr/hdp/current/spark-client/")
+          self.storePropertyToInterpreter(interpreter, 'SPARK_HOME', 'string', "/usr/adh/current/spark-client/")
         else:
           del interpreter_settings[setting_key]
 
       elif interpreter['group'] == 'spark' and interpreter['name'] == 'spark2':
         if 'spark2-env' in params.config['configurations']:
           self.storePropertyToInterpreter(interpreter, 'master', 'string', "yarn-client")
-          self.storePropertyToInterpreter(interpreter, 'SPARK_HOME', 'string', "/usr/hdp/current/spark2-client/")
+          self.storePropertyToInterpreter(interpreter, 'SPARK_HOME', 'string', "/usr/adh/current/spark2-client/")
         else:
           del interpreter_settings[setting_key]
 
