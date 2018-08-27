@@ -320,9 +320,9 @@ class TezRecommender(service_advisor.ServiceAdvisor):
     putTezProperty = self.putProperty(configurations, "tez-site")
     if "HIVE" in self.getServiceNames(services) and "hive-site" in services["configurations"] and "hive.metastore.warehouse.external.dir" in services["configurations"]["hive-site"]["properties"]:
       hive_metastore_warehouse_external_dir = services["configurations"]["hive-site"]["properties"]['hive.metastore.warehouse.external.dir']
-      putTezProperty("tez.history.logging.proto-base-dir", "{0}/sys.db".format(hive_metastore_warehouse_external_dir))
-      putTezProperty("tez.history.logging.service.class", "org.apache.tez.dag.history.logging.proto.ProtoHistoryLoggingService")
-      self.logger.info("Updated 'tez-site' config 'tez.history.logging.proto-base-dir' and 'tez.history.logging.service.class'")
+    # putTezProperty("tez.history.logging.proto-base-dir", "{0}/sys.db".format(hive_metastore_warehouse_external_dir))
+    # putTezProperty("tez.history.logging.service.class", "org.apache.tez.dag.history.logging.proto.ProtoHistoryLoggingService")
+    # self.logger.info("Updated 'tez-site' config 'tez.history.logging.proto-base-dir' and 'tez.history.logging.service.class'")
 
 
   def __getJdkMajorVersion(self, javaHome):
@@ -381,6 +381,3 @@ class TezValidator(service_advisor.ServiceAdvisor):
                                   "{0} should be less than YARN max allocation size ({1})".format(prop_name2, yarnMaxAllocationSize))})
 
     return self.toConfigurationValidationProblems(validationItems, "tez-site")
-
-
-
