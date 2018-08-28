@@ -38,7 +38,7 @@ class SparkClient(Script):
   def configure(self, env, upgrade_type=None, config_dir=None):
     import params
     env.set_params(params)
-    Execute('mkdir /usr/lib/spark/standalone-metastore')
+    Execute('if [ ! -d "/usr/lib/spark/standalone-metastore" ]; then mkdir /usr/lib/spark/standalone-metastore; fi')
 
     setup_spark(env, 'client', upgrade_type=upgrade_type, action = 'config')
 
