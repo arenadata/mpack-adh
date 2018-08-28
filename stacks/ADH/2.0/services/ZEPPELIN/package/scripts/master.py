@@ -48,6 +48,7 @@ class Master(Script):
     self.install_packages(env)
 
     self.create_zeppelin_log_dir(env)
+    self.create_zeppelin_notebook_dir(env)
 
     if params.spark_version:
       Execute('echo spark_version:' + str(params.spark_version) + ' detected for spark_home: '
@@ -97,6 +98,17 @@ class Master(Script):
               mode=0755
               )
 
+  def create_zeppelin_notebook_dir(self, env):
+    import params
+    env.set_params(params)
+    Directory([params.zeppelin_notebook_dir],
+              owner=params.zeppelin_user,
+              group=params.zeppelin_group,
+              cd_access="a",
+              create_parents=True,
+              mode=0755
+              )
+
   def create_zeppelin_hdfs_conf_dir(self, env):
     import params
     env.set_params(params)
@@ -120,6 +132,7 @@ class Master(Script):
     env.set_params(params)
     env.set_params(status_params)
     self.create_zeppelin_log_dir(env)
+    self.create_zeppelin_notebook_dir(env)
 
     # create the pid and zeppelin dirs
     Directory([params.zeppelin_pid_dir, params.zeppelin_dir],

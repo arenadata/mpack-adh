@@ -90,6 +90,8 @@ if 'zeppelin.interpreter.group.order' in config['configurations']['zeppelin-site
 zeppelin_user = config['configurations']['zeppelin-env']['zeppelin_user']
 zeppelin_group = config['configurations']['zeppelin-env']['zeppelin_group']
 zeppelin_log_dir = config['configurations']['zeppelin-env']['zeppelin_log_dir']
+zeppelin_notebook = config['configurations']['zeppelin-site']['zeppelin.notebook.dir']
+zeppelin_notebook_dir = os.path.join('/usr/adh/current/zeppelin-server/', zeppelin_notebook)
 zeppelin_pid_dir = config['configurations']['zeppelin-env']['zeppelin_pid_dir']
 zeppelin_log_file = os.path.join(zeppelin_log_dir, 'zeppelin-setup.log')
 zeppelin_hdfs_user_dir = format("/user/{zeppelin_user}")
