@@ -131,6 +131,10 @@ export SPARK_LOG_DIR={{spark_log_dir}}
 # Where the pid file is stored. (Default: /tmp)
 export SPARK_PID_DIR={{spark_pid_dir}}
 
+export SPARK_DAEMON_CLASSPATH=${SPARK_DAEMON_CLASSPATH}:/usr/adh/current/hadoop-client/lib/woodstox-core-5.0.3.jar:/usr/adh/current/hadoop-client/lib/stax2-api-3.1.4.jar:/usr/adh/current/hadoop-client/lib/commons-configuration2-2.1.1.jar:/usr/adh/current/hadoop-client/client/hadoop-hdfs-client.jar:/usr/adh/current/spark2-client/jars/jackson-core-2.6.7.jar:/usr/adh/current/spark2-client/jars/jackson-jaxrs-1.9.13.jar:/usr/adh/spark2-client/jars/jackson-annotations-2.6.7.jar:/usr/adh/current/hadoop-yarn-client/hadoop-yarn-client.jar:/usr/adh/current/hadoop-client/client/re2j.jar
+
+export SPARK_CLASSPATH=${SPARK_CLASSPATH}:/usr/adh/current/hadoop-client/lib/woodstox-core-5.0.3.jar:/usr/adh/current/hadoop-client/lib/stax2-api-3.1.4.jar:/usr/adh/current/hadoop-client/lib/commons-configuration2-2.1.1.jar:/usr/adh/current/hadoop-client/client/hadoop-hdfs-client.jar:/usr/adh/current/spark2-client/jars/jackson-core-2.6.7.jar:/usr/adh/current/spark2-client/jars/jackson-jaxrs-1.9.13.jar:/usr/adh/spark2-client/jars/jackson-annotations-2.6.7.jar:/usr/adh/current/hadoop-yarn-client/hadoop-yarn-client.jar:/usr/adh/current/hadoop-client/client/re2j.jar
+
 #Memory for Master, Worker and history server (default: 1024MB)
 export SPARK_DAEMON_MEMORY={{spark_daemon_memory}}m
 

@@ -114,7 +114,7 @@ spark_history_server_stop = format("{spark_home}/sbin/stop-history-server.sh")
 
 spark_thrift_server_start = format("{spark_home}/sbin/start-thriftserver.sh")
 spark_thrift_server_stop = format("{spark_home}/sbin/stop-thriftserver.sh")
-spark_hadoop_lib_native = format("{stack_root}/current/hadoop-client/lib/native:{stack_root}/current/hadoop-client/lib/native/Linux-amd64-64")
+spark_hadoop_lib_native = format("{stack_root}/current/hadoop-client/lib/native:{stack_root}/current/hadoop-client/lib/native/Linux-amd64-64:{stack_root}/current/hadoop-client/lib/woodstox-core-5.0.3.jar:{stack_root}/current/hadoop-client/lib/stax2-api-3.1.4.jar:{stack_root}/current/hadoop-client/lib/commons-configuration2-2.1.1.jar:{stack_root}/current/hadoop-client/client/jackson-jaxrs-json-provider.jar:{stack_root}/current/hadoop-client/client/hadoop-hdfs-client.jar:{stack_root}/current/spark2-client/jars/jackson-core-2.6.7.jar:{stack_root}/current/spark2-client/jars/jackson-jaxrs-1.9.13.jar:{stack_root}/spark2-client/jars/jackson-annotations-2.6.7.jar:{stack_root}/current/hadoop-yarn-client/hadoop-yarn-client.jar:{stack_root}/current/hadoop-client/client/re2j.jar:{stack_root}/current/hadoop-client/client/jackson-jaxrs-base.jar:{stack_root}/current/hadoop-client/client/jackson-module-jaxb-annotations.jar")
 
 run_example_cmd = format("{spark_home}/bin/run-example")
 spark_smoke_example = "SparkPi"
