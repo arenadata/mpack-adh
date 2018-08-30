@@ -789,4 +789,18 @@
     </description>
     <on-ambari-upgrade add="false"/>
   </property>
+  <property>
+    <name>hbase.wal.provider</name>
+    <value>filesystem</value>
+    <description>Write-Ahead Log Provider (defaultProvider, multiwal, asyncfs, filesystem)
+    </description>
+    <on-ambari-upgrade add="false"/>
+  </property>
+  <property>
+    <name>hbase.wal.meta_provider</name>
+    <value>filesystem</value>
+    <description>Write-Ahead Log Provider (defaultProvider, multiwal, asyncfs, filesystem)
+    </description>
+    <on-ambari-upgrade add="false"/>
+  </property>
 </configuration>
