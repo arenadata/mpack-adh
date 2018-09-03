@@ -55,95 +55,105 @@ template = '''
       "group": "spark",
       "properties": {
 	    "spark.executor.memory": {
-          "type": "string", 
-          "name": "spark.executor.memory", 
+          "type": "string",
+          "name": "spark.executor.memory",
           "value": "512m"
         },
         "args": {
-          "type": "string", 
-          "name": "args", 
+          "type": "string",
+          "name": "args",
           "value": ""
         },
         "zeppelin.spark.printREPLOutput": {
-          "type": "string", 
-          "name": "zeppelin.spark.printREPLOutput", 
+          "type": "string",
+          "name": "zeppelin.spark.printREPLOutput",
           "value": "true"
         },
         "spark.cores.max": {
-          "type": "string", 
-          "name": "spark.cores.max", 
+          "type": "string",
+          "name": "spark.cores.max",
           "value": ""
         },
         "zeppelin.dep.additionalRemoteRepository": {
-          "type": "string", 
-          "name": "zeppelin.dep.additionalRemoteRepository", 
+          "type": "string",
+          "name": "zeppelin.dep.additionalRemoteRepository",
           "value": "spark-packages,http://dl.bintray.com/spark-packages/maven,false;"
         },
         "zeppelin.spark.sql.stacktrace": {
-          "type": "string", 
-          "name": "zeppelin.spark.sql.stacktrace", 
+          "type": "string",
+          "name": "zeppelin.spark.sql.stacktrace",
           "value": "false"
         },
         "zeppelin.spark.importImplicit": {
-          "type": "string", 
-          "name": "zeppelin.spark.importImplicit", 
+          "type": "string",
+          "name": "zeppelin.spark.importImplicit",
           "value": "true"
         },
         "zeppelin.spark.concurrentSQL": {
-          "type": "string", 
-          "name": "zeppelin.spark.concurrentSQL", 
+          "type": "string",
+          "name": "zeppelin.spark.concurrentSQL",
           "value": "false"
         },
         "zeppelin.spark.useHiveContext": {
-          "type": "string", 
-          "name": "zeppelin.spark.useHiveContext", 
+          "type": "string",
+          "name": "zeppelin.spark.useHiveContext",
           "value": "true"
         },
         "zeppelin.pyspark.python": {
-          "type": "string", 
-          "name": "zeppelin.pyspark.python", 
+          "type": "string",
+          "name": "zeppelin.pyspark.python",
           "value": "python"
         },
         "zeppelin.dep.localrepo": {
-          "type": "string", 
-          "name": "zeppelin.dep.localrepo", 
+          "type": "string",
+          "name": "zeppelin.dep.localrepo",
           "value": "local-repo"
         },
         "zeppelin.R.knitr": {
-          "type": "string", 
-          "name": "zeppelin.R.knitr", 
+          "type": "string",
+          "name": "zeppelin.R.knitr",
           "value": "true"
         },
         "zeppelin.spark.maxResult": {
-          "type": "string", 
-          "name": "zeppelin.spark.maxResult", 
+          "type": "string",
+          "name": "zeppelin.spark.maxResult",
           "value": "1000"
         },
 		"master": {
-          "type": "string", 
-          "name": "master", 
-          "value": "yarn-client"
-        },        
-        "spark.app.name": {
-          "type": "string", 
-          "name": "spark.app.name", 
-          "value": "Zeppelin"
+          "type": "string",
+          "name": "master",
+          "value": "yarn"
+        },
+        "spark.submit.deployMode": {
+          "type": "string",
+          "name": "master",
+          "value": "client"
+        },
+        "spark.submit.deployMode": {
+          "type": "string",
+          "name": "master",
+          "value": "client"
+        },
+        "SPARK_DIST_CLASSPATH": {
+          "type": "string",
+          "name": "spark.app.name",
+          "value": "$SPARK_DIST_CLASSPATH:/usr/adh/current/hadoop-client/lib/woodstox-core-5.0.3.jar:/usr/adh/current/hadoop-client/lib/stax2-api-3.1.4.jar:/usr/adh/current/hadoop-client/lib/commons-configuration2-2.1.1.jar:/usr/adh/current/hadoop-client/client/hadoop-hdfs-client.jar:/usr/adh/current/spark2-client/jars/jackson-core-2.6.7.jar:/usr/adh/current/spark2-client/jars/jackson-jaxrs-1.9.13.jar:/usr/adh/spark2-client/jars/jackson-annotations-2.6.7.jar:/usr/adh/current/hadoop-yarn-client/hadoop-yarn-client.jar:/usr/adh/current/hadoop-client/client/re2j.jar:/usr/adh/current/hadoop-client/client/jackson-jaxrs-base.jar:/usr/adh/current/hadoop-client/client/jackson-module-jaxb-annotations.jar:/usr/adh/current/hadoop-client/client/jackson-jaxrs-json-provider.jar"
         },
         "zeppelin.R.image.width": {
-          "type": "string", 
-          "name": "zeppelin.R.image.width", 
+          "type": "string",
+          "name": "zeppelin.R.image.width",
           "value": "100%"
         },
 		"zeppelin.R.render.options": {
-          "type": "string", 
-          "name": "zeppelin.R.render.options", 
+          "type": "string",
+          "name": "zeppelin.R.render.options",
           "value": "out.format \u003d \u0027html\u0027, comment \u003d NA, echo \u003d FALSE, results \u003d \u0027asis\u0027, message \u003d F, warning \u003d F"
         },
         "zeppelin.R.cmd": {
-          "type": "string", 
-          "name": "zeppelin.R.cmd", 
+          "type": "string",
+          "name": "zeppelin.R.cmd",
           "value": "R"
-        }        
+        }
       },
       "status": "READY",
       "interpreterGroup": [
@@ -206,95 +216,95 @@ template = '''
       "group": "spark",
       "properties": {
         "spark.executor.memory": {
-          "type": "string", 
-          "name": "spark.executor.memory", 
+          "type": "string",
+          "name": "spark.executor.memory",
           "value": ""
         },
         "args": {
-          "type": "string", 
-          "name": "args", 
+          "type": "string",
+          "name": "args",
           "value": ""
         },
 		"zeppelin.spark.printREPLOutput": {
-          "type": "string", 
-          "name": "zeppelin.spark.printREPLOutput", 
+          "type": "string",
+          "name": "zeppelin.spark.printREPLOutput",
           "value": "true"
         },
         "spark.cores.max": {
-          "type": "string", 
-          "name": "spark.cores.max", 
+          "type": "string",
+          "name": "spark.cores.max",
           "value": ""
         },
         "zeppelin.dep.additionalRemoteRepository": {
-          "type": "string", 
-          "name": "zeppelin.dep.additionalRemoteRepository", 
+          "type": "string",
+          "name": "zeppelin.dep.additionalRemoteRepository",
           "value": "spark-packages,http://dl.bintray.com/spark-packages/maven,false;"
         },
         "zeppelin.spark.importImplicit": {
-          "type": "string", 
-          "name": "zeppelin.spark.importImplicit", 
+          "type": "string",
+          "name": "zeppelin.spark.importImplicit",
           "value": "true"
         },
         "zeppelin.spark.sql.stacktrace": {
-          "type": "string", 
-          "name": "zeppelin.spark.sql.stacktrace", 
+          "type": "string",
+          "name": "zeppelin.spark.sql.stacktrace",
           "value": "false"
         },
         "zeppelin.spark.concurrentSQL": {
-          "type": "string", 
-          "name": "zeppelin.spark.concurrentSQL", 
+          "type": "string",
+          "name": "zeppelin.spark.concurrentSQL",
           "value": "false"
         },
         "zeppelin.spark.useHiveContext": {
-          "type": "string", 
-          "name": "zeppelin.spark.useHiveContext", 
-          "value": "true"
+          "type": "string",
+          "name": "zeppelin.spark.useHiveContext",
+          "value": "false"
         },
         "zeppelin.pyspark.python": {
-          "type": "string", 
-          "name": "zeppelin.pyspark.python", 
+          "type": "string",
+          "name": "zeppelin.pyspark.python",
           "value": "python"
         },
         "zeppelin.dep.localrepo": {
-          "type": "string", 
-          "name": "zeppelin.dep.localrepo", 
+          "type": "string",
+          "name": "zeppelin.dep.localrepo",
           "value": "local-repo"
         },
         "zeppelin.R.knitr": {
-          "type": "string", 
-          "name": "zeppelin.R.knitr", 
+          "type": "string",
+          "name": "zeppelin.R.knitr",
           "value": "true"
-        },        
+        },
         "zeppelin.spark.maxResult": {
-          "type": "string", 
-          "name": "zeppelin.spark.maxResult", 
+          "type": "string",
+          "name": "zeppelin.spark.maxResult",
           "value": "1000"
         },
         "master": {
-          "type": "string", 
-          "name": "master", 
+          "type": "string",
+          "name": "master",
           "value": "local[*]"
         },
         "spark.app.name": {
-          "type": "string", 
-          "name": "spark.app.name", 
+          "type": "string",
+          "name": "spark.app.name",
           "value": "Zeppelin"
         },
         "zeppelin.R.image.width": {
-          "type": "string", 
-          "name": "zeppelin.R.image.width", 
+          "type": "string",
+          "name": "zeppelin.R.image.width",
           "value": "100%"
         },
         "zeppelin.R.render.options": {
-          "type": "string", 
-          "name": "zeppelin.R.render.options", 
+          "type": "string",
+          "name": "zeppelin.R.render.options",
           "value": "out.format \u003d \u0027html\u0027, comment \u003d NA, echo \u003d FALSE, results \u003d \u0027asis\u0027, message \u003d F, warning \u003d F"
         },
         "zeppelin.R.cmd": {
-          "type": "string", 
-          "name": "zeppelin.R.cmd", 
+          "type": "string",
+          "name": "zeppelin.R.cmd",
           "value": "R"
-        }        
+        }
       },
       "status": "READY",
       "interpreterGroup": [
@@ -340,55 +350,55 @@ template = '''
       "group": "jdbc",
       "properties": {
 	    "default.password": {
-          "type": "string", 
-          "name": "default.password", 
+          "type": "string",
+          "name": "default.password",
           "value": ""
         },
         "zeppelin.jdbc.auth.type": {
-          "type": "string", 
-          "name": "zeppelin.jdbc.auth.type", 
+          "type": "string",
+          "name": "zeppelin.jdbc.auth.type",
           "value": ""
         },
         "common.max_count": {
-          "type": "string", 
-          "name": "common.max_count", 
+          "type": "string",
+          "name": "common.max_count",
           "value": "1000"
         },
 		"zeppelin.jdbc.principal": {
-          "type": "string", 
-          "name": "zeppelin.jdbc.principal", 
+          "type": "string",
+          "name": "zeppelin.jdbc.principal",
           "value": ""
         },
         "default.user": {
-          "type": "string", 
-          "name": "default.user", 
+          "type": "string",
+          "name": "default.user",
           "value": "gpadmin"
         },
         "default.url": {
-          "type": "string", 
-          "name": "default.url", 
+          "type": "string",
+          "name": "default.url",
           "value": "jdbc:postgresql://localhost:5432/"
         },
         "default.driver": {
-          "type": "string", 
-          "name": "default.driver", 
+          "type": "string",
+          "name": "default.driver",
           "value": "org.postgresql.Driver"
         },
         "zeppelin.jdbc.keytab.location": {
-          "type": "string", 
-          "name": "zeppelin.jdbc.keytab.location", 
+          "type": "string",
+          "name": "zeppelin.jdbc.keytab.location",
           "value": ""
         },
         "zeppelin.jdbc.concurrent.use": {
-          "type": "string", 
-          "name": "zeppelin.jdbc.concurrent.use", 
+          "type": "string",
+          "name": "zeppelin.jdbc.concurrent.use",
           "value": "true"
         },
         "zeppelin.jdbc.concurrent.max_connection": {
-          "type": "string", 
-          "name": "zeppelin.jdbc.concurrent.max_connection", 
+          "type": "string",
+          "name": "zeppelin.jdbc.concurrent.max_connection",
           "value": "10"
-        }        
+        }
       },
       "status": "READY",
       "interpreterGroup": [
@@ -420,105 +430,105 @@ template = '''
       "group": "livy",
       "properties": {
 	    "zeppelin.livy.pull_status.interval.millis": {
-          "type": "string", 
-          "name": "zeppelin.livy.pull_status.interval.millis", 
+          "type": "string",
+          "name": "zeppelin.livy.pull_status.interval.millis",
           "value": "1000"
         },
         "livy.spark.executor.memory": {
-          "type": "string", 
-          "name": "livy.spark.executor.memory", 
+          "type": "string",
+          "name": "livy.spark.executor.memory",
           "value": ""
         },
         "zeppelin.livy.session.create_timeout": {
-          "type": "string", 
-          "name": "zeppelin.livy.session.create_timeout", 
+          "type": "string",
+          "name": "zeppelin.livy.session.create_timeout",
           "value": "120"
         },
         "zeppelin.livy.principal": {
-          "type": "string", 
-          "name": "zeppelin.livy.principal", 
+          "type": "string",
+          "name": "zeppelin.livy.principal",
           "value": ""
         },
         "zeppelin.livy.spark.sql.maxResult": {
-          "type": "string", 
-          "name": "zeppelin.livy.spark.sql.maxResult", 
+          "type": "string",
+          "name": "zeppelin.livy.spark.sql.maxResult",
           "value": "1000"
         },
         "zeppelin.livy.keytab": {
-          "type": "string", 
-          "name": "zeppelin.livy.keytab", 
+          "type": "string",
+          "name": "zeppelin.livy.keytab",
           "value": ""
         },
         "zeppelin.livy.concurrentSQL": {
-          "type": "string", 
-          "name": "zeppelin.livy.concurrentSQL", 
+          "type": "string",
+          "name": "zeppelin.livy.concurrentSQL",
           "value": "false"
         },
         "zeppelin.livy.spark.sql.field.truncate": {
-          "type": "checkbox", 
-          "name": "zeppelin.livy.spark.sql.field.truncate", 
+          "type": "checkbox",
+          "name": "zeppelin.livy.spark.sql.field.truncate",
           "value": true
         },
         "livy.spark.executor.cores": {
-          "type": "string", 
-          "name": "livy.spark.executor.cores", 
+          "type": "string",
+          "name": "livy.spark.executor.cores",
           "value": ""
         },
         "zeppelin.livy.displayAppInfo": {
-          "type": "string", 
-          "name": "zeppelin.livy.displayAppInfo", 
+          "type": "string",
+          "name": "zeppelin.livy.displayAppInfo",
           "value": "true"
         },
         "zeppelin.livy.url": {
-          "type": "string", 
-          "name": "zeppelin.livy.url", 
+          "type": "string",
+          "name": "zeppelin.livy.url",
           "value": "http://localhost:8998"
         },
         "livy.spark.dynamicAllocation.minExecutors": {
-          "type": "string", 
-          "name": "livy.spark.dynamicAllocation.minExecutors", 
+          "type": "string",
+          "name": "livy.spark.dynamicAllocation.minExecutors",
           "value": ""
         },
         "livy.spark.driver.cores": {
-          "type": "string", 
-          "name": "livy.spark.driver.cores", 
+          "type": "string",
+          "name": "livy.spark.driver.cores",
           "value": ""
         },
         "livy.spark.jars.packages": {
-          "type": "string", 
-          "name": "livy.spark.jars.packages", 
+          "type": "string",
+          "name": "livy.spark.jars.packages",
           "value": ""
-        },        
+        },
         "livy.spark.dynamicAllocation.enabled": {
-          "type": "string", 
-          "name": "livy.spark.dynamicAllocation.enabled", 
+          "type": "string",
+          "name": "livy.spark.dynamicAllocation.enabled",
           "value": ""
         },
         "livy.spark.executor.instances": {
-          "type": "string", 
-          "name": "livy.spark.executor.instances", 
+          "type": "string",
+          "name": "livy.spark.executor.instances",
           "value": ""
         },
         "livy.spark.dynamicAllocation.cachedExecutorIdleTimeout": {
-          "type": "string", 
-          "name": "livy.spark.dynamicAllocation.cachedExecutorIdleTimeout", 
+          "type": "string",
+          "name": "livy.spark.dynamicAllocation.cachedExecutorIdleTimeout",
           "value": ""
         },
         "livy.spark.dynamicAllocation.maxExecutors": {
-          "type": "string", 
-          "name": "livy.spark.dynamicAllocation.maxExecutors", 
+          "type": "string",
+          "name": "livy.spark.dynamicAllocation.maxExecutors",
           "value": ""
         },
         "livy.spark.dynamicAllocation.initialExecutors": {
-          "type": "string", 
-          "name": "livy.spark.dynamicAllocation.initialExecutors", 
+          "type": "string",
+          "name": "livy.spark.dynamicAllocation.initialExecutors",
           "value": ""
         },
         "livy.spark.driver.memory": {
-          "type": "string", 
-          "name": "livy.spark.driver.memory", 
+          "type": "string",
+          "name": "livy.spark.driver.memory",
           "value": ""
-        }        
+        }
       },
       "status": "READY",
       "interpreterGroup": [
@@ -592,98 +602,98 @@ template = '''
       "name": "livy2",
       "properties": {
 	    "zeppelin.livy.keytab": {
-          "type": "string", 
-          "name": "zeppelin.livy.keytab", 
+          "type": "string",
+          "name": "zeppelin.livy.keytab",
           "value": ""
         },
         "zeppelin.livy.spark.sql.maxResult": {
-          "type": "string", 
-          "name": "zeppelin.livy.spark.sql.maxResult", 
+          "type": "string",
+          "name": "zeppelin.livy.spark.sql.maxResult",
           "value": "1000"
         },
         "livy.spark.executor.instances": {
-          "type": "string", 
-          "name": "livy.spark.executor.instances", 
+          "type": "string",
+          "name": "livy.spark.executor.instances",
           "value": ""
         },
         "livy.spark.executor.memory": {
-          "type": "string", 
-          "name": "livy.spark.executor.memory", 
+          "type": "string",
+          "name": "livy.spark.executor.memory",
           "value": ""
         },
         "livy.spark.dynamicAllocation.enabled": {
-          "type": "string", 
-          "name": "livy.spark.dynamicAllocation.enabled", 
+          "type": "string",
+          "name": "livy.spark.dynamicAllocation.enabled",
           "value": ""
         },
         "livy.spark.dynamicAllocation.cachedExecutorIdleTimeout": {
-          "type": "string", 
-          "name": "livy.spark.dynamicAllocation.cachedExecutorIdleTimeout", 
+          "type": "string",
+          "name": "livy.spark.dynamicAllocation.cachedExecutorIdleTimeout",
           "value": ""
         },
         "livy.spark.dynamicAllocation.initialExecutors": {
-          "type": "string", 
-          "name": "livy.spark.dynamicAllocation.initialExecutors", 
+          "type": "string",
+          "name": "livy.spark.dynamicAllocation.initialExecutors",
           "value": ""
         },
         "zeppelin.livy.session.create_timeout": {
-          "type": "string", 
-          "name": "zeppelin.livy.session.create_timeout", 
+          "type": "string",
+          "name": "zeppelin.livy.session.create_timeout",
           "value": "120"
         },
         "livy.spark.driver.memory": {
-          "type": "string", 
-          "name": "livy.spark.driver.memory", 
+          "type": "string",
+          "name": "livy.spark.driver.memory",
           "value": ""
         },
         "zeppelin.livy.displayAppInfo": {
-          "type": "string", 
-          "name": "zeppelin.livy.displayAppInfo", 
+          "type": "string",
+          "name": "zeppelin.livy.displayAppInfo",
           "value": "true"
         },
         "livy.spark.jars.packages": {
-          "type": "string", 
-          "name": "livy.spark.jars.packages", 
+          "type": "string",
+          "name": "livy.spark.jars.packages",
           "value": ""
         },
         "livy.spark.dynamicAllocation.maxExecutors": {
-          "type": "string", 
-          "name": "livy.spark.dynamicAllocation.maxExecutors", 
+          "type": "string",
+          "name": "livy.spark.dynamicAllocation.maxExecutors",
           "value": ""
         },
         "zeppelin.livy.concurrentSQL": {
-          "type": "string", 
-          "name": "zeppelin.livy.concurrentSQL", 
+          "type": "string",
+          "name": "zeppelin.livy.concurrentSQL",
           "value": "false"
         },
         "zeppelin.livy.principal": {
-          "type": "string", 
-          "name": "zeppelin.livy.principal", 
+          "type": "string",
+          "name": "zeppelin.livy.principal",
           "value": ""
         },
         "livy.spark.executor.cores": {
-          "type": "string", 
-          "name": "livy.spark.executor.cores", 
+          "type": "string",
+          "name": "livy.spark.executor.cores",
           "value": ""
         },
         "zeppelin.livy.url": {
-          "type": "string", 
-          "name": "zeppelin.livy.url", 
+          "type": "string",
+          "name": "zeppelin.livy.url",
           "value": "http://localhost:8998"
         },
         "zeppelin.livy.pull_status.interval.millis": {
-          "type": "string", 
-          "name": "zeppelin.livy.pull_status.interval.millis", 
+          "type": "string",
+          "name": "zeppelin.livy.pull_status.interval.millis",
           "value": "1000"
         },
         "livy.spark.driver.cores": {
-          "type": "string", 
-          "name": "livy.spark.driver.cores", 
+          "type": "string",
+          "name": "livy.spark.driver.cores",
           "value": ""
         },
         "livy.spark.dynamicAllocation.minExecutors": {
-          "type": "string", 
-          "name": "livy.spark.dynamicAllocation.minExecutors", 
+          "type": "string",
+          "name": "livy.spark.dynamicAllocation.minExecutors",
           "value": ""
         }
       },
@@ -748,10 +758,10 @@ template = '''
       "group": "md",
       "properties": {
 	    "markdown.parser.type": {
-          "type": "string", 
-          "name": "markdown.parser.type", 
+          "type": "string",
+          "name": "markdown.parser.type",
           "value": "markdown4j"
-        }        
+        }
       },
       "status": "READY",
       "interpreterGroup": [
