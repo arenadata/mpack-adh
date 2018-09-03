@@ -134,11 +134,6 @@ template = '''
           "name": "master",
           "value": "client"
         },
-        "SPARK_DIST_CLASSPATH": {
-          "type": "string",
-          "name": "spark.app.name",
-          "value": "$SPARK_DIST_CLASSPATH:/usr/adh/current/hadoop-client/lib/woodstox-core-5.0.3.jar:/usr/adh/current/hadoop-client/lib/stax2-api-3.1.4.jar:/usr/adh/current/hadoop-client/lib/commons-configuration2-2.1.1.jar:/usr/adh/current/hadoop-client/client/hadoop-hdfs-client.jar:/usr/adh/current/spark2-client/jars/jackson-core-2.6.7.jar:/usr/adh/current/spark2-client/jars/jackson-jaxrs-1.9.13.jar:/usr/adh/spark2-client/jars/jackson-annotations-2.6.7.jar:/usr/adh/current/hadoop-yarn-client/hadoop-yarn-client.jar:/usr/adh/current/hadoop-client/client/re2j.jar:/usr/adh/current/hadoop-client/client/jackson-jaxrs-base.jar:/usr/adh/current/hadoop-client/client/jackson-module-jaxb-annotations.jar:/usr/adh/current/hadoop-client/client/jackson-jaxrs-json-provider.jar"
-        },
         "zeppelin.R.image.width": {
           "type": "string",
           "name": "zeppelin.R.image.width",
