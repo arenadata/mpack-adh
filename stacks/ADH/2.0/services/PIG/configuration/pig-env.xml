@@ -31,6 +31,7 @@ HADOOP_HOME=${HADOOP_HOME:-{{hadoop_home}}}
 
 if [ -d "/usr/lib/tez" ]; then
   PIG_OPTS="$PIG_OPTS -Dmapreduce.framework.name=yarn"
+  export PIG_CLASSPATH=$PIG_CLASSPATH:/usr/lib/tez/*:/usr/lib/tez/lib/*
 fi
     </value>
     <value-attributes>

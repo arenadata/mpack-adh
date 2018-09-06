@@ -22,7 +22,7 @@
       <name>PIG</name>
       <displayName>Pig</displayName>
       <comment>Scripting platform for analyzing large datasets</comment>
-      <version>0.16.2</version>
+      <version>0.17</version>
       <components>
         <component>
           <name>PIG</name>
@@ -50,8 +50,8 @@
               <type>env</type>
               <fileName>pig.properties</fileName>
               <dictionaryName>pig-properties</dictionaryName>
-            </configFile>                         
-          </configFiles>          
+            </configFile>
+          </configFiles>
         </component>
       </components>
       <osSpecifics>
@@ -59,21 +59,10 @@
           <osFamily>redhat7,amazonlinux2,redhat6,suse11,suse12</osFamily>
           <packages>
             <package>
-              <name>pig_${stack_version}</name>
+              <name>pig</name>
             </package>
             <package>
-              <name>datafu_${stack_version}</name>
-            </package>
-          </packages>
-        </osSpecific>
-        <osSpecific>
-          <osFamily>debian7,debian9,ubuntu12,ubuntu14,ubuntu16</osFamily>
-          <packages>
-            <package>
-              <name>pig-${stack_version}</name>
-            </package>
-            <package>
-              <name>datafu-${stack_version}</name>
+              <name>pig_udf_datafu</name>
             </package>
           </packages>
         </osSpecific>
