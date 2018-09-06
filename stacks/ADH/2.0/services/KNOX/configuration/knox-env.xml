@@ -69,7 +69,7 @@
   </property>
   <property>
     <name>knox_pid_dir</name>
-    <value>/var/run/knox</value>
+    <value>/usr/adh/current/knox-server/pids/</value>
     <display-name>Knox PID dir</display-name>
     <description>Knox PID dir.</description>
     <value-attributes>

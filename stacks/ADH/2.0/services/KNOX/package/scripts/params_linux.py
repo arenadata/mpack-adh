@@ -93,12 +93,14 @@ knox_logs_dir = '/var/log/knox'
 # default parameters
 knox_bin = '/usr/bin/gateway'
 knox_conf_dir = '/etc/knox/conf'
+knox_home_dir = ('/usr/lib/knox')
 ldap_bin = '/usr/lib/knox/bin/ldap.sh'
 knox_client_bin = '/usr/lib/knox/bin/knoxcli.sh'
 
 # HDP 2.2+ parameters
 if stack_version_formatted and check_stack_feature(StackFeature.ROLLING_UPGRADE, stack_version_formatted):
   knox_bin = format('{stack_root}/current/knox-server/bin/gateway.sh')
+  knox_home_dir = format('{stack_root}/current/knox-server')
   knox_conf_dir = format('{stack_root}/current/knox-server/conf')
   ldap_bin = format('{stack_root}/current/knox-server/bin/ldap.sh')
   knox_client_bin = format('{stack_root}/current/knox-server/bin/knoxcli.sh')

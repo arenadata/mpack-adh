@@ -52,7 +52,8 @@ class KnoxGateway(Script):
     import params
     env.set_params(params)
     self.install_packages(env)
-
+    Execute(("chown", "-R", format("{knox_user}:{knox_group}"), '/usr/lib/knox'),
+                sudo=True)
     File(os.path.join(params.knox_conf_dir, 'topologies', 'sandbox.xml'),
          action = "delete",
     )
