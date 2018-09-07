@@ -62,7 +62,7 @@
               <name>pig</name>
             </package>
             <package>
-              <name>pig_udf_datafu</name>
+              <name>pig-udf-datafu</name>
             </package>
           </packages>
         </osSpecific>
