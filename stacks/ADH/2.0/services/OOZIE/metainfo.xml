@@ -23,7 +23,7 @@
       <displayName>Oozie</displayName>
       <comment>System for workflow coordination and execution of Apache Hadoop jobs.  This also includes the installation of the optional Oozie Web Console which relies on and will install the &lt;a target="_blank" href="http://www.sencha.com/legal/open-source-faq/"&gt;ExtJS&lt;/a&gt; Library.
       </comment>
-      <version>4.4.0</version>
+      <version>5.0.0</version>
       <credential-store>
         <supported>true</supported>
         <enabled>true</enabled>
@@ -131,15 +131,7 @@
           <osFamily>redhat5,amazonlinux2,redhat6,redhat7,suse11,suse12</osFamily>
           <packages>
             <package>
-              <name>oozie_${stack_version}</name>
-            </package>
-          </packages>
-        </osSpecific>
-        <osSpecific>
-          <osFamily>debian7,debian9,ubuntu12,ubuntu14,ubuntu16</osFamily>
-          <packages>
-            <package>
-              <name>oozie-${stack_version}</name>
+              <name>oozie</name>
             </package>
           </packages>
         </osSpecific>
