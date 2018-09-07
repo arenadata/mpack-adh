@@ -24,6 +24,7 @@ from resource_management.core.resources.system import Execute, Directory, File, 
 from resource_management.core.resources import Package
 from resource_management.core.source import Template
 from resource_management.core.resources.service import ServiceConfig
+from resource_management.core.resources.system import Execute, File
 from resource_management.libraries.resources.xml_config import XmlConfig
 
 from resource_management.core.exceptions import Fail
@@ -38,9 +39,14 @@ from resource_management.libraries.functions.lzo_utils import install_lzo_if_nee
 def hdfs(name=None):
   import params
 
+  Execute('tar -czf /tmp/mapreduce.tar.gz -C /usr/lib/ ./hadoop')
+  Execute('mv /tmp/mapreduce.tar.gz /usr/lib/hadoop/')
+  Execute('ln -sf /usr/lib/hadoop-hdfs/bin/hdfs /usr/lib/hadoop/bin/hdfs')
+  Execute('ln -sf /usr/lib/hadoop/libexec /usr/lib/hadoop-hdfs/libexec')
+
   if params.create_lib_snappy_symlinks:
     install_snappy()
-  
+
   # On some OS this folder could be not exists, so we will create it before pushing there files
   Directory(params.limits_conf_dir,
             create_parents = True,
@@ -151,14 +157,14 @@ def hdfs(name=None):
        owner=tc_owner,
        content=Template("slaves.j2")
   )
-  
+
   install_lzo_if_needed()
-      
+
 def install_snappy():
   import params
   Directory([params.so_target_dir_x86, params.so_target_dir_x64],
             create_parents = True,
-  )    
+  )
   Link(params.so_target_x86,
        to=params.so_src_x86,
   )
