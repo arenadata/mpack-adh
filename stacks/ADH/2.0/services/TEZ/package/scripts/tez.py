@@ -24,6 +24,7 @@ import os
 # Local Imports
 from resource_management.core.resources.system import Directory, File
 from resource_management.libraries.resources.xml_config import XmlConfig
+from resource_management.libraries.functions.copy_tarball import copy_to_hdfs
 from resource_management.libraries.functions.format import format
 from resource_management.libraries.functions import lzo_utils
 from resource_management.core.source import InlineTemplate
@@ -65,6 +66,12 @@ def tez(config_dir):
        content=InlineTemplate(params.tez_env_sh_template),
        mode=0555)
 
+  # ****** Begin Copy Tarballs ******
+  # *********************************
+  #  if copy tarball to HDFS feature  supported copy tez.tar.gz to HDFS
+  if params.stack_version_formatted and check_stack_feature(StackFeature.COPY_TARBALL_TO_HDFS, params.stack_version_formatted):
+    copy_to_hdfs("tez", params.user_group, params.hdfs_user, skip=params.sysprep_skip_copy_tarballs_hdfs)
+
 
 @OsFamilyFuncImpl(os_family=OSConst.WINSRV_FAMILY)
 def tez(config_dir):
@@ -80,4 +87,3 @@ def tez(config_dir):
              mode="f",
              configuration_attributes=params.config['configurationAttributes']['tez-site']
   )
-
