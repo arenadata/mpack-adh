@@ -88,7 +88,7 @@
   </property>
   <property>
     <name>atlas.audit.hbase.zookeeper.quorum</name>
-    <value/>
+    <value>localhost</value>
     <description/>
     <on-ambari-upgrade add="false"/>
   </property>
@@ -102,12 +102,24 @@
   </property>
   <property>
     <name>atlas.graph.storage.hostname</name>
-    <value/>
+    <value>localhost</value>
     <description/>
     <on-ambari-upgrade add="false"/>
   </property>
+  <property>
+  <name>atlas.graph.storage.backend</name>
+  <value>hbase</value>
+  <description/>
+  <on-ambari-upgrade add="false"/>
+</property>
 
   <!-- Graph properties -->
+  <property>
+   <name>atlas.graph.index.search.backend</name>
+   <value>solr</value>
+   <description>The Atlas indexing backend (e.g. solr, elasticsearch).</description>
+   <on-ambari-upgrade add="false"/>
+ </property>
   <property>
     <name>atlas.graph.index.search.solr.mode</name>
     <value>cloud</value>
@@ -116,7 +128,7 @@
   </property>
   <property>
     <name>atlas.graph.index.search.solr.zookeeper-url</name>
-    <value/>
+    <value>localhost:2181/solr</value>
     <description>The ZooKeeper quorum setup for Solr as comma separated value.</description>
     <on-ambari-upgrade add="false"/>
   </property>
