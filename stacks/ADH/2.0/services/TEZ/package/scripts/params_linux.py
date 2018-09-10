@@ -27,8 +27,6 @@ from resource_management.libraries.functions.format import format
 from resource_management.libraries.functions.stack_features import check_stack_feature
 from resource_management.libraries.functions.version import format_stack_version
 from resource_management.libraries.functions.default import default
-from resource_management.libraries.functions.copy_tarball import STACK_ROOT_PATTERN, STACK_NAME_PATTERN, STACK_VERSION_PATTERN
-from resource_management.libraries.functions.copy_tarball import get_sysprep_skip_copy_tarballs_hdfs
 from resource_management.libraries.functions import get_kinit_path
 from resource_management.libraries.functions.get_not_managed_resources import get_not_managed_resources
 from resource_management.libraries.script.script import Script
@@ -39,8 +37,6 @@ config = Script.get_config()
 tmp_dir = Script.get_tmp_dir()
 
 architecture = get_architecture()
-
-sysprep_skip_copy_tarballs_hdfs = get_sysprep_skip_copy_tarballs_hdfs()
 
 stack_name = default("/clusterLevelParams/stack_name", None)
 stack_root = Script.get_stack_root()
@@ -118,3 +114,6 @@ HdfsResource = functools.partial(
 )
 
 tez_site_config = dict(config['configurations']['tez-site'])
+
+
+

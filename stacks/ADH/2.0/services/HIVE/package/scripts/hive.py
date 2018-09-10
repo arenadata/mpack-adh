@@ -147,6 +147,7 @@ def setup_hiveserver2():
   #  if copy tarball to HDFS feature  supported copy mapreduce.tar.gz and tez.tar.gz to HDFS
   if params.stack_version_formatted_major and check_stack_feature(StackFeature.COPY_TARBALL_TO_HDFS, params.stack_version_formatted_major):
     copy_to_hdfs("mapreduce", params.user_group, params.hdfs_user, skip=params.sysprep_skip_copy_tarballs_hdfs)
+    copy_to_hdfs("tez", params.user_group, params.hdfs_user, skip=params.sysprep_skip_copy_tarballs_hdfs)
 
   # Always copy pig.tar.gz and hive.tar.gz using the appropriate mode.
   # This can use a different source and dest location to account
@@ -287,7 +288,7 @@ def create_hive_hdfs_dirs():
                         group = params.user_group,
                         mode = 0700
     )
-
+    
     if __is_hdfs_acls_enabled():
       if params.security_enabled:
         kinit_cmd = format("{kinit_path_local} -kt {hdfs_user_keytab} {hdfs_principal_name}; ")
@@ -306,14 +307,14 @@ def create_hive_hdfs_dirs():
 
 def __is_hdfs_acls_enabled():
   import params
-
+  
   return_code, stdout, _ = get_user_call_output("hdfs getconf -confKey dfs.namenode.acls.enabled",
                                                 user = params.hdfs_user)
   acls_enabled = stdout == "true"
   return_code, stdout, _ = get_user_call_output("hdfs getconf -confKey dfs.namenode.posix.acl.inheritance.enabled",
                                                 user = params.hdfs_user)
   acls_inheritance_enabled = stdout == "true"
-
+  
   return acls_enabled and acls_inheritance_enabled
 
 def setup_non_client():
@@ -394,7 +395,7 @@ def refresh_yarn():
   if os.path.isfile(YARN_REFRESHED_FILE):
     Logger.info("Yarn already refreshed")
     return
-
+  
   if params.security_enabled:
     Execute(params.yarn_kinit_cmd, user = params.yarn_user)
   Execute("yarn rmadmin -refreshSuperUserGroupsConfiguration", user = params.yarn_user)
@@ -402,7 +403,7 @@ def refresh_yarn():
 
 def create_hive_metastore_schema():
   import params
-
+  
   SYS_DB_CREATED_FILE = "/etc/hive/sys.db.created"
 
   if os.path.isfile(SYS_DB_CREATED_FILE):
