@@ -39,11 +39,6 @@ from resource_management.libraries.functions.lzo_utils import install_lzo_if_nee
 def hdfs(name=None):
   import params
 
-  Execute('tar -czf /tmp/mapreduce.tar.gz -C /usr/lib/ ./hadoop')
-  Execute('mv /tmp/mapreduce.tar.gz /usr/lib/hadoop/')
-  Execute('ln -sf /usr/lib/hadoop-hdfs/bin/hdfs /usr/lib/hadoop/bin/hdfs')
-  Execute('ln -sf /usr/lib/hadoop/libexec /usr/lib/hadoop-hdfs/libexec')
-
   if params.create_lib_snappy_symlinks:
     install_snappy()
 
@@ -157,6 +152,11 @@ def hdfs(name=None):
        owner=tc_owner,
        content=Template("slaves.j2")
   )
+
+  Execute('tar -czf /tmp/mapreduce.tar.gz -C /usr/lib/ ./hadoop')
+  Execute('mv /tmp/mapreduce.tar.gz /usr/lib/hadoop/')
+  Execute('ln -sf /usr/lib/hadoop-hdfs/bin/hdfs /usr/lib/hadoop/bin/hdfs')
+  Execute('ln -sf /usr/lib/hadoop/libexec/ /usr/lib/hadoop-hdfs/libexec')
 
   install_lzo_if_needed()
 
