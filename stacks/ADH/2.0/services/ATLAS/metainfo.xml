@@ -53,13 +53,6 @@
                 <enabled>true</enabled>
               </auto-deploy>
             </dependency>
-            <dependency>
-              <name>KAFKA/KAFKA_BROKER</name>
-              <scope>cluster</scope>
-              <auto-deploy>
-                <enabled>true</enabled>
-              </auto-deploy>
-            </dependency>
           </dependencies>
           <commandScript>
             <script>scripts/metadata_server.py</script>
@@ -109,6 +102,27 @@
             </configFile>
           </configFiles>
         </component>
+       <component>
+          <name>KAFKA_BROKER</name>
+          <displayName>Message Broker</displayName>
+          <category>MASTER</category>
+          <cardinality>2</cardinality>
+          <versionAdvertised>true</versionAdvertised>
+          <dependencies>
+            <dependency>
+              <name>ZOOKEEPER/ZOOKEEPER_SERVER</name>
+              <scope>cluster</scope>
+              <auto-deploy>
+                <enabled>true</enabled>
+              </auto-deploy>
+            </dependency>
+          </dependencies>
+          <commandScript>
+            <script>scripts/kafka_broker.py</script>
+            <scriptType>PYTHON</scriptType>
+            <timeout>1200</timeout>
+          </commandScript>
+        </component>
       </components>
 
       <sso>
@@ -122,10 +136,6 @@
           <default>true</default>
         </quickLinksConfiguration>
       </quickLinksConfigurations>
-
-      <requiredServices>
-        <service>KAFKA</service>
-      </requiredServices>
 
       <themes>
         <theme>
@@ -160,6 +170,9 @@
             <package>
               <name>kafka</name>
             </package>
+            <package>
+              <name>kafka-server</name>
+            </package>
           </packages>
         </osSpecific>
       </osSpecifics>
@@ -169,6 +182,10 @@
         <scriptType>PYTHON</scriptType>
         <timeout>300</timeout>
       </commandScript>
+
+      <requiredServices>
+        <service>ZOOKEEPER</service>
+      </requiredServices>
 
       <configuration-dependencies>
         <config-type>application-properties</config-type>
@@ -182,6 +199,17 @@
         <config-type>ranger-atlas-plugin-properties</config-type>
         <config-type>ranger-atlas-policymgr-ssl</config-type>
         <config-type>ranger-atlas-security</config-type>
+        <config-type>kafka-broker</config-type>
+        <config-type>kafka-env</config-type>
+        <config-type>kafka-log4j</config-type>
+        <config-type>kafka_jaas_conf</config-type>
+        <config-type>kafka_client_jaas_conf</config-type>
+        <config-type>ranger-kafka-plugin-properties</config-type>
+        <config-type>ranger-kafka-audit</config-type>
+        <config-type>ranger-kafka-policymgr-ssl</config-type>
+        <config-type>ranger-kafka-security</config-type>
+        <config-type>zookeeper-env</config-type>
+        <config-type>zoo.cfg</config-type>
       </configuration-dependencies>
 
     </service>
