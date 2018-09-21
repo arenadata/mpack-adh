@@ -54,6 +54,7 @@ sudo = AMBARI_SUDO_BINARY
 security_enabled = status_params.security_enabled
 fs_root = config['configurations']['core-site']['fs.defaultFS']
 solr_conf = "/etc/solr/conf"
+solr_home = "/usr/adh/current/solr-server"
 
 solr_port = status_params.solr_port
 solr_piddir = status_params.solr_piddir
@@ -222,7 +223,7 @@ if has_ranger_admin and is_supported_solr_ranger:
     ranger_plugin_config['ambari.service.check.user'] = policy_user
 
   #For curl command in ranger plugin to get db connector
-  jdk_location = config['hostLevelParams']['jdk_location']
+  jdk_location = config['ambariLevelParams']['jdk_location']
   java_share_dir = '/usr/share/java'
   previous_jdbc_jar_name = None
 

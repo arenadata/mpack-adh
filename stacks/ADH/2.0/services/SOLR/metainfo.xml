@@ -25,7 +25,7 @@
       <version>7.3.0</version>
       <components>
         <component>
-          <name>SOLR</name>
+          <name>Solr</name>
           <timelineAppid>solr</timelineAppid>
           <displayName>Solr</displayName>
           <category>MASTER</category>
