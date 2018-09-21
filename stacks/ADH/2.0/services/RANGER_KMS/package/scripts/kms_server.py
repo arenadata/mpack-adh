@@ -91,6 +91,7 @@ class KmsServer(Script):
     import params
 
     env.set_params(params)
+    Execute('ln -sf /usr/lib/ranger-kms/conf/ /usr/lib/ranger-kms/ews/webapp/WEB-INF/classes/')
     kms.kms()
 
   def pre_upgrade_restart(self, env, upgrade_type=None):
