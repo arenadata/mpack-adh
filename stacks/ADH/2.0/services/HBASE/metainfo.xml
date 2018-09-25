@@ -195,6 +195,9 @@
               <name>phoenix</name>
               <condition>should_install_phoenix</condition>
             </package>
+            <package>
+              <name>ranger-hbase-plugin</name>
+            </package>
           </packages>
         </osSpecific>
       </osSpecifics>

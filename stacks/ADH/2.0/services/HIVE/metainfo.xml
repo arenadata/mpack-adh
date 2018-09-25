@@ -285,6 +285,9 @@
             <package>
               <name>hive-hcatalog</name>
             </package>
+            <package>
+              <name>ranger-hive-plugin</name>
+            </package>
           </packages>
         </osSpecific>
         <osSpecific>

@@ -203,6 +203,9 @@
             <package>
               <name>hadoop-hdfs</name>
             </package>
+            <package>
+              <name>ranger-yarn-plugin</name>
+            </package>
           </packages>
         </osSpecific>
       </osSpecifics>

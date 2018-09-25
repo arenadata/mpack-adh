@@ -23,7 +23,7 @@
       <displayName>Atlas</displayName>
       <comment>Atlas Metadata and Governance platform</comment>
       <version>1.0.0</version>
-      
+
       <components>
         <component>
           <name>ATLAS_SERVER</name>
@@ -172,6 +172,9 @@
             </package>
             <package>
               <name>kafka-server</name>
+            </package>
+            <package>
+              <name>ranger-atlas-plugin</name>
             </package>
           </packages>
         </osSpecific>

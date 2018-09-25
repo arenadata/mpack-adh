@@ -75,6 +75,9 @@
             <package>
               <name>knox</name>
             </package>
+            <package>
+              <name>ranger-knox-plugin</name>
+            </package>
           </packages>
         </osSpecific>
       </osSpecifics>
