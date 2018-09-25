@@ -156,7 +156,6 @@ def hdfs(name=None):
   Execute('tar -czf /tmp/mapreduce.tar.gz -C /usr/lib/ ./hadoop')
   Execute('mv /tmp/mapreduce.tar.gz /usr/lib/hadoop/')
   Execute('ln -sf /usr/lib/hadoop-hdfs/bin/hdfs /usr/lib/hadoop/bin/hdfs')
-  Execute('ln -sf /usr/lib/hadoop/libexec/ /usr/lib/hadoop-hdfs/libexec')
 
   install_lzo_if_needed()
 

@@ -79,6 +79,7 @@ class NameNode(Script):
     hdfs("namenode")
     hdfs_binary = self.get_hdfs_binary()
     namenode(action="configure", hdfs_binary=hdfs_binary, env=env)
+    Execute('ln -sf /usr/lib/hadoop/libexec/ /usr/lib/hadoop-hdfs/libexec')
 
   def save_configs(self, env):
     import params
