@@ -2092,7 +2092,7 @@ class MAPREDUCE2Recommender(YARNRecommender):
 
     putMapredProperty('yarn.app.mapreduce.am.resource.mb', min(max(int(clusterData['ramPerContainer']),int(configurations["yarn-site"]["properties"]["yarn.scheduler.minimum-allocation-mb"])),
                                                                int(configurations["yarn-site"]["properties"]["yarn.scheduler.maximum-allocation-mb"])))
-    putMapredProperty('yarn.app.mapreduce.am.command-opts', "-Xmx" + str(int(0.8 * int(configurations["mapred-site"]["properties"]["yarn.app.mapreduce.am.resource.mb"]))) + "m" + " -Dhdp.version=2.0.0.0-1")
+    putMapredProperty('yarn.app.mapreduce.am.command-opts', "-Xmx" + str(int(0.8 * int(configurations["mapred-site"]["properties"]["yarn.app.mapreduce.am.resource.mb"]))) + "m" + " -Dhdp.version=2.0.1.1-71")
     servicesList = [service["StackServices"]["service_name"] for service in services["services"]]
     min_mapreduce_map_memory_mb = 0
     min_mapreduce_reduce_memory_mb = 0

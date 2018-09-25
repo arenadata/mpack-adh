@@ -20,7 +20,7 @@
   <property>
     <name>tez.lib.uris</name>
     <display-name>TEZ Lib URIs</display-name>
-    <value>/adh/apps/2.0.0.0-1/tez/tez.tar.gz</value>
+    <value>/adh/apps/2.0.1.1-71/tez/tez.tar.gz</value>
     <description>Comma-delimited list of the location of the Tez libraries which will be localized for DAGs.
       Specifying a single .tar.gz or .tgz assumes that a compressed version of the tez libs is being used. This is uncompressed into a tezlibs directory when running containers, and tezlibs/;tezlibs/lib/ are added to the classpath (after . and .*).
       If multiple files are specified - files are localized as regular files, contents of directories are localized as regular files (non-recursive).
@@ -30,14 +30,14 @@
   <property>
     <name>tez.lib.uris.classpath</name>
     <display-name>TEZ Lib URIs Classpath</display-name>
-    <value>/usr/lib/tez/*:/usr/lib/tez/lib/*:/usr/adh/2.0.0.0-1/hadoop/lib/hadoop-lzo-0.6.0.2.0.0.0-1.jar:/etc/hadoop/conf/secure:/usr/lib/hadoop/lib/*:/usr/lib/hadoop/.//*:/usr/lib/hadoop-hdfs/./:/usr/lib/hadoop-hdfs/lib/*:/usr/lib/hadoop-hdfs/.//*:/usr/lib/hadoop-mapreduce/.//*:/usr/lib/hadoop-yarn/./:/usr/lib/hadoop-yarn/lib/*:/usr/lib/hadoop-yarn/.//*</value>
+    <value>/usr/lib/tez/*:/usr/lib/tez/lib/*:/etc/hadoop/conf/secure:/usr/lib/hadoop/lib/*:/usr/lib/hadoop/.//*:/usr/lib/hadoop-hdfs/./:/usr/lib/hadoop-hdfs/lib/*:/usr/lib/hadoop-hdfs/.//*:/usr/lib/hadoop-mapreduce/.//*:/usr/lib/hadoop-yarn/./:/usr/lib/hadoop-yarn/lib/*:/usr/lib/hadoop-yarn/.//*</value>
     <description>Comma-delimited list of the location of the Tez libraries which will be localized for DAGs.
     </description>
     <on-ambari-upgrade add="false"/>
   </property>
   <property>
     <name>tez.cluster.additional.classpath.prefix</name>
-    <value>/usr/adh/2.0.0.0-1/hadoop/lib/hadoop-lzo-0.6.0.*.jar:/etc/hadoop/conf/secure</value>
+    <value>/usr/adh/2.0.1.1-71/hadoop/lib/hadoop-lzo-0.6.0.*.jar:/etc/hadoop/conf/secure</value>
     <description/>
     <on-ambari-upgrade add="false"/>
   </property>
@@ -88,7 +88,7 @@
   </property>
   <property>
     <name>tez.am.launch.env</name>
-    <value>LD_LIBRARY_PATH=/usr/adh/2.0.0.0-1/hadoop/lib/native:/usr/adh/2.0.0.0-1/hadoop/lib/native/Linux-{{architecture}}-64</value>
+    <value>LD_LIBRARY_PATH=/usr/adh/2.0.1.1-71/hadoop/lib/native:/usr/adh/2.0.1.1-71/hadoop/lib/native/Linux-{{architecture}}-64</value>
     <description>
         Additional execution environment entries for tez. This is not an additive property. You must preserve the original value if
         you want to have access to native libraries.
@@ -134,7 +134,7 @@
   </property>
   <property>
     <name>tez.task.launch.env</name>
-    <value>LD_LIBRARY_PATH=/usr/adh/2.0.0.0-1/hadoop/lib/native:/usr/adh/2.0.0.0-1/hadoop/lib/native/Linux-{{architecture}}-64</value>
+    <value>LD_LIBRARY_PATH=/usr/adh/2.0.1.1-71/hadoop/lib/native:/usr/adh/2.0.1.1-71/hadoop/lib/native/Linux-{{architecture}}-64</value>
     <description>
       Additional execution environment entries for tez. This is not an additive property. You must preserve the original value if
       you want to have access to native libraries.

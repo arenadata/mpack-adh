@@ -67,7 +67,7 @@
   </property>
   <property>
     <name>spark.yarn.archive</name>
-    <value>hdfs:///adh/apps/2.0.0.0-1/spark2/spark2-adh-yarn-archive.tar.gz</value>
+    <value>hdfs:///adh/apps/2.0.1.1-71/spark2/spark2-adh-yarn-archive.tar.gz</value>
     <description>
 	An archive containing needed Spark jars for distribution to the YARN cache
     </description>
