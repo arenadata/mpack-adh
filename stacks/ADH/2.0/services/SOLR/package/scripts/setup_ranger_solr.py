@@ -25,7 +25,7 @@ from resource_management.core.resources.system import Directory
 
 def setup_ranger_solr():
   import params
-
+  Execute('ln -sf /usr/adh/current/ranger-admin/contrib/solr_for_audit_setup/ /usr/adh/current/solr-server/server/solr/configsets/ranger_audit_configs')
   if params.has_ranger_admin and params.security_enabled:
 
     from resource_management.libraries.functions.setup_ranger_plugin_xml import setup_ranger_plugin
@@ -82,7 +82,7 @@ def setup_ranger_solr():
                         plugin_security_properties=params.ranger_solr_security, plugin_security_attributes=params.ranger_solr_security_attrs,
                         plugin_policymgr_ssl_properties=params.ranger_solr_policymgr_ssl, plugin_policymgr_ssl_attributes=params.ranger_solr_policymgr_ssl_attrs,
                         component_list=['solr'], audit_db_is_enabled=params.xa_audit_db_is_enabled,
-                        credential_file=params.credential_file, xa_audit_db_password=params.xa_audit_db_password, 
+                        credential_file=params.credential_file, xa_audit_db_password=params.xa_audit_db_password,
                         ssl_truststore_password=params.ssl_truststore_password, ssl_keystore_password=params.ssl_keystore_password,
                         api_version = 'v2', skip_if_rangeradmin_down= not params.retryAble,
                         is_security_enabled = params.security_enabled,

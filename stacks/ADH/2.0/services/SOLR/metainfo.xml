@@ -75,6 +75,9 @@
             <package>
               <name>ambari-infra-solr-client-*</name>
             </package>
+            <package>
+              <name>ranger-solr-plugin</name>
+            </package>
           </packages>
         </osSpecific>
       </osSpecifics>
