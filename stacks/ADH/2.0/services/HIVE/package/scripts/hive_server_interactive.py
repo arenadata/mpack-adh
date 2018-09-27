@@ -51,6 +51,7 @@ class HiveServerInteractive(Script):
     def install(self, env):
       import params
       self.install_packages(env)
+      Execute('mkdir /etc/tez_llap/ | mkdir /etc/tez_llap/conf)
 
     def configure(self, env):
       import params
@@ -139,7 +140,7 @@ class HiveServerInteractive(Script):
           except urllib2.HTTPError, e:
             if e.code < 400:
               running = True
-          
+
           if running:
             Logger.info(format("Runnning HSI found on {hive_server_interactive_host}"))
             return True
@@ -225,7 +226,7 @@ class HiveServerInteractive(Script):
 
       cmd = format("{stack_root}/current/hive-server2/bin/hive --service llap --size {params.llap_daemon_container_size}m --startImmediately --name {params.llap_app_name} "
                    "--cache {params.hive_llap_io_mem_size}m --xmx {params.llap_heap_size}m --loglevel {params.llap_log_level} "
-                   "--output {LLAP_PACKAGE_CREATION_PATH}/{unique_name} --user {params.hive_user}")
+                   "--output {LLAP_PACKAGE_CREATION_PATH}/{unique_name}")
 
       # Append params that are supported from Hive llap GA version.
       # TODO: All the code related to Slider Anti-affinity will be removed and
@@ -247,7 +248,7 @@ class HiveServerInteractive(Script):
 
       # Setup the logger for the ga version only
       cmd += format(" --logger {params.llap_logger}")
-        
+
       if params.security_enabled:
         llap_keytab_splits = params.hive_llap_keytab_file.split("/")
         Logger.debug("llap_keytab_splits : {0}".format(llap_keytab_splits))
@@ -299,7 +300,7 @@ class HiveServerInteractive(Script):
             return True
           else:
             Logger.info("LLAP app '{0}' is not running.".format(params.llap_app_name))
-          
+
           raise # throw the original exception
 
     """
