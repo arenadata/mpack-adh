@@ -51,7 +51,7 @@ class HiveServerInteractive(Script):
     def install(self, env):
       import params
       self.install_packages(env)
-      Execute('mkdir /etc/tez_llap/ | mkdir /etc/tez_llap/conf)
+      Execute('mkdir /etc/tez_llap/ | mkdir /etc/tez_llap/conf')
 
     def configure(self, env):
       import params
