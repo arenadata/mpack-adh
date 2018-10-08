@@ -114,10 +114,6 @@ export SPARK_LOG_DIR={{spark_log_dir}}
 # Where the pid file is stored. (Default: /tmp)
 export SPARK_PID_DIR={{spark_pid_dir}}
 
-export SPARK_CLASSPATH=${SPARK_CLASSPATH}:/usr/lib/hadoop-hdfs/hadoop-hdfs-2.8.1.jar:/usr/lib/hadoop-hdfs/hadoop-hdfs-client-2.8.1.jar:/usr/lib/hadoop-hdfs/hadoop-hdfs-native-client-2.8.1.jar:/usr/lib/hadoop-hdfs/hadoop-hdfs-nfs-2.8.1.jar:/usr/lib/hadoop/hadoop-annotations-2.8.1.jar:/usr/lib/hadoop/hadoop-auth-2.8.1.jar:/usr/lib/hadoop/hadoop-common-2.8.1.jar:/usr/lib/hadoop-yarn/hadoop-yarn-client-2.8.1.jar:/usr/lib/hadoop-yarn/hadoop-yarn-api-2.8.1.jar:/usr/lib/hadoop/hadoop-yarn-server-common-2.8.1.jar
-
-export SPARK_DAEMON_CLASSPATH=${SPARK_DAEMON_CLASSPATH}:/usr/lib/hadoop-hdfs/hadoop-hdfs-2.8.1.jar:/usr/lib/hadoop-hdfs/hadoop-hdfs-client-2.8.1.jar:/usr/lib/hadoop-hdfs/hadoop-hdfs-native-client-2.8.1.jar:/usr/lib/hadoop-hdfs/hadoop-hdfs-nfs-2.8.1.jar:/usr/lib/hadoop/hadoop-annotations-2.8.1.jar:/usr/lib/hadoop/hadoop-auth-2.8.1.jar:/usr/lib/hadoop/hadoop-common-2.8.1.jar:/usr/lib/hadoop-yarn/hadoop-yarn-client-2.8.1.jar:/usr/lib/hadoop-yarn/hadoop-yarn-api-2.8.1.jar:/usr/lib/hadoop/hadoop-yarn-server-common-2.8.1.jar
-
 #Memory for Master, Worker and history server (default: 1024MB)
 export SPARK_DAEMON_MEMORY={{spark_daemon_memory}}m
 
