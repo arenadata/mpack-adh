@@ -117,7 +117,7 @@
 
       <requiredServices>
         <service>KAFKA</service>
-        <service>SOLR</service>
+        <service>AMBARI_INFRA</service>
         <service>HBASE</service>
         <service>ZOOKEEPER</service>
       </requiredServices>
