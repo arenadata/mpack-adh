@@ -23,6 +23,170 @@
       <displayName>Log Search</displayName>
       <comment>Log aggregation, analysis, and visualization for Ambari managed services.</comment>
       <version>0.5.0</version>
+
+
+      <credential-store>
+        <supported>true</supported>
+        <enabled>true</enabled>
+        <required>true</required>
+      </credential-store>
+
+      <components>
+
+        <component>
+          <name>LOGSEARCH_SERVER</name>
+          <timelineAppid>logsearch</timelineAppid>
+          <displayName>Log Search Server</displayName>
+          <category>MASTER</category>
+          <cardinality>0-1</cardinality>
+          <versionAdvertised>false</versionAdvertised>
+          <commandScript>
+            <script>scripts/logsearch.py</script>
+            <scriptType>PYTHON</scriptType>
+            <timeout>1800</timeout>
+          </commandScript>
+          <logs>
+            <log>
+              <logId>logsearch_app</logId>
+              <primary>true</primary>
+            </log>
+            <log>
+              <logId>logsearch_perf</logId>
+            </log>
+          </logs>
+          <configuration-dependencies>
+            <config-type>infra-solr-env</config-type>
+            <config-type>logsearch-properties</config-type>
+            <config-type>logsearch-env</config-type>
+            <config-type>logsearch-common-env</config-type>
+            <config-type>logsearch-log4j</config-type>
+            <config-type>logsearch-admin-json</config-type>
+            <config-type>logsearch-service_logs-solrconfig.xml</config-type>
+            <config-type>logsearch-audit_logs-solrconfig.xml</config-type>
+          </configuration-dependencies>
+        </component>
+
+        <component>
+          <name>LOGSEARCH_LOGFEEDER</name>
+          <timelineAppid>logfeeder</timelineAppid>
+          <displayName>Log Feeder</displayName>
+          <category>SLAVE</category>
+          <cardinality>ALL</cardinality>
+          <versionAdvertised>false</versionAdvertised>
+          <commandScript>
+            <script>scripts/logfeeder.py</script>
+            <scriptType>PYTHON</scriptType>
+          </commandScript>
+          <logs>
+            <log>
+              <logId>logsearch_feeder</logId>
+              <primary>true</primary>
+            </log>
+          </logs>
+
+          <configuration-dependencies>
+            <config-type>infra-solr-env</config-type>
+            <config-type>logsearch-common-env</config-type>
+            <config-type>logfeeder-properties</config-type>
+            <config-type>logfeeder-env</config-type>
+            <config-type>logfeeder-grok</config-type>
+            <config-type>logfeeder-log4j</config-type>
+            <config-type>logfeeder-system_log-env</config-type>
+            <config-type>logfeeder-output-config</config-type>
+          </configuration-dependencies>
+        </component>
+
+      </components>
+
+      <osSpecifics>
+        <osSpecific>
+          <osFamily>redhat7,amazon2015,redhat6,suse11,suse12</osFamily>
+          <packages>
+            <package>
+              <name>ambari-logsearch-logfeeder</name>
+              <skipUpgrade>true</skipUpgrade>
+            </package>
+            <package>
+              <name>ambari-logsearch-portal</name>
+              <skipUpgrade>true</skipUpgrade>
+              <condition>should_install_logsearch_portal</condition>
+            </package>
+            <package>
+              <name>ambari-infra-solr-client</name>
+              <condition>should_install_infra_solr_client</condition>
+            </package>
+          </packages>
+        </osSpecific>
+        <osSpecific>
+          <osFamily>debian7,ubuntu12,ubuntu14,ubuntu16</osFamily>
+          <packages>
+            <package>
+              <name>ambari-logsearch-logfeeder</name>
+              <skipUpgrade>true</skipUpgrade>
+            </package>
+            <package>
+              <name>ambari-logsearch-portal</name>
+              <skipUpgrade>true</skipUpgrade>
+              <condition>should_install_logsearch_portal</condition>
+            </package>
+            <package>
+              <name>ambari-infra-solr-client</name>
+              <condition>should_install_infra_solr_client</condition>
+            </package>
+          </packages>
+        </osSpecific>
+      </osSpecifics>
+
+      <commandScript>
+        <script>scripts/service_check.py</script>
+        <scriptType>PYTHON</scriptType>
+        <timeout>300</timeout>
+      </commandScript>
+
+      <configuration-dependencies>
+        <config-type>logfeeder-ambari-config</config-type>
+        <config-type>logfeeder-custom-logsearch-config</config-type>
+        <config-type>accumulo-logsearch-conf</config-type>
+        <config-type>ams-logsearch-conf</config-type>
+        <config-type>atlas-logsearch-conf</config-type>
+        <config-type>falcon-logsearch-conf</config-type>
+        <config-type>flume-logsearch-conf</config-type>
+        <config-type>hbase-logsearch-conf</config-type>
+        <config-type>hdfs-logsearch-conf</config-type>
+        <config-type>hive-logsearch-conf</config-type>
+        <config-type>infra-logsearch-conf</config-type>
+        <config-type>kafka-logsearch-conf</config-type>
+        <config-type>knox-logsearch-conf</config-type>
+        <config-type>mapred-logsearch-conf</config-type>
+        <config-type>nifi-logsearch-conf</config-type>
+        <config-type>oozie-logsearch-conf</config-type>
+        <config-type>ranger-kms-logsearch-conf</config-type>
+        <config-type>ranger-logsearch-conf</config-type>
+        <config-type>spark-logsearch-conf</config-type>
+        <config-type>spark2-logsearch-conf</config-type>
+        <config-type>storm-logsearch-conf</config-type>
+        <config-type>yarn-logsearch-conf</config-type>
+        <config-type>zeppelin-logsearch-conf</config-type>
+        <config-type>zookeeper-logsearch-conf</config-type>
+      </configuration-dependencies>
+
+      <requiredServices>
+        <service>AMBARI_INFRA</service>
+      </requiredServices>
+
+      <quickLinksConfigurations>
+        <quickLinksConfiguration>
+          <fileName>quicklinks.json</fileName>
+          <default>true</default>
+        </quickLinksConfiguration>
+      </quickLinksConfigurations>
+
+      <themes>
+        <theme>
+          <fileName>theme.json</fileName>
+          <default>true</default>
+        </theme>
+      </themes>
     </service>
   </services>
 </metainfo>
