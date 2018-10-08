@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+ 
+<configuration>
+
+  <property>
+    <name>flink_install_dir</name>
+    <value>/usr/lib/flink</value>
+    <description>Location to install Flink</description>
+    <display-name>Flink Installation Directory</display-name>
+  </property> 
+
+  <property>
+    <name>flink_appname</name>
+    <value>flinkapp-from-ambari</value>
+    <description>Flink application name</description>
+    <display-name>Flink Default Application Name</display-name>
+  </property> 
+
+  <property>
+    <name>hadoop_conf_dir</name>
+    <value>/etc/hadoop/conf</value>
+    <description>Hadoop conf dir. Needed to submit to YARN</description>
+    <display-name>Hadoop Configuration Directory</display-name>
+  </property>   
+
+</configuration>

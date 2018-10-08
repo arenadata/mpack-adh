@@ -1,12 +1,12 @@
 {
   "type" : "full-release",
   "name" : "adh-ambari-mpack",
-  "version": "2.0.1.1-71",
+  "version": "1.6.0.1-19",
   "branch": "UNKNOWN",
   "description" : "ADH Ambari Management Pack",
   "prerequisites": {
-    "min-ambari-version" : "2.7.0.0",
-    "max-ambari-version" : ""
+    "min-ambari-version" : "2.6.1.0",
+    "max-ambari-version" : "2.6.2.0"
   },
   "artifacts": [
     {

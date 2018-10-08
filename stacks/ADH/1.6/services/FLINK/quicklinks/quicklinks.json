@@ -1,0 +1,35 @@
+{
+  "name": "default",
+  "description": "default quick links configuration",
+  "configuration": {
+    "protocol":
+    {
+      "type":"https",
+      "checks":[
+        {
+          "property":"ssl_enable",
+          "desired":"true",
+          "site":"flink-site"
+        }
+      ]
+    },
+
+    "links": [
+      {
+        "name": "flink_ui",
+        "label": "Flink Job Manager",
+        "requires_user_name": "false",
+        "component_name": "FLINK_MASTER",
+        "url":"%@://%@:%@/",
+        "port":{
+          "http_property": "flink.server.port",
+          "http_default_port": "8081",
+          "https_property": "flink.server.port",
+          "https_default_port": "8081",
+          "regex": "^(\\d+)$",
+          "site": "flink-site"
+        }
+      }
+    ]
+  }
+}
