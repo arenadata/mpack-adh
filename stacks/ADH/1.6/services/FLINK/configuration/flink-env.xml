@@ -15,7 +15,7 @@
 
   <property>
     <name>flink_log_dir</name>
-    <value>/usr/lib/flink/log</value>
+    <value>/var/log/flink</value>
     <description>Flink Log dir</description>
     <display-name>Flink Log Directory</display-name>
   </property>

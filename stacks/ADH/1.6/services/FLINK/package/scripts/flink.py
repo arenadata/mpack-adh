@@ -21,11 +21,11 @@ class Master(Script):
     env.set_params(params)
     env.set_params(status_params)
     self.install_packages(env)
-      
+
     Directory([status_params.flink_pid_dir, params.flink_log_dir],
             owner=params.flink_user,
             group=params.flink_group
-    )   
+    )
 
     File(params.flink_log_file,
             mode=0644,
@@ -33,21 +33,21 @@ class Master(Script):
             group=params.flink_group,
             content=''
     )
-         
+
   def configure(self, env, isInstall=False):
     import params
     import status_params
     env.set_params(params)
     env.set_params(status_params)
-    
+
     self.create_hdfs_user(params.flink_user)
     self.config_ssh(params.flink_user)
 
     #write out config
     properties_content=InlineTemplate(params.flink_yaml_content)
     File(format("{conf_dir}/flink-conf.yaml"), content=properties_content, owner=params.flink_user)
-    Execute("mkdir -p {flink_home_dir}/log")
-            
+    Execute(format("ln -sf {flink_log_dir} {flink_install_dir}/log"))
+
   def config_ssh(self, flink_user):
     if not os.path.exists(format("{flink_home_dir}/.ssh/id_rsa")):
       cmd1 = format("ssh-keygen -f {flink_home_dir}/.ssh/id_rsa -t rsa -N \"\"")
@@ -66,16 +66,16 @@ class Master(Script):
       action = "delete",
       owner = params.flink_user
     )
-      
+
   def start(self, env):
     import params
     import status_params
 
     env.set_params(params)
     env.set_params(status_params)
-    
+
     self.configure(env, True)
-    
+
     cmd = format("{params.bin_dir}/jobmanager.sh start >> {params.flink_log_file}")
     #cmd = "env >/tmp/1.log"
     Execute (cmd, user=params.flink_user, environment=self.get_env())
@@ -84,13 +84,13 @@ class Master(Script):
       os.remove(params.temp_file)
 
   def status(self, env):
-    import status_params       
+    import status_params
     check_process_status(status_params.flink_pid_file)
 
   def create_hdfs_user(self, user):
     Execute('hadoop fs -mkdir -p /user/'+user, user='hdfs', ignore_failures=True)
     Execute('hadoop fs -chown ' + user + ' /user/'+user, user='hdfs')
     Execute('hadoop fs -chgrp ' + user + ' /user/'+user, user='hdfs')
-          
+
 if __name__ == "__main__":
   Master().execute()
