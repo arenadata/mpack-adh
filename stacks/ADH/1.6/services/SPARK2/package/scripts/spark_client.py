@@ -25,6 +25,7 @@ from resource_management.libraries.functions import stack_select
 from resource_management.libraries.functions.stack_features import check_stack_feature
 from resource_management.libraries.functions import StackFeature
 from resource_management.core.exceptions import ClientComponentHasNoStatus
+from resource_management.core.resources.system import Execute
 from resource_management.core.logger import Logger
 from resource_management.core import shell
 from setup_spark import setup_spark
@@ -34,16 +35,17 @@ class SparkClient(Script):
   def install(self, env):
     self.install_packages(env)
     self.configure(env)
+    Execute('ln -sf /usr/lib/hadoop-hdfs/hadoop-hdfs-client-2.8.1.jar  /usr/lib/spark/jars/hadoop-hdfs-client.jar')
 
   def configure(self, env, upgrade_type=None, config_dir=None):
     import params
     env.set_params(params)
-    
+
     setup_spark(env, 'client', upgrade_type=upgrade_type, action = 'config')
 
   def status(self, env):
     raise ClientComponentHasNoStatus()
-  
+
   def get_component_name(self):
     return "spark2-client"
 
@@ -58,4 +60,3 @@ class SparkClient(Script):
 
 if __name__ == "__main__":
   SparkClient().execute()
-
