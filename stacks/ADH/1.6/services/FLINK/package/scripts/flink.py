@@ -2,6 +2,7 @@
 
 import sys, os, pwd, grp, signal, time, glob
 from resource_management.libraries.functions.check_process_status import check_process_status
+from resource_management.core.resources.system import Execute
 from resource_management import *
 from subprocess import call
 
@@ -21,6 +22,11 @@ class Master(Script):
     env.set_params(params)
     env.set_params(status_params)
     self.install_packages(env)
+    Execute('ln -sf /usr/lib/hadoop-yarn/lib/jersey-client-1.9.jar  /usr/lib/flink/lib/jersey-client.jar')
+    Execute('ln -sf /usr/lib/hadoop-yarn/lib/jersey-server-1.9.jar  /usr/lib/flink/lib/jersey-server.jar')
+    Execute('ln -sf /usr/lib/hadoop-yarn/lib/jersey-core-1.9.jar  /usr/lib/flink/lib/jersey-core.jar')
+    Execute('ln -sf /usr/lib/hadoop-yarn/lib/jersey-guice-1.9.jar  /usr/lib/flink/lib/jersey-guice.jar')
+    Execute('ln -sf /usr/lib/hadoop-yarn/lib/jersey-json-1.9.jar  /usr/lib/flink/lib/jersey-json.jar')
 
     Directory([status_params.flink_pid_dir, params.flink_log_dir],
             owner=params.flink_user,
