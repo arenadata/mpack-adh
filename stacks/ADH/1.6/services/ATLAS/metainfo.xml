@@ -30,7 +30,7 @@
           <versionAdvertised>true</versionAdvertised>
           <dependencies>
             <dependency>
-              <name>SOLR/SOLR_SERVER</name>
+              <name>AMBARI_INFRA/INFRA_SOLR_CLIENT</name>
               <scope>host</scope>
               <auto-deploy>
                 <enabled>true</enabled>
@@ -121,12 +121,8 @@
         <service>HBASE</service>
         <service>ZOOKEEPER</service>
       </requiredServices>
-
+       
       <themes>
-        <theme>
-          <fileName>theme.json</fileName>
-          <default>true</default>
-        </theme>
         <theme>
           <fileName>theme_version_2.json</fileName>
           <default>true</default>
@@ -169,12 +165,12 @@
         <config-type>atlas-env</config-type>
         <config-type>atlas-log4j</config-type>
         <config-type>core-site</config-type>
+        <config-type>hdfs-site</config-type>
         <config-type>ranger-atlas-audit</config-type>
         <config-type>ranger-atlas-plugin-properties</config-type>
         <config-type>ranger-atlas-policymgr-ssl</config-type>
         <config-type>ranger-atlas-security</config-type>
       </configuration-dependencies>
-
     </service>
   </services>
 </metainfo>

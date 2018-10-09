@@ -140,7 +140,6 @@ class ADH16StackAdvisor(ADH15StackAdvisor):
     super(ADH16StackAdvisor, self).recommendAtlasConfigurations(configurations, clusterData, services, hosts)
     servicesList = [service["StackServices"]["service_name"] for service in services["services"]]
     putAtlasApplicationProperty = self.putProperty(configurations, "application-properties", services)
-
     knox_host = 'localhost'
     knox_port = '8443'
     if 'KNOX' in servicesList:
@@ -158,6 +157,16 @@ class ADH16StackAdvisor(ADH15StackAdvisor):
     else:
       knox_service_user = 'knox'
     putAtlasApplicationProperty('atlas.proxyusers',knox_service_user)
+
+    zookeeper_hosts = self.getHostNamesWithComponent("ZOOKEEPER", "ZOOKEEPER_SERVER", services)
+    zookeeper_host_arr = []
+    zookeeper_port = self.getZKPort(services)
+    for i in range(len(zookeeper_hosts)):
+      zookeeper_host = zookeeper_hosts[i] + ':' + zookeeper_port
+      zookeeper_host_arr.append(zookeeper_host)
+
+    solr_zookeeper_url = ",".join(zookeeper_host_arr)
+    putAtlasApplicationProperty('atlas.graph.index.search.solr.zookeeper-url', solr_zookeeper_url + "/infra-solr")
 
   def recommendDruidConfigurations(self, configurations, clusterData, services, hosts):
 
