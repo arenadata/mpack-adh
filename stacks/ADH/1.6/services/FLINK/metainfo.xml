@@ -18,6 +18,15 @@
                     <scriptType>PYTHON</scriptType>
                     <timeout>10000</timeout>
                   </commandScript>
+                  <dependencies>
+                    <dependency>
+                      <name>YARN/YARN_CLIENT</name>
+                      <scope>host</scope>
+                      <auto-deploy>
+                        <enabled>true</enabled>
+                      </auto-deploy>
+                    </dependency>
+                  </dependencies>
                 </component>
                 <component>
                   <name>FLINK_TASKMANAGER</name>
@@ -29,8 +38,17 @@
                     <scriptType>PYTHON</scriptType>
                     <timeout>10000</timeout>
                   </commandScript>
+                  <dependencies>
+                    <dependency>
+                      <name>YARN/YARN_CLIENT</name>
+                      <scope>host</scope>
+                      <auto-deploy>
+                        <enabled>true</enabled>
+                      </auto-deploy>
+                    </dependency>
+                  </dependencies>
                 </component>
-            </components>
+              </components>
 
             <osSpecifics>
               <osSpecific>
