@@ -22,7 +22,66 @@
       <name>KNOX</name>
       <displayName>Knox</displayName>
       <comment>Provides a single point of authentication and access for Apache Hadoop services in a cluster</comment>
-      <version>0.13.0.1.6</version>
+      <version>0.14.0.1.6</version>
+      <components>
+        <component>
+          <name>KNOX_GATEWAY</name>
+          <displayName>Knox Gateway</displayName>
+          <category>MASTER</category>
+          <cardinality>1+</cardinality>
+          <versionAdvertised>true</versionAdvertised>
+          <commandScript>
+            <script>scripts/knox_gateway.py</script>
+            <scriptType>PYTHON</scriptType>
+            <timeout>1200</timeout>
+          </commandScript>
+            <customCommands>
+                <customCommand>
+                    <name>STARTDEMOLDAP</name>
+                    <commandScript>
+                        <script>scripts/knox_gateway.py</script>
+                        <scriptType>PYTHON</scriptType>
+                        <timeout>600</timeout>
+                    </commandScript>
+                </customCommand>
+                <customCommand>
+                    <name>STOPDEMOLDAP</name>
+                    <commandScript>
+                        <script>scripts/knox_gateway.py</script>
+                        <scriptType>PYTHON</scriptType>
+                        <timeout>600</timeout>
+                    </commandScript>
+                </customCommand>
+            </customCommands>
+        </component>
+      </components>
+      <osSpecifics>
+        <osSpecific>
+          <osFamily>any</osFamily>
+          <packages>
+            <package>
+              <name>knox</name>
+            </package>
+            <package>
+              <name>ranger-knox-plugin</name>
+            </package>
+          </packages>
+        </osSpecific>
+      </osSpecifics>
+      <commandScript>
+        <script>scripts/service_check.py</script>
+        <scriptType>PYTHON</scriptType>
+        <timeout>300</timeout>
+      </commandScript>
+      <configuration-dependencies>
+        <config-type>gateway-site</config-type>
+        <config-type>gateway-log4j</config-type>
+        <config-type>topology</config-type>
+        <config-type>ranger-knox-plugin-properties</config-type>
+        <config-type>ranger-knox-audit</config-type>
+        <config-type>ranger-knox-policymgr-ssl</config-type>
+        <config-type>ranger-knox-security</config-type>
+      </configuration-dependencies>
     </service>
   </services>
 </metainfo>
