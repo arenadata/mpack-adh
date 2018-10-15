@@ -65,7 +65,7 @@ class Solr(Script):
     else:
       solr_env = {'SOLR_INCLUDE': format('{solr_conf}/solr-env.sh')}
     Execute(
-      format('{solr_bindir}/solr start -cloud -noprompt -s {solr_datadir} >> {solr_log} 2>&1'),
+      format('{solr_bindir}/solr start -cloud -p {solr_port} -noprompt -s {solr_datadir} >> {solr_log} 2>&1'),
       environment=solr_env,
       user=params.solr_user
     )
