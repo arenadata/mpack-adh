@@ -22,7 +22,7 @@
       <name>SOLR</name>
       <displayName>Solr</displayName>
       <comment>Solr is the popular, blazing fast open source enterprise search platform from the Apache Lucene project</comment>
-      <version>7.3.1</version>
+      <version>7.3.1.1.6</version>
       <components>
         <component>
           <name>SOLR_SERVER</name>

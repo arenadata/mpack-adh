@@ -20,7 +20,7 @@
       <name>ATLAS</name>
       <displayName>Atlas</displayName>
       <comment>Atlas Metadata and Governance platform</comment>
-      <version>0.8.1.1.6</version>
+      <version>0.8.2.1.6</version>
       <components>
         <component>
           <name>ATLAS_SERVER</name>
@@ -121,7 +121,7 @@
         <service>HBASE</service>
         <service>ZOOKEEPER</service>
       </requiredServices>
-       
+
       <themes>
         <theme>
           <fileName>theme_version_2.json</fileName>
