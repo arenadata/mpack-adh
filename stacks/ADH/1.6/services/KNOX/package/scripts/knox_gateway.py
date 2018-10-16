@@ -59,18 +59,18 @@ class KnoxGateway(Script):
     Execute(("chown", "-R", format("{knox_user}:{knox_group}"), params.knox_home),
             sudo = True
     )
-    
-    Execute ('ln -sf /usr/lib/knox/logs/gateway-audit.log /var/log/gateway-audit.log')
-    Execute ('ln -sf /usr/lib/knox/logs/gateway.err /var/log/gateway.err')
-    Execute ('ln -sf /usr/lib/knox/logs/gateway.log /var/log/gateway.log')
-    Execute ('ln -sf /usr/lib/knox/logs/knoxcli.log /var/log/knoxcli.log')
-    Execute ('ln -sf /usr/lib/knox/pids/gateway.pid /var/run/knox/gateway.pid')
+
 
   def configure(self, env, upgrade_type=None):
     import params
     env.set_params(params)
     knox()
     ldap()
+    Execute ('ln -sf /usr/lib/knox/logs/gateway-audit.log /var/log/gateway-audit.log')
+    Execute ('ln -sf /usr/lib/knox/logs/gateway.err /var/log/gateway.err')
+    Execute ('ln -sf /usr/lib/knox/logs/gateway.log /var/log/gateway.log')
+    Execute ('ln -sf /usr/lib/knox/logs/knoxcli.log /var/log/knoxcli.log')
+    Execute ('ln -sf /usr/lib/knox/pids/gateway.pid /var/run/knox/gateway.pid')
 
   def configureldap(self, env):
     import params
@@ -172,7 +172,7 @@ class KnoxGatewayDefault(KnoxGateway):
     except:
       show_logs(params.knox_logs_dir, params.knox_user)
       raise
-    
+
     File(params.knox_pid_file,
          action="delete",
     )
@@ -206,11 +206,11 @@ class KnoxGatewayDefault(KnoxGateway):
     File(params.ldap_pid_file,
       action = "delete"
     )
-      
+
   def get_log_folder(self):
     import params
     return params.knox_logs_dir
-  
+
   def get_user(self):
     import params
     return params.knox_user
