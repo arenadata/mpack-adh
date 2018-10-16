@@ -128,7 +128,7 @@
   </property>
   <property>
     <name>spark.driver.extraClassPath</name>
-    <value>/usr/lib/hadoop-hdfs/hadoop-hdfs-2.8.1.jar:/usr/lib/hadoop-hdfs/hadoop-hdfs-client-2.8.1.jar:/usr/lib/hadoop-hdfs/hadoop-hdfs-native-client-2.8.1.jar:/usr/lib/hadoop-hdfs/hadoop-hdfs-nfs-2.8.1.jar:/usr/lib/hadoop/hadoop-annotations-2.8.1.jar:/usr/lib/hadoop/hadoop-auth-2.8.1.jar:/usr/lib/hadoop/hadoop-common-2.8.1.jar:/usr/lib/hadoop-yarn/hadoop-yarn-client-2.8.1.jar:/usr/lib/hadoop-yarn/hadoop-yarn-api-2.8.1.jar:/usr/lib/hadoop/hadoop-yarn-server-common-2.8.1.jar</value>
+    <value>/usr/lib/hadoop-hdfs/hadoop-hdfs.jar:/usr/lib/hadoop-hdfs/hadoop-hdfs-client.jar:/usr/lib/hadoop-hdfs/hadoop-hdfs-native-client.jar:/usr/lib/hadoop-hdfs/hadoop-hdfs-nfs.jar:/usr/lib/hadoop/hadoop-annotations.jar:/usr/lib/hadoop/hadoop-auth.jar:/usr/lib/hadoop/hadoop-common.jar:/usr/lib/hadoop-yarn/hadoop-yarn-client.jar:/usr/lib/hadoop-yarn/hadoop-yarn-api.jar:/usr/lib/hadoop/hadoop-yarn-server-common.jar</value>
     <description>
     spark.driver.extraClassPath
     </description>
