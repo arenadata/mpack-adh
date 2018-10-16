@@ -116,6 +116,7 @@ livy2_hdfs_user_dir = format("/user/{livy2_user}")
 livy2_server_pid_file = status_params.livy2_server_pid_file
 livy2_recovery_dir = default("/configurations/livy2-conf/livy.server.recovery.state-store.url", "/livy2-recovery")
 
+livy2_store = config['configurations']['livy2-conf']['livy.server.recovery.state-store']
 livy2_server_start = format("{livy2_home}/bin/livy-server start")
 livy2_server_stop = format("{livy2_home}/bin/livy-server stop")
 livy2_logs_dir = format("{livy2_home}/logs")
@@ -293,4 +294,3 @@ HdfsResource = functools.partial(
   immutable_paths = get_not_managed_resources(),
   dfs_type = dfs_type
 )
-

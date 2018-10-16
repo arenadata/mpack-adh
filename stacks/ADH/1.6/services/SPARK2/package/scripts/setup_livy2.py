@@ -33,7 +33,7 @@ def setup_livy(env, type, upgrade_type = None, action = None):
             create_parents = True
   )
 
-  if type == 'server' and action == 'config':
+  if type == 'server' and action == 'config' and params.livy2_store == 'filesystem':
     params.HdfsResource(params.livy2_hdfs_user_dir,
                         type="directory",
                         action="create_on_execute",
@@ -87,5 +87,3 @@ def setup_livy(env, type, upgrade_type = None, action = None):
             group=params.livy2_group,
             mode=0755,
   )
-
-
