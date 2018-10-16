@@ -649,7 +649,9 @@ class ADH16StackAdvisor(ADH15StackAdvisor):
     super(ADH16StackAdvisor, self).recommendHIVEConfigurations(configurations, clusterData, services, hosts)
     putHiveAtlasHookProperty = self.putProperty(configurations, "hive-atlas-application.properties", services)
     putHiveAtlasHookPropertyAttribute = self.putPropertyAttribute(configurations,"hive-atlas-application.properties")
-
+    putHiveEnvProperty = self.putProperty(configurations, "hive-env", services)
+    putHiveSiteProperty = self.putProperty(configurations, "hive-site", services)
+    
     if 'hive-env' in services['configurations'] and 'hive_user' in services['configurations']['hive-env']['properties']:
       hive_user = services['configurations']['hive-env']['properties']['hive_user']
     else:
@@ -734,6 +736,10 @@ class ADH16StackAdvisor(ADH15StackAdvisor):
         putHiveInteractiveSiteProperty('hive.druid.metadata.uri', druid_metadata_uri)
         putHiveInteractiveSiteProperty('hive.druid.metadata.username', druid_metadata_user)
         putHiveInteractiveSiteProperty('hive.druid.metadata.db.type', druid_metadata_type)
+
+        putHiveEnvProperty("hive_exec_orc_storage_strategy", "SPEED")
+        putHiveSiteProperty("hive.exec.orc.encoding.strategy", configurations["hive-env"]["properties"]["hive_exec_orc_storage_strategy"])
+        putHiveSiteProperty("hive.exec.orc.compression.strategy", configurations["hive-env"]["properties"]["hive_exec_orc_storage_strategy"])
 
 
   def recommendHBASEConfigurations(self, configurations, clusterData, services, hosts):
