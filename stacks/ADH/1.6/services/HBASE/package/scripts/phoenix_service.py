@@ -18,16 +18,18 @@ limitations under the License.
 
 """
 
+import errno
+from resource_management.core.logger import Logger
 from resource_management.core.resources.system import Execute
 from resource_management.core.resources.system import File
 from resource_management.libraries.functions import check_process_status, format
 
-# Note: Phoenix Query Server is only applicable to HDP-2.3 and above.
+# Note: Phoenix Query Server is only applicable to phoenix version stacks and above.
 def phoenix_service(action = 'start'): # 'start', 'stop', 'status'
     # Note: params/status_params should already be imported before calling phoenix_service()
+    Execute('echo FUCK')
     pid_file = format("{pid_dir}/phoenix-hbase-queryserver.pid")
     no_op_test = format("ls {pid_file} >/dev/null 2>&1 && ps -p `cat {pid_file}` >/dev/null 2>&1")
-
     if action == "status":
       check_process_status(pid_file)
     else:
@@ -37,14 +39,17 @@ def phoenix_service(action = 'start'): # 'start', 'stop', 'status'
         Execute(daemon_cmd,
                 user=format("{hbase_user}"),
                 environment=env)
-
+  
       elif action == 'stop':
         Execute(daemon_cmd,
-                timeout = 30,
-                on_timeout = format("! ( {no_op_test} ) || {sudo} -H -E kill -9 `cat {pid_file}`"),
                 user=format("{hbase_user}"),
                 environment=env
         )
-        File(pid_file,
-             action = "delete"
-        )
+        try:
+          File(pid_file, action = "delete")
+        except OSError as exc:
+          # OSError: [Errno 2] No such file or directory
+          if exc.errno == errno.ENOENT:
+            Logger.info("Did not remove '{0}' as it did not exist".format(pid_file))
+          else:
+            raise
