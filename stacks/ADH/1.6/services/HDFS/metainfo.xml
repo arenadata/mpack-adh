@@ -21,6 +21,134 @@
     <service>
       <name>HDFS</name>
       <version>2.8.5.1.6</version>
+
+      <components>
+        <component>
+          <name>NFS_GATEWAY</name>
+          <displayName>NFSGateway</displayName>
+          <cardinality>0+</cardinality>
+          <versionAdvertised>true</versionAdvertised>
+          <category>SLAVE</category>
+          <commandScript>
+            <script>scripts/nfsgateway.py</script>
+            <scriptType>PYTHON</scriptType>
+            <timeout>1200</timeout>
+          </commandScript>
+          <dependencies>
+            <dependency>
+              <name>HDFS/HDFS_CLIENT</name>
+              <scope>host</scope>
+              <auto-deploy>
+                <enabled>true</enabled>
+              </auto-deploy>
+            </dependency>
+          </dependencies>
+        </component>
+      <component>
+        <name>HTTPFS</name>
+        <displayName>HttpFS</displayName>
+        <category>SLAVE</category>
+        <!-- how many of these components are allowed in a cluster -->
+        <cardinality>0+</cardinality>
+        <!-- reference to (and details of) what script is to be used to install/stop/start/config the service -->
+        <commandScript>
+          <script>scripts/httpfs.py</script>
+          <scriptType>PYTHON</scriptType>
+          <timeout>600</timeout>
+        </commandScript>
+      </component>
+      </components>
+
+      <osSpecifics>
+        <osSpecific>
+          <osFamily>any</osFamily>
+          <packages>
+            <package>
+              <name>hadoop</name>
+            </package>
+            <package>
+              <name>ranger-hdfs-plugin</name>
+              <skipUpgrade>true</skipUpgrade>
+            </package>
+            <package>
+              <name>rpcbind</name>
+              <condition>should_install_rpcbind</condition>
+            </package>
+          </packages>
+        </osSpecific>
+
+        <osSpecific>
+          <osFamily>redhat6,redhat7,suse11,suse12</osFamily>
+          <packages>
+            <package>
+              <name>hadoop-client</name>
+            </package>
+            <package>
+              <name>snappy</name>
+            </package>
+            <package>
+              <name>snappy-devel</name>
+            </package>
+            <package>
+              <name>lzo</name>
+              <skipUpgrade>true</skipUpgrade>
+            </package>
+            <package>
+              <name>hadoop-libhdfs</name>
+            </package>
+            <package>
+              <name>mysql-connector-java</name>
+            </package>
+            <package>
+              <name>hadoop-httpfs</name>
+            </package>
+          </packages>
+        </osSpecific>
+
+        <osSpecific>
+          <osFamily>debian7,ubuntu12,ubuntu14</osFamily>
+          <packages>
+            <package>
+              <name>hadoop-client</name>
+            </package>
+            <package>
+              <name>libsnappy1</name>
+            </package>
+            <package>
+              <name>libsnappy-dev</name>
+            </package>
+            <package>
+              <name>liblzo2-2</name>
+              <skipUpgrade>true</skipUpgrade>
+            </package>
+            <package>
+              <name>hadoop-hdfs</name>
+            </package>
+            <package>
+              <name>libhdfs0</name>
+            </package>
+            <package>
+              <name>libhdfs0-dev</name>
+            </package>
+          </packages>
+        </osSpecific>
+
+      </osSpecifics>
+
+      <themes>
+        <theme>
+          <fileName>theme.json</fileName>
+          <default>true</default>
+        </theme>
+      </themes>
+
+       <quickLinksConfigurations>
+        <quickLinksConfiguration>
+          <fileName>quicklinks.json</fileName>
+          <default>true</default>
+        </quickLinksConfiguration>
+      </quickLinksConfigurations>
+
      </service>
   </services>
 </metainfo>
