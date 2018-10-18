@@ -227,62 +227,8 @@ if has_ranger_admin and is_supported_solr_ranger:
   java_share_dir = '/usr/share/java'
   previous_jdbc_jar_name = None
 
-  if stack_supports_ranger_audit_db:
-    if xa_audit_db_flavor and xa_audit_db_flavor == 'mysql':
-      jdbc_jar_name = default("/hostLevelParams/custom_mysql_jdbc_name", None)
-      previous_jdbc_jar_name = default("/hostLevelParams/previous_custom_mysql_jdbc_name", None)
-      audit_jdbc_url = format('jdbc:mysql://{xa_db_host}/{xa_audit_db_name}')
-      jdbc_driver = "com.mysql.jdbc.Driver"
-    elif xa_audit_db_flavor and xa_audit_db_flavor == 'oracle':
-      jdbc_jar_name = default("/hostLevelParams/custom_oracle_jdbc_name", None)
-      previous_jdbc_jar_name = default("/hostLevelParams/previous_custom_oracle_jdbc_name", None)
-      colon_count = xa_db_host.count(':')
-      if colon_count == 2 or colon_count == 0:
-        audit_jdbc_url = format('jdbc:oracle:thin:@{xa_db_host}')
-      else:
-        audit_jdbc_url = format('jdbc:oracle:thin:@//{xa_db_host}')
-      jdbc_driver = "oracle.jdbc.OracleDriver"
-    elif xa_audit_db_flavor and xa_audit_db_flavor == 'postgres':
-      jdbc_jar_name = default("/hostLevelParams/custom_postgres_jdbc_name", None)
-      previous_jdbc_jar_name = default("/hostLevelParams/previous_custom_postgres_jdbc_name", None)
-      audit_jdbc_url = format('jdbc:postgresql://{xa_db_host}/{xa_audit_db_name}')
-      jdbc_driver = "org.postgresql.Driver"
-    elif xa_audit_db_flavor and xa_audit_db_flavor == 'mssql':
-      jdbc_jar_name = default("/hostLevelParams/custom_mssql_jdbc_name", None)
-      previous_jdbc_jar_name = default("/hostLevelParams/previous_custom_mssql_jdbc_name", None)
-      audit_jdbc_url = format('jdbc:sqlserver://{xa_db_host};databaseName={xa_audit_db_name}')
-      jdbc_driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver"
-    elif xa_audit_db_flavor and xa_audit_db_flavor == 'sqla':
-      jdbc_jar_name = default("/hostLevelParams/custom_sqlanywhere_jdbc_name", None)
-      previous_jdbc_jar_name = default("/hostLevelParams/previous_custom_sqlanywhere_jdbc_name", None)
-      audit_jdbc_url = format('jdbc:sqlanywhere:database={xa_audit_db_name};host={xa_db_host}')
-      jdbc_driver = "sap.jdbc4.sqlanywhere.IDriver"
-
-  downloaded_custom_connector = format("{tmp_dir}/{jdbc_jar_name}") if stack_supports_ranger_audit_db else None
-  driver_curl_source = format("{jdk_location}/{jdbc_jar_name}") if stack_supports_ranger_audit_db else None
-  driver_curl_target = format("{solr_home}/libs/{jdbc_jar_name}") if stack_supports_ranger_audit_db else None
-  previous_jdbc_jar = format("{solr_home}/libs/{previous_jdbc_jar_name}") if stack_supports_ranger_audit_db else None
-
-  xa_audit_db_is_enabled = False
-  ranger_audit_solr_urls = config['configurations']['ranger-admin-site']['ranger.audit.solr.urls']
-  if xml_configurations_supported and stack_supports_ranger_audit_db:
-    xa_audit_db_is_enabled = config['configurations']['ranger-solr-audit']['xasecure.audit.destination.db']
-  xa_audit_hdfs_is_enabled = default('/configurations/ranger-solr-audit/xasecure.audit.destination.hdfs', False)
-  ssl_keystore_password = unicode(config['configurations']['ranger-solr-policymgr-ssl']['xasecure.policymgr.clientssl.keystore.password']) if xml_configurations_supported else None
-  ssl_truststore_password = unicode(config['configurations']['ranger-solr-policymgr-ssl']['xasecure.policymgr.clientssl.truststore.password']) if xml_configurations_supported else None
-  credential_file = format('/etc/ranger/{repo_name}/cred.jceks') if xml_configurations_supported else None
-
-  stack_version = get_stack_version('solr-server')
-  setup_ranger_env_sh_source = format('{stack_root}/{stack_version}/ranger-solr-plugin/install/conf.templates/enable/solr-ranger-env.sh')
-  setup_ranger_env_sh_target = format("{solr_conf}/solr-ranger-env.sh")
-
-  #For SQLA explicitly disable audit to DB for Ranger
-  if xa_audit_db_flavor == 'sqla':
-    xa_audit_db_is_enabled = False
-
   namenode_hosts = default("/clusterHostInfo/namenode_host", [])
   has_namenode = not len(namenode_hosts) == 0
-
 
 # *********************** end RANGER PLUGIN CHANGES ****************
 smokeuser = config['configurations']['cluster-env']['smokeuser']
