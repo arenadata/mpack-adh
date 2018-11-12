@@ -21,11 +21,11 @@ class TaskManager(Script):
     env.set_params(params)
     env.set_params(status_params)
     self.install_packages(env)
-      
+
     Directory([status_params.flink_pid_dir, params.flink_log_dir],
             owner=params.flink_user,
             group=params.flink_group
-    )   
+    )
 
     File(params.flink_log_file,
             mode=0644,
@@ -33,17 +33,18 @@ class TaskManager(Script):
             group=params.flink_group,
             content=''
     )
-         
+
   def configure(self, env, isInstall=False):
     import params
     import status_params
     env.set_params(params)
     env.set_params(status_params)
-    
+
     #write out config
     properties_content=InlineTemplate(params.flink_yaml_content)
     File(format("{conf_dir}/flink-conf.yaml"), content=properties_content, owner=params.flink_user)
-            
+    Execute(format("ln -sf {flink_log_dir} {flink_install_dir}/log"))
+
   def stop(self, env):
     import params
     import status_params
@@ -53,16 +54,16 @@ class TaskManager(Script):
       action = "delete",
       owner = params.flink_user
     )
-      
+
   def start(self, env):
     import params
     import status_params
 
     env.set_params(params)
     env.set_params(status_params)
-    
+
     self.configure(env, True)
-    
+
     cmd = format("{params.bin_dir}/taskmanager.sh start >> {params.flink_log_file}")
     #cmd = "env >/tmp/1.log"
     Execute (cmd, user=params.flink_user, environment=self.get_env())
@@ -71,7 +72,7 @@ class TaskManager(Script):
       os.remove(params.temp_file)
 
   def status(self, env):
-    import status_params       
+    import status_params
     check_process_status(status_params.flink_task_pid_file)
 
 if __name__ == "__main__":
