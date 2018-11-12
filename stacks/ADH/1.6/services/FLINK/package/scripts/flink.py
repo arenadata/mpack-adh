@@ -22,11 +22,11 @@ class Master(Script):
     env.set_params(params)
     env.set_params(status_params)
     self.install_packages(env)
-    Execute('ln -sf /usr/lib/hadoop-yarn/lib/jersey-client-1.9.jar  /usr/lib/flink/lib/jersey-client.jar')
-    Execute('ln -sf /usr/lib/hadoop-yarn/lib/jersey-server-1.9.jar  /usr/lib/flink/lib/jersey-server.jar')
-    Execute('ln -sf /usr/lib/hadoop-yarn/lib/jersey-core-1.9.jar  /usr/lib/flink/lib/jersey-core.jar')
-    Execute('ln -sf /usr/lib/hadoop-yarn/lib/jersey-guice-1.9.jar  /usr/lib/flink/lib/jersey-guice.jar')
-    Execute('ln -sf /usr/lib/hadoop-yarn/lib/jersey-json-1.9.jar  /usr/lib/flink/lib/jersey-json.jar')
+    Execute('ln -sf /usr/lib/hadoop-yarn/lib/jersey-client-1.9.jar  /usr/lib/flink/lib/jersey-client.jar', sudo = True)
+    Execute('ln -sf /usr/lib/hadoop-yarn/lib/jersey-server-1.9.jar  /usr/lib/flink/lib/jersey-server.jar', sudo = True)
+    Execute('ln -sf /usr/lib/hadoop-yarn/lib/jersey-core-1.9.jar  /usr/lib/flink/lib/jersey-core.jar', sudo = True)
+    Execute('ln -sf /usr/lib/hadoop-yarn/lib/jersey-guice-1.9.jar  /usr/lib/flink/lib/jersey-guice.jar', sudo = True)
+    Execute('ln -sf /usr/lib/hadoop-yarn/lib/jersey-json-1.9.jar  /usr/lib/flink/lib/jersey-json.jar', sudo = True)
 
     Directory([status_params.flink_pid_dir, params.flink_log_dir],
             owner=params.flink_user,
@@ -52,7 +52,7 @@ class Master(Script):
     #write out config
     properties_content=InlineTemplate(params.flink_yaml_content)
     File(format("{conf_dir}/flink-conf.yaml"), content=properties_content, owner=params.flink_user)
-    Execute(format("ln -sf {flink_log_dir} {flink_install_dir}/log"))
+    Execute(format("ln -sf {flink_log_dir} {flink_install_dir}/log"), sudo = True)
 
   def config_ssh(self, flink_user):
     if not os.path.exists(format("{flink_home_dir}/.ssh/id_rsa")):
