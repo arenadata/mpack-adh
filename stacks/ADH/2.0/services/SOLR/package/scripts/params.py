@@ -81,11 +81,11 @@ solr_bindir = solr_dir + '/bin'
 cloud_scripts = solr_dir + '/server/scripts/cloud-scripts'
 
 if "solr-env" in config['configurations']:
-  solr_hosts = config['clusterHostInfo']['solr_hosts']
+  solr_hosts = config['clusterHostInfo']['solr_server_hosts']
   solr_znode = default('/configurations/solr-env/solr_znode', '/solr')
   solr_min_mem = default('/configurations/solr-env/solr_minmem', 1024)
   solr_max_mem = default('/configurations/solr-env/solr_maxmem', 2048)
-  solr_instance_count = len(config['clusterHostInfo']['solr_hosts'])
+  solr_instance_count = len(config['clusterHostInfo']['solr_server_hosts'])
   solr_datadir = default('/configurations/solr-env/solr_datadir', '/opt/solr/data')
   solr_data_resources_dir = os.path.join(solr_datadir, 'resources')
   solr_jmx_port = default('/configurations/solr-env/solr_jmx_port', 18983)
