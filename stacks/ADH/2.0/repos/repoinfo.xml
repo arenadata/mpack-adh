@@ -19,13 +19,13 @@
   <latest></latest>
   <os family="redhat7">
     <repo>
-      <baseurl>https://ci.arenadata.io/artifactory/list/adh16-centos7-x64-adh/</baseurl>
+      <baseurl>https://ci.arenadata.io/artifactory/list/adh20-centos7-x64-adh/</baseurl>
       <repoid>ADH-2.0</repoid>
       <reponame>ADH</reponame>
       <unique>true</unique>
     </repo>
     <repo>
-      <baseurl>https://ci.arenadata.io/artifactory/list/adh16-sles12-adh/</baseurl>
+      <baseurl>https://ci.arenadata.io/artifactory/list/adh20-centos7-x64-adh/</baseurl>
       <repoid>ADH-UTILS-2.0</repoid>
       <reponame>ADH-UTILS</reponame>
       <unique>false</unique>
@@ -33,13 +33,13 @@
   </os>
   <os family="suse12">
     <repo>
-      <baseurl>https://ci.arenadata.io/artifactory/list/adh16-sles12-adh/</baseurl>
+      <baseurl>https://ci.arenadata.io/artifactory/list/adh20-sles12-adh/</baseurl>
       <repoid>ADH-2.0</repoid>
       <reponame>ADH</reponame>
       <unique>true</unique>
     </repo>
     <repo>
-      <baseurl>https://ci.arenadata.io/artifactory/list/adh16-sles12-adh/</baseurl>
+      <baseurl>https://ci.arenadata.io/artifactory/list/adh20-sles12-adh/</baseurl>
       <repoid>ADH-UTILS-2.0</repoid>
       <reponame>ADH-UTILS</reponame>
       <unique>false</unique>
