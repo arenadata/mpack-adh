@@ -107,7 +107,7 @@
           <displayName>Message Broker</displayName>
           <category>MASTER</category>
           <cardinality>2</cardinality>
-          <versionAdvertised>true</versionAdvertised>
+          <versionAdvertised>false</versionAdvertised>
           <dependencies>
             <dependency>
               <name>ZOOKEEPER/ZOOKEEPER_SERVER</name>
