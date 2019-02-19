@@ -55,7 +55,7 @@ def service(componentName, action='start', serviceName='yarn'):
   else:
     # !!! yarn-daemon.sh deletes the PID for us; if we remove it the script
     # may not work correctly when stopping the service
-    delete_pid_file = False
+    delete_pid_file = True
     daemon = format("{yarn_bin}/yarn")
     if componentName == 'registrydns' and status_params.registry_dns_needs_privileged_access:
       pid_file = status_params.yarn_registry_dns_priv_pid_file
@@ -90,7 +90,7 @@ def service(componentName, action='start', serviceName='yarn'):
     try:
       # Attempt to start the process. Internally, this is skipped if the process is already running.
       Execute(daemon_cmd, user = usr, not_if = check_process)
-  
+
       # Ensure that the process with the expected PID exists.
       Execute(check_process,
               not_if = check_process,
