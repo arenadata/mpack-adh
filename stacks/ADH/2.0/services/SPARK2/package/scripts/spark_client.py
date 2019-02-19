@@ -34,6 +34,7 @@ class SparkClient(Script):
   def install(self, env):
     self.install_packages(env)
     self.configure(env)
+    Execute('ln -sf /usr/lib/hadoop/client/hadoop-hdfs-client.jar /usr/lib/spark/jars/hadoop-hdfs-client.jar')
 
   def configure(self, env, upgrade_type=None, config_dir=None):
     import params
