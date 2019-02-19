@@ -289,7 +289,7 @@
   </property>
   <property>
     <name>spark.sql.hive.metastore.jars</name>
-    <value>/usr/adh/{{version}}/spark2/standalone-metastore/standalone-metastore-1.21.2.{{version}}-hive3.jar</value>
+    <value>/usr/adh/{{version}}/spark2/standalone-metastore/*:/usr/adh/{{version}}/spark2/jars/*:/usr/adh/{{version}}/spark2/:/usr/adh/2.0.1.1-71/hive/lib/*</value>
     <description></description>
     <on-ambari-upgrade add="false"/>
   </property>
