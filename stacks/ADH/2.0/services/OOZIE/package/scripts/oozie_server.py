@@ -19,6 +19,7 @@ limitations under the License.
 """
 
 from resource_management.core import Logger
+from resource_management.core.resources.system import Execute
 from resource_management.libraries.script import Script
 from resource_management.libraries.functions import stack_select
 from resource_management.libraries.functions import StackFeature
@@ -74,12 +75,11 @@ class OozieServer(Script):
     env.set_params(params)
 
     self.configure(env)
-
     # preparing the WAR file must run after configure since configure writes out
     # oozie-env.sh which is needed to have the right environment directories setup!
     if upgrade_type is not None:
       OozieUpgrade.prepare_warfile()
-
+    
     oozie_service(action='start', upgrade_type=upgrade_type)
 
   def stop(self, env, upgrade_type=None):

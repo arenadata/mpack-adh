@@ -36,7 +36,8 @@ SERVER_ROLE_DIRECTORY_MAP = {
   'ru_execute_tasks' : 'oozie-server'
 }
 
-component_directory = Script.get_component_from_role(SERVER_ROLE_DIRECTORY_MAP, "OOZIE_CLIENT")
+#component_directory = Script.get_component_from_role(SERVER_ROLE_DIRECTORY_MAP, "OOZIE_CLIENT")
+component_directory = "oozie-client"
 
 config = Script.get_config()
 stack_root = Script.get_stack_root()
