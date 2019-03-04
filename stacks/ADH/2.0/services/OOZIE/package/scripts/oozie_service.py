@@ -74,7 +74,7 @@ def oozie_service(action = 'start', upgrade_type=None):
   no_op_test = as_user(format("ls {pid_file} >/dev/null 2>&1 && ps -p `cat {pid_file}` >/dev/null 2>&1"), user=params.oozie_user)
 
   if action == 'start':
-    start_cmd = format("cd {oozie_tmp_dir} && {oozie_home}/bin/oozie-start.sh")
+    start_cmd = format("cd {oozie_tmp_dir} && {oozie_home}/bin/oozied.sh start")
     path_to_jdbc = params.target
 
     if params.jdbc_driver_name == "com.mysql.jdbc.Driver" or \

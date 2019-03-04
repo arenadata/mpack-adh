@@ -272,6 +272,7 @@ def oozie_server_specific(upgrade_type):
   skip_recreate_sharelib = format("test -f {hashcode_file} && test -d {oozie_home}/share")
 
   untar_sharelib = ('tar','-xvf',format('{oozie_home}/oozie-sharelib.tar.gz'),'-C',params.oozie_home)
+  Execute(('ln','-sf', format('{oozie_webapps_conf_dir}'), format('{oozie_server_dir}')), sudo=True)
 
   Execute( untar_sharelib,    # time-expensive
     not_if  = format("{no_op_test} || {skip_recreate_sharelib}"),
@@ -373,6 +374,7 @@ def oozie_server_specific(upgrade_type):
          group=params.user_group,
          content=Template("zkmigrator_jaas.conf.j2")
          )
+  
 
 def __parse_sharelib_from_output(output):
   """
