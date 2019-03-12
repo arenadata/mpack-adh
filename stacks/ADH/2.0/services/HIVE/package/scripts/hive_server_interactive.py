@@ -51,7 +51,6 @@ class HiveServerInteractive(Script):
     def install(self, env):
       import params
       self.install_packages(env)
-      Execute('mkdir -p /etc/tez_llap/ | mkdir -p /etc/tez_llap/conf')
 
     def configure(self, env):
       import params
@@ -75,6 +74,12 @@ class HiveServerInteractive(Script):
 
         resource_created = copy_to_hdfs(
           "tez_hive2",
+          params.user_group,
+          params.hdfs_user,
+          skip=params.sysprep_skip_copy_tarballs_hdfs) or resource_created
+
+        resource_created = copy_to_hdfs(
+          "yarn",
           params.user_group,
           params.hdfs_user,
           skip=params.sysprep_skip_copy_tarballs_hdfs) or resource_created
@@ -136,9 +141,13 @@ class HiveServerInteractive(Script):
             resp = urllib2.urlopen(req)
             running = True
           except urllib2.URLError, e:
-              pass
+            pass
           except urllib2.HTTPError, e:
             if e.code < 400:
+              running = True
+          except socket.error, e:
+            # If we get connection reset error there is a live HS2 on other side.
+            if e.errno == 104:
               running = True
 
           if running:
@@ -226,7 +235,7 @@ class HiveServerInteractive(Script):
 
       cmd = format("{stack_root}/current/hive-server2/bin/hive --service llap --size {params.llap_daemon_container_size}m --startImmediately --name {params.llap_app_name} "
                    "--cache {params.hive_llap_io_mem_size}m --xmx {params.llap_heap_size}m --loglevel {params.llap_log_level} "
-                   "--output {LLAP_PACKAGE_CREATION_PATH}/{unique_name}")
+                   "--output {LLAP_PACKAGE_CREATION_PATH}/{unique_name} --user {params.hive_user}")
 
       # Append params that are supported from Hive llap GA version.
       # TODO: All the code related to Slider Anti-affinity will be removed and
@@ -248,7 +257,7 @@ class HiveServerInteractive(Script):
 
       # Setup the logger for the ga version only
       cmd += format(" --logger {params.llap_logger}")
-
+        
       if params.security_enabled:
         llap_keytab_splits = params.hive_llap_keytab_file.split("/")
         Logger.debug("llap_keytab_splits : {0}".format(llap_keytab_splits))
@@ -270,38 +279,30 @@ class HiveServerInteractive(Script):
           metaspaceSize = "1024m"
         cmd = cmd[:-1] + " -XX:MetaspaceSize="+metaspaceSize+ "\""
 
-      try:
-        Logger.info(format("LLAP start command: {cmd}"))
-        code, output, error = shell.checked_call(cmd,
-                                                 user = params.hive_user,
-                                                 quiet = True,
-                                                 stderr = subprocess.PIPE,
-                                                 logoutput = True,
-                                                 env = { 'HIVE_CONF_DIR': params.hive_server_interactive_conf_dir } )
+      Logger.info(format("LLAP start command: {cmd}"))
+      code, output, error = shell.checked_call(cmd,
+                                               user = params.hive_user,
+                                               quiet = True,
+                                               stderr = subprocess.PIPE,
+                                               logoutput = True,
+                                               env = { 'HIVE_CONF_DIR': params.hive_server_interactive_conf_dir } )
 
-        if code != 0 or output is None:
-          raise Fail("Command failed with either non-zero return code or no output.")
-
-        # We need to check the status of LLAP app to figure out it got
-        # launched properly and is in running state. Then go ahead with Hive Interactive Server start.
-        status = self.check_llap_app_status(params.llap_app_name, params.num_retries_for_checking_llap_status)
-        if status:
-          Logger.info("LLAP app '{0}' deployed successfully.".format(params.llap_app_name))
-          return True
-        else:
-          Logger.error("LLAP app '{0}' deployment unsuccessful.".format(params.llap_app_name))
-          return False
-      except:
+      # We need to check the status of LLAP app to figure out it got
+      # launched properly and is in running state. Then go ahead with Hive Interactive Server start.
+      status = self.check_llap_app_status(params.llap_app_name, params.num_retries_for_checking_llap_status)
+      if status:
+        Logger.info("LLAP app '{0}' deployed successfully.".format(params.llap_app_name))
+        return True
+      else:
         if params.hive_server_interactive_ha:
-          Logger.error("Exception occured. Checking if LLAP was started by another HSI instance ...")
+          Logger.info("LLAP start failed. Checking if LLAP was started by another HSI instance ...")
+          time.sleep(20) #sleep for 30s. Llap app may get started during start of  another HS2
           status = self.check_llap_app_status(params.llap_app_name, 2, params.hive_server_interactive_ha)
           if status:
             Logger.info("LLAP app '{0}' is running.".format(params.llap_app_name))
             return True
-          else:
-            Logger.info("LLAP app '{0}' is not running.".format(params.llap_app_name))
-
-          raise # throw the original exception
+        Logger.error("LLAP app '{0}' deployment unsuccessful.".format(params.llap_app_name))
+        return False
 
     """
     Checks and deletes previous run 'LLAP package' folders, ignoring three latest packages.

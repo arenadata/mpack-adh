@@ -45,7 +45,7 @@ class HiveServiceCheck(Script):
 
     if params.security_enabled:
       kinit_cmd = format(
-        "{kinit_path_local} -kt {smoke_user_keytab} {smokeuser_principal}; ")
+        "{kinit_path_local} -kt {hive_metastore_keytab_path} {hive_principal}; ")
     else:
       kinit_cmd = ""
 
@@ -84,10 +84,10 @@ class HiveServiceCheck(Script):
       address = address_list[i]
       try:
         check_thrift_port_sasl(address, server_port, params.hive_server2_authentication,
-                               params.hive_server_principal, kinit_cmd, params.smokeuser,
-                               transport_mode=params.hive_transport_mode, http_endpoint=params.hive_http_endpoint,
-                               ssl=params.hive_ssl, ssl_keystore=ssl_keystore,
-                               ssl_password=ssl_password)
+                               params.hive_principal, kinit_cmd, params.smokeuser, hive_user = params.hive_user,
+                               transport_mode=params.hive_transport_mode,
+                               http_endpoint=params.hive_http_endpoint, ssl=params.hive_ssl,
+                               ssl_keystore=ssl_keystore, ssl_password=ssl_password)
         Logger.info("Successfully connected to {0} on port {1}".format(address, server_port))
         workable_server_available = True
       except:
@@ -131,8 +131,8 @@ class HiveServiceCheck(Script):
       beeline_url.append('auth=noSasl')
 
     # append url according to principal
-    if kinit_cmd:
-      beeline_url.append('principal={key}')
+#    if kinit_cmd:
+#      beeline_url.append('principal={key}')
 
     exec_path = params.execute_path
     if params.version:
