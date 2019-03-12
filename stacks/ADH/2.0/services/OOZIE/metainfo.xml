@@ -125,6 +125,9 @@
             <package>
               <name>zip</name>
             </package>
+            <package>
+              <name>extjs</name>
+            </package>
           </packages>
         </osSpecific>
         <osSpecific>
