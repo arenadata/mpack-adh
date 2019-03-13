@@ -780,7 +780,7 @@ limitations under the License.
   </property>
   <property>
     <name>hive.llap.task.scheduler.locality.delay</name>
-    <value>8000</value>
+    <value>5000</value>
     <description>
       Amount of time to wait (in ms) before allocating a request which contains location information,
       to a location other than the ones requested. Set to -1 for an infinite delay, 0

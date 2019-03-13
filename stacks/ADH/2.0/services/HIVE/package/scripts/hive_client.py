@@ -29,7 +29,6 @@ from resource_management.core.exceptions import ClientComponentHasNoStatus
 from resource_management.core.logger import Logger
 from resource_management.libraries.script.script import Script
 from resource_management.libraries.functions import stack_select
-from resource_management.core.resources.system import Execute, File
 from resource_management.libraries.functions.constants import StackFeature
 from resource_management.libraries.functions.stack_features import check_stack_feature
 
@@ -46,8 +45,6 @@ class HiveClient(Script):
   def configure(self, env):
     import params
     env.set_params(params)
-    Execute('tar -czf /tmp/hive.tar.gz -C /usr/lib/hive/lib/ .')
-    Execute('mv /tmp/hive.tar.gz /usr/lib/hive/')
     hive(name='client')
 
   def pre_upgrade_restart(self, env, upgrade_type=None):

@@ -59,7 +59,8 @@ class HiveMetastore(Script):
     self.configure(env)
     if params.init_metastore_schema:
       create_metastore_schema() # execute without config lock
-    # create_hive_metastore_schema() # before starting metastore create info schema
+
+    create_hive_metastore_schema() # before starting metastore create info schema
 
     hive_service('metastore', action='start', upgrade_type=upgrade_type)
 
@@ -131,7 +132,7 @@ class HiveMetastore(Script):
         params.hive_metastore_principal,
         status_params.hostname,
         status_params.tmp_dir)
-
+      
     # ensure that the JDBC drive is present for the schema tool; if it's not
     # present, then download it first
     if params.hive_jdbc_driver in params.hive_jdbc_drivers_list:
@@ -182,7 +183,7 @@ class HiveMetastore(Script):
 
     command = format("{binary} -dbType {hive_metastore_db_type} -upgradeSchema")
     Execute(command, user=params.hive_user, tries=1, environment=env_dict, logoutput=True)
-
+    
   def get_log_folder(self):
     import params
     return params.hive_log_dir

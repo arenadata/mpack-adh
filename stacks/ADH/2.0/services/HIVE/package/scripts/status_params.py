@@ -79,7 +79,7 @@ hadoop_bin_dir = stack_select.get_hadoop_dir("bin")
 hive_server_conf_dir = "/etc/hive/conf"
 hive_server_interactive_conf_dir = "/etc/hive_llap/conf"
 tez_conf_dir = "/etc/tez/conf"
-tez_interactive_conf_dir = "/etc/tez_llap/conf"
+tez_interactive_conf_dir = "/etc/tez/conf"
 
 hive_home_dir = format("{stack_root}/current/{component_directory}")
 hive_conf_dir = format("{stack_root}/current/{component_directory}/conf")

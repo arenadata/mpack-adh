@@ -50,6 +50,8 @@
   llaptaskscheduler.sink.timeline.collector.hosts={{ams_collector_hosts}}
   llaptaskscheduler.sink.timeline.port={{metric_collector_port}}
   llaptaskscheduler.sink.timeline.protocol={{metric_collector_protocol}}
+  llaptaskscheduler.sink.timeline.instanceId = {{cluster_name}}
+  llaptaskscheduler.sink.timeline.set.instanceId = {{set_instanceId}}
   llaptaskscheduler.sink.timeline.host_in_memory_aggregation = {{host_in_memory_aggregation}}
   llaptaskscheduler.sink.timeline.host_in_memory_aggregation_port = {{host_in_memory_aggregation_port}}
   {% if is_aggregation_https_enabled %}

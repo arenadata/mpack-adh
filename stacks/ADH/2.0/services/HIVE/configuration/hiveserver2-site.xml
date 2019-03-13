@@ -20,7 +20,7 @@ limitations under the License.
   <property>
     <name>hive.security.authenticator.manager</name>
     <value>org.apache.hadoop.hive.ql.security.SessionStateUserAuthenticator</value>
-    <description>Hive client authenticator manager class name. The user-defined authenticator class should implement interface org.apache.hadoop.hive.ql.security.HiveAuthenticationProvider.  </description>
+    <description>Hive client authenticator manager class name. The user-defined authenticator class should implement interface org.apache.hadoop.hive.ql.security.HiveAuthenticationProvider.</description>
     <depends-on>
       <property>
         <type>hive-env</type>
@@ -32,8 +32,10 @@ limitations under the License.
   <property>
     <name>hive.security.authorization.manager</name>
     <value>org.apache.hadoop.hive.ql.security.authorization.plugin.sqlstd.SQLStdHiveAuthorizerFactory</value>
-    <description>the hive client authorization manager class name.
-    The user defined authorization class should implement interface org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider.  </description>
+    <description>
+      The Hive client authorization manager class name. The user defined authorization class should implement
+      interface org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider.
+    </description>
     <depends-on>
       <property>
         <type>hive-env</type>
@@ -61,7 +63,7 @@ limitations under the License.
   <property>
     <name>hive.conf.restricted.list</name>
     <value>hive.security.authenticator.manager,hive.security.authorization.manager,hive.users.in.admin.role</value>
-    <description/>
+    <description>Comma separated list of configuration options which are immutable at runtime</description>
     <depends-on>
       <property>
         <type>hive-env</type>

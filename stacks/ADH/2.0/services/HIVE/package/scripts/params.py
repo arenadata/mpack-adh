@@ -53,6 +53,8 @@ from resource_management.libraries.resources.hdfs_resource import HdfsResource
 from resource_management.libraries.script.script import Script
 
 
+host_sys_prepped = default("/ambariLevelParams/host_sys_prepped", False)
+sysprep_skip_hive_schema_create = host_sys_prepped and default("/configurations/cluster-env/sysprep_skip_hive_schema_create", False)
 sysprep_skip_copy_tarballs_hdfs = get_sysprep_skip_copy_tarballs_hdfs()
 retryAble = default("/commandParams/command_retry_enabled", False)
 
@@ -225,9 +227,6 @@ hive_metastore_user_passwd = unicode(hive_metastore_user_passwd) if not is_empty
 hive_metastore_db_type = config['configurations']['hive-env']['hive_database_type']
 hive_db_schma_name = config['configurations']['hive-site']['ambari.hive.db.schema.name']
 
-#HACK Temporarily use dbType=azuredb while invoking schematool
-if hive_metastore_db_type == "mssql":
-  hive_metastore_db_type = "azuredb"
 
 #users
 hive_user = config['configurations']['hive-env']['hive_user']
@@ -474,14 +473,14 @@ tez_local_lib_jars = '/usr/lib/tez/lib/*.jar'
 tez_lib_uris = default("/configurations/tez-site/tez.lib.uris", None)
 
 if OSCheck.is_ubuntu_family():
-  mysql_configname = '/etc/mysql/my.cnf'
+  mysql_confignames = ['/etc/mysql/my.cnf', '/etc/mysql/mysql.conf.d/mysqld.cnf']
 else:
-  mysql_configname = '/etc/my.cnf'
+  mysql_confignames = ['/etc/my.cnf']
 
 mysql_user = 'mysql'
 
 # Hive security
-hive_authorization_enabled = config['configurations']['hive-site']['hive.security.authorization.enabled']
+hive_authorization_enabled = config['configurations']['hiveserver2-site']['hive.security.authorization.enabled']
 
 mysql_jdbc_driver_jar = "/usr/share/java/mysql-connector-java.jar"
 
@@ -613,7 +612,7 @@ if has_hive_interactive:
   start_hiveserver2_interactive_path = format("{tmp_dir}/start_hiveserver2_interactive_script")
   hive_interactive_env_sh_template = config['configurations']['hive-interactive-env']['content']
   hive_interactive_enabled = default('/configurations/hive-interactive-env/enable_hive_interactive', False)
-  llap_app_java_opts = default('/configurations/hive-interactive-env/llap_java_opts', '-XX:+AlwaysPreTouch {% if java_version > 7 %}-XX:+UseG1GC -XX:TLABSize=8m -XX:+ResizeTLAB -XX:+UseNUMA -XX:+AggressiveOpts -XX:InitiatingHeapOccupancyPercent=70 -XX:+UnlockExperimentalVMOptions -XX:G1MaxNewSizePercent=40  -XX:MaxGCPauseMillis=200{% else %}-XX:+PrintGCDetails -verbose:gc -XX:+PrintGCTimeStamps -XX:+UseNUMA -XX:+UseParallelGC{% endif %}')
+  llap_app_java_opts = default('/configurations/hive-interactive-env/llap_java_opts', '-XX:+AlwaysPreTouch -XX:+UseG1GC -XX:TLABSize=8m -XX:+ResizeTLAB -XX:+UseNUMA -XX:+AggressiveOpts -XX:InitiatingHeapOccupancyPercent=70 -XX:+UnlockExperimentalVMOptions -XX:G1MaxNewSizePercent=40 -XX:MaxGCPauseMillis=200')
   hive_interactive_heapsize = hive_heapsize
   llap_app_name = config['configurations']['hive-interactive-env']['llap_app_name']
   # Ambari upgrade may not add this config as it will force restart of HSI (stack upgrade should)
@@ -643,8 +642,8 @@ if has_hive_interactive:
   hive_llap_daemon_num_executors = config['configurations']['hive-interactive-site']['hive.llap.daemon.num.executors']
   hive_llap_principal = None
   if security_enabled:
-    hive_llap_keytab_file = config['configurations']['hive-interactive-site']['hive.llap.daemon.keytab.file']
-    hive_llap_principal = (config['configurations']['hive-interactive-site']['hive.llap.daemon.service.principal']).replace('_HOST',hostname.lower())
+    hive_llap_keytab_file = config['configurations']['hive-site']['hive.metastore.kerberos.keytab.file']
+    hive_llap_principal = (config['configurations']['hive-site']['hive.metastore.kerberos.principal']).replace('_HOST',hostname.lower())
   pass
 
 if security_enabled:
@@ -659,6 +658,9 @@ if security_enabled:
 hive_cluster_token_zkstore = default("/configurations/hive-site/hive.cluster.delegation.token.store.zookeeper.znode", None)
 jaas_file = os.path.join(hive_config_dir, 'zkmigrator_jaas.conf')
 hive_zk_namespace = default("/configurations/hive-site/hive.zookeeper.namespace", None)
+
+zk_principal_name = default("/configurations/zookeeper-env/zookeeper_principal_name", "zookeeper/_HOST@EXAMPLE.COM")
+zk_principal_user = zk_principal_name.split('/')[0]
 
 # ranger hive plugin section start
 
@@ -815,9 +817,11 @@ if 'druid-common' in config['configurations'] \
 
 #beeline-site config
 
+beeline_jdbc_url_default = default("/configurations/hive-env/beeline_jdbc_url_default", "container")
+
 beeline_site_config = {
   'beeline.hs2.jdbc.url.container': hive_jdbc_url,
-  'beeline.hs2.jdbc.url.default': 'container'
+  'beeline.hs2.jdbc.url.default': beeline_jdbc_url_default
 }
 
 if has_hive_interactive:

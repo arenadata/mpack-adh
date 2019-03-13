@@ -313,7 +313,12 @@
       <empty-value-valid>false</empty-value-valid>
     </value-attributes>
   </property>
-
+  <property>
+    <name>beeline_jdbc_url_default</name>
+    <value>container</value>
+    <description>Default url to use for beeline (container|llap)</description>
+    <display-name>Default beeline url</display-name>
+  </property>
 
   <!-- hive-env.sh -->
   <property>
@@ -335,6 +340,10 @@ if [ "$SERVICE" = "hiveserver2" ]; then
   export HADOOP_OPTS="$HADOOP_OPTS -Xloggc:{{hive_log_dir}}/hiveserver2-gc-%t.log -XX:+UseG1GC -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintGCCause -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=10M -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath={{hive_log_dir}}/hs2_heapdump.hprof -Dhive.log.dir={{hive_log_dir}} -Dhive.log.file=hiveserver2.log"
 
 fi
+
+{% if security_enabled %}
+export HADOOP_OPTS="$HADOOP_OPTS -Dzookeeper.sasl.client.username={{zk_principal_user}}"
+{% endif %}
 
 export HADOOP_CLIENT_OPTS="$HADOOP_CLIENT_OPTS  -Xmx${HADOOP_HEAPSIZE}m"
 export HADOOP_CLIENT_OPTS="$HADOOP_CLIENT_OPTS{{heap_dump_opts}}"
