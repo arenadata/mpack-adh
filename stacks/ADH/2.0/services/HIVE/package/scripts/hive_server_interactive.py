@@ -235,7 +235,7 @@ class HiveServerInteractive(Script):
 
       cmd = format("{stack_root}/current/hive-server2/bin/hive --service llap --size {params.llap_daemon_container_size}m --startImmediately --name {params.llap_app_name} "
                    "--cache {params.hive_llap_io_mem_size}m --xmx {params.llap_heap_size}m --loglevel {params.llap_log_level} "
-                   "--output {LLAP_PACKAGE_CREATION_PATH}/{unique_name} --user {params.hive_user}")
+                   "--output {LLAP_PACKAGE_CREATION_PATH}/{unique_name}")
 
       # Append params that are supported from Hive llap GA version.
       # TODO: All the code related to Slider Anti-affinity will be removed and

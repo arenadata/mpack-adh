@@ -642,8 +642,8 @@ if has_hive_interactive:
   hive_llap_daemon_num_executors = config['configurations']['hive-interactive-site']['hive.llap.daemon.num.executors']
   hive_llap_principal = None
   if security_enabled:
-    hive_llap_keytab_file = config['configurations']['hive-interactive-site']['hive.llap.daemon.keytab.file']
-    hive_llap_principal = (config['configurations']['hive-interactive-site']['hive.llap.daemon.service.principal']).replace('_HOST',hostname.lower())
+    hive_llap_keytab_file = config['configurations']['hive-site']['hive.metastore.kerberos.keytab.file']
+    hive_llap_principal = (config['configurations']['hive-site']['hive.metastore.kerberos.principal']).replace('_HOST',hostname.lower())
   pass
 
 if security_enabled:

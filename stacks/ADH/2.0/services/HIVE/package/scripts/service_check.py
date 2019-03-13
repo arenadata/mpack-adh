@@ -131,8 +131,8 @@ class HiveServiceCheck(Script):
       beeline_url.append('auth=noSasl')
 
     # append url according to principal
-#    if kinit_cmd:
-#      beeline_url.append('principal={key}')
+    if kinit_cmd:
+      beeline_url.append('principal={key}')
 
     exec_path = params.execute_path
     if params.version:
