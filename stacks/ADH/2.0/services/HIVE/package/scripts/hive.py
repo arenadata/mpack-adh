@@ -308,8 +308,6 @@ def create_hive_hdfs_dirs():
 def __is_hdfs_acls_enabled():
   import params
   
-  hdfs_protocol = params.fs_root.startswith("hdfs://")
-  
   return_code, stdout, _ = get_user_call_output("hdfs getconf -confKey dfs.namenode.acls.enabled",
                                                 user = params.hdfs_user)
   acls_enabled = stdout == "true"
@@ -317,7 +315,7 @@ def __is_hdfs_acls_enabled():
                                                 user = params.hdfs_user)
   acls_inheritance_enabled = stdout == "true"
   
-  return hdfs_protocol and acls_enabled and acls_inheritance_enabled
+  return acls_enabled and acls_inheritance_enabled
 
 def setup_non_client():
   import params
@@ -456,10 +454,6 @@ def create_hive_metastore_schema():
 
 def create_metastore_schema():
   import params
-
-  if params.sysprep_skip_hive_schema_create:
-    Logger.info("Skipping creation of Hive Metastore schema as host is sys prepped")
-    return
 
   create_schema_cmd = format("export HIVE_CONF_DIR={hive_server_conf_dir} ; "
                              "{hive_schematool_bin}/schematool -initSchema "

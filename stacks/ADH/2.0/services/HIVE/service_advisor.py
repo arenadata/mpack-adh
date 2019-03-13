@@ -199,11 +199,16 @@ class HiveRecommender(service_advisor.ServiceAdvisor):
     putHiveInteractiveSitePropertyAttribute = self.putPropertyAttribute(configurations, "hive-interactive-site")
     putHiveAtlasHookPropertyAttribute = self.putPropertyAttribute(configurations,"hive-atlas-application.properties")
 
-    hive_server_hosts = self.getHostsWithComponent("HIVE", "HIVE_SERVER", services, hosts)
-    hive_server_interactive_hosts = self.getHostsWithComponent("HIVE", "HIVE_SERVER_INTERACTIVE", services, hosts)
-    hive_client_hosts = self.getHostsWithComponent("HIVE", "HIVE_CLIENT", services, hosts)
-
     servicesList = [service["StackServices"]["service_name"] for service in services["services"]]
+
+    containerSize = clusterData["mapMemory"] if clusterData["mapMemory"] > 2048 else int(clusterData["reduceMemory"])
+    containerSize = min(clusterData["containers"] * clusterData["ramPerContainer"], containerSize)
+    container_size_bytes = int(containerSize)*1024*1024
+    
+    putHiveProperty("hive.auto.convert.join.noconditionaltask.size", int(round(container_size_bytes / 3)))
+    putHiveProperty("hive.tez.java.opts", "-server -Xmx" + str(int(round((0.8 * containerSize) + 0.5))) + "m " +
+                    "-Djava.net.preferIPv4Stack=true -XX:NewRatio=8 -XX:+UseNUMA -XX:+UseParallelGC -XX:+PrintGCDetails -verbose:gc -XX:+PrintGCTimeStamps")
+    putHiveProperty("hive.tez.container.size", containerSize)
     
     # druid is not in list of services to be installed
     if 'DRUID' in servicesList:
@@ -253,8 +258,9 @@ class HiveRecommender(service_advisor.ServiceAdvisor):
           putHiveProperty("javax.jdo.option.ConnectionURL", dbConnection)
 
     # Transactions
+    hs2Hosts = self.getHostsWithComponent("HIVE", "HIVE_SERVER", services, hosts)
     cpu_count = 0
-    for hostData in hive_server_hosts:
+    for hostData in hs2Hosts:
       cpu_count = max(cpu_count, hostData["Hosts"]["cpu_count"])
     putHiveSiteProperty("hive.compactor.worker.threads", str(max(cpu_count / 8, 1)))
 
@@ -283,12 +289,6 @@ class HiveRecommender(service_advisor.ServiceAdvisor):
 
     if not "yarn-site" in configurations:
       self.calculateYarnAllocationSizes(configurations, services, hosts)
-
-
-    containerSize = clusterData["mapMemory"] if clusterData["mapMemory"] > 2048 else int(clusterData["reduceMemory"])
-    containerSize = min(clusterData["containers"] * clusterData["ramPerContainer"], containerSize)
-    container_size_bytes = int(containerSize)*1024*1024
-
     yarnMaxAllocationSize = min(30 * int(configurations["yarn-site"]["properties"]["yarn.scheduler.minimum-allocation-mb"]), int(configurations["yarn-site"]["properties"]["yarn.scheduler.maximum-allocation-mb"]))
     #duplicate tez task resource calc logic, direct dependency doesn't look good here (in case of Hive without Tez)
     tez_container_size = min(containerSize, yarnMaxAllocationSize)
@@ -349,6 +349,7 @@ class HiveRecommender(service_advisor.ServiceAdvisor):
     putHiveSiteProperty("hive.server2.tez.default.queues", ",".join([leafQueue["value"] for leafQueue in leafQueues]))
 
     #HSI HA
+    hive_server_interactive_hosts = self.getHostsWithComponent("HIVE", "HIVE_SERVER_INTERACTIVE", services, hosts)
     is_hsi_ha = len(hive_server_interactive_hosts) > 1
     putHiveInteractiveSitePropertyAttribute("hive.server2.active.passive.ha.registry.namespace", "visible", str(is_hsi_ha).lower())
 
@@ -371,6 +372,15 @@ class HiveRecommender(service_advisor.ServiceAdvisor):
       elif (rangerEnvHiveAuthProperty.lower() == "ranger"):
         putHiveEnvProperty("hive_security_authorization", "None")
 
+    # hive_security_authorization == "none"
+    # this property is unrelated to Kerberos
+    if str(configurations["hive-env"]["properties"]["hive_security_authorization"]).lower() == "none":
+      putHiveSiteProperty("hive.security.authorization.manager", "org.apache.hadoop.hive.ql.security.authorization.plugin.sqlstd.SQLStdConfOnlyAuthorizerFactory")
+      if "KERBEROS" not in servicesList: # Kerberos security depends on this property
+        putHiveSiteProperty("hive.security.authorization.enabled", "false")
+    else:
+      putHiveSiteProperty("hive.security.authorization.enabled", "true")
+
     try:
       auth_manager_value = str(configurations["hive-env"]["properties"]["hive.security.metastore.authorization.manager"])
     except KeyError:
@@ -387,6 +397,7 @@ class HiveRecommender(service_advisor.ServiceAdvisor):
       putHiveServerProperty("hive.security.authenticator.manager", "org.apache.hadoop.hive.ql.security.SessionStateUserAuthenticator")
       putHiveServerProperty("hive.conf.restricted.list", "hive.security.authenticator.manager,hive.security.authorization.manager,hive.security.metastore.authorization.manager,"
                                                          "hive.security.metastore.authenticator.manager,hive.users.in.admin.role,hive.server2.xsrf.filter.enabled,hive.security.authorization.enabled")
+      putHiveSiteProperty("hive.security.authorization.manager", "org.apache.hadoop.hive.ql.security.authorization.plugin.sqlstd.SQLStdConfOnlyAuthorizerFactory")
       if sqlstdauth_class not in auth_manager_values:
         auth_manager_values.append(sqlstdauth_class)
     elif sqlstdauth_class in auth_manager_values:
@@ -421,7 +432,6 @@ class HiveRecommender(service_advisor.ServiceAdvisor):
 
     if hive_server2_auth == "ldap":
       putHiveSiteProperty("hive.server2.authentication.ldap.url", "")
-      putHiveSitePropertyAttribute("hive.server2.authentication.ldap.url", "delete", "false")
     else:
       if ("hive.server2.authentication.ldap.url" in configurations["hive-site"]["properties"]) or \
               ("hive-site" not in services["configurations"]) or \
@@ -463,12 +473,20 @@ class HiveRecommender(service_advisor.ServiceAdvisor):
     hs_heapsize_multiplier = 3.0/8
     hm_heapsize_multiplier = 1.0/8
     # HiveServer2 and HiveMetastore located on the same host
+    hive_server_hosts = self.getHostsWithComponent("HIVE", "HIVE_SERVER", services, hosts)
+    hive_client_hosts = self.getHostsWithComponent("HIVE", "HIVE_CLIENT", services, hosts)
+
     if hive_server_hosts is not None and len(hive_server_hosts):
       hs_host_ram = hive_server_hosts[0]["Hosts"]["total_mem"]/1024
       putHiveEnvProperty("hive.metastore.heapsize", max(512, int(hs_host_ram*hm_heapsize_multiplier)))
       putHiveEnvProperty("hive.heapsize", max(512, int(hs_host_ram*hs_heapsize_multiplier)))
       putHiveEnvPropertyAttribute("hive.metastore.heapsize", "maximum", max(1024, hs_host_ram))
       putHiveEnvPropertyAttribute("hive.heapsize", "maximum", max(1024, hs_host_ram))
+
+    # TEZ JVM options
+    # These jvm params are jdk8 only may not work on prior jdk versions but thats ok since HDP3 is jdk8 only
+    jvmGCParams = "-XX:+UseG1GC -XX:+ResizeTLAB"
+    putHiveSiteProperty("hive.tez.java.opts", "-server -Djava.net.preferIPv4Stack=true -XX:NewRatio=8 -XX:+UseNUMA " + jvmGCParams + " -XX:+PrintGCDetails -verbose:gc -XX:+PrintGCTimeStamps")
 
     # if hive using sqla db, then we should add DataNucleus property
     sqla_db_used = "hive-env" in services["configurations"] and "hive_database" in services["configurations"]["hive-env"]["properties"] and \
@@ -607,10 +625,6 @@ class HiveRecommender(service_advisor.ServiceAdvisor):
         putHiveAtlasHookPropertyAttribute("atlas.jaas.ticketBased-KafkaClient.loginModuleName", "delete", "true")
         putHiveAtlasHookPropertyAttribute("atlas.jaas.ticketBased-KafkaClient.option.useTicketCache", "delete", "true")
 
-    #beeline-site
-    beeline_jdbc_url_default = "llap" if (hive_server_interactive_hosts and not hive_server_hosts) else "container"
-    putHiveEnvProperty("beeline_jdbc_url_default", beeline_jdbc_url_default)
-
   def druid_host(self, component_name, config_type, services, hosts, default_host=None):
     hosts = self.getHostsWithComponent('DRUID', component_name, services, hosts)
     if hosts and config_type in services['configurations']:
@@ -703,6 +717,7 @@ class HiveValidator(service_advisor.ServiceAdvisor):
 
   def validateHiveConfigurationsFromHDP30(self, properties, recommendedDefaults, configurations, services, hosts):
     validationItems = [ {"config-name": "hive.tez.container.size", "item": self.validatorLessThenDefaultValue(properties, recommendedDefaults, "hive.tez.container.size")},
+                        {"config-name": "hive.tez.java.opts", "item": self.validateXmxValue(properties, recommendedDefaults, "hive.tez.java.opts")},
                         {"config-name": "hive.auto.convert.join.noconditionaltask.size", "item": self.validatorLessThenDefaultValue(properties, recommendedDefaults, "hive.auto.convert.join.noconditionaltask.size")} ]
     
     hive_site = properties
@@ -753,16 +768,11 @@ class HiveValidator(service_advisor.ServiceAdvisor):
     
     hive_env = properties
     hive_site = self.getSiteProperties(configurations, "hive-site")
-    hiveserver2_site = self.getSiteProperties(configurations, "hiveserver2-site")
-    
-    hive_server_hosts = self.getHostsWithComponent("HIVE", "HIVE_SERVER", services, hosts)
-    hive_server_interactive_hosts = self.getHostsWithComponent("HIVE", "HIVE_SERVER_INTERACTIVE", services, hosts)
-    hive_client_hosts = self.getHostsWithComponent("HIVE", "HIVE_CLIENT", services, hosts)
     
     servicesList = [service["StackServices"]["service_name"] for service in services["services"]]
     if "hive_security_authorization" in hive_env and \
         str(hive_env["hive_security_authorization"]).lower() == "none" \
-      and str(hiveserver2_site["hive.security.authorization.enabled"]).lower() == "true":
+      and str(hive_site["hive.security.authorization.enabled"]).lower() == "true":
       authorization_item = self.getErrorItem("hive_security_authorization should not be None "
                                              "if hive.security.authorization.enabled is set")
       validationItems.append({"config-name": "hive_security_authorization", "item": authorization_item})
@@ -786,21 +796,7 @@ class HiveValidator(service_advisor.ServiceAdvisor):
         validationItems.append({"config-name": "alert_ldap_password",
                                 "item": self.getWarnItem(
                                   "Provide the password for the alert user. Hive authentication type LDAP requires valid LDAP credentials for the alerts.")})
-    
-    beeline_jdbc_url_default = hive_env["beeline_jdbc_url_default"]
-    if beeline_jdbc_url_default not in ["container", "llap"]:
-      validationItems.append({"config-name": "beeline_jdbc_url_default",
-                                "item": self.getWarnItem(
-                                  "beeline_jdbc_url_default should be \"container\" or \"llap\".")})
-    if beeline_jdbc_url_default == "container" and not hive_server_hosts and hive_server_interactive_hosts:
-      validationItems.append({"config-name": "beeline_jdbc_url_default",
-                                "item": self.getWarnItem(
-                                  "beeline_jdbc_url_default may not be \"container\" if only HSI is installed.")})
-    if beeline_jdbc_url_default == "llap" and not hive_server_interactive_hosts:
-      validationItems.append({"config-name": "beeline_jdbc_url_default",
-                                "item": self.getWarnItem(
-                                  "beeline_jdbc_url_default may not be \"llap\" if no HSI is installed.")})
-    
+
     return self.toConfigurationValidationProblems(validationItems, "hive-env")
 
 
@@ -995,11 +991,7 @@ class HiveValidator(service_advisor.ServiceAdvisor):
             errMsg3 = " Reducing the 'Maximum Total Concurrent Queries' (value: {0}) is advisable as it is consuming more than 50% of " \
                       "'{1}' queue for LLAP.".format(num_tez_sessions, llap_queue_name)
             validationItems.append({"config-name": "hive.server2.tez.sessions.per.default.queue","item": self.getWarnItem(errMsg3)})
-      
-      if int(hsi_site["hive.llap.io.memory.size"]) > int(hsi_site["hive.llap.daemon.yarn.container.mb"]):
-        errorMessage = "In-Memory Cache per Daemon (value: {0}) may not be more then Memory per Daemon (value: {1})".format(hsi_site["hive.llap.io.memory.size"], hsi_site["hive.llap.daemon.yarn.container.mb"])
-        validationItems.append({"config-name": "hive.llap.io.memory.size","item": self.getErrorItem(errorMessage)})
-      
+
     # Validate that "remaining available capacity" in cluster is at least 512 MB, after "llap" queue is selected,
     # in order to run Service Checks.
     if llap_queue_name and llap_queue_cap_perc and llap_queue_name == self.AMBARI_MANAGED_LLAP_QUEUE_NAME:

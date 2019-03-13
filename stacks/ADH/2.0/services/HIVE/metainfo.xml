@@ -106,7 +106,6 @@
           <commandScript>
             <script>scripts/hive_server.py</script>
             <scriptType>PYTHON</scriptType>
-            <timeout>1500</timeout>
           </commandScript>
           <logs>
             <log>
@@ -287,25 +286,7 @@
               <name>hive-hcatalog</name>
             </package>
             <package>
-              <name>hive-hbase</name>
-            </package>
-            <package>
-              <name>hive-hcatalog-server</name>
-            </package>
-            <package>
-              <name>hive-jdbc</name>
-            </package>
-            <package>
-              <name>hive-metastore</name>
-            </package>
-            <package>
-              <name>hive-server2</name>
-            </package>
-            <package>
-              <name>hive-webhcat</name>
-            </package>
-            <package>
-              <name>hive-webhcat-server</name>
+              <name>ranger-hive-plugin</name>
             </package>
           </packages>
         </osSpecific>
@@ -324,6 +305,16 @@
           <packages>
             <package>
               <name>mariadb-server</name>
+              <skipUpgrade>true</skipUpgrade>
+              <condition>should_install_mysql</condition>
+            </package>
+          </packages>
+        </osSpecific>
+        <osSpecific>
+          <osFamily>amazonlinux2,redhat6,debian7,debian9,ubuntu12,ubuntu14,ubuntu16</osFamily>
+          <packages>
+            <package>
+              <name>mysql-server</name>
               <skipUpgrade>true</skipUpgrade>
               <condition>should_install_mysql</condition>
             </package>
@@ -377,7 +368,10 @@
         <service>HDFS</service>
         <service>YARN</service>
         <service>TEZ</service>
+        <!-- TODO AMBARI-20753
+        Re-add after Pig service is being packaged.
         <service>PIG</service>
+        -->
       </requiredServices>
 
       <configuration-dependencies>
