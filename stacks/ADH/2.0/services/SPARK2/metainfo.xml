@@ -271,6 +271,9 @@
               <name>spark-python</name>
             </package>
             <package>
+              <name>spark-standalone-metastore</name>
+            </package>
+            <package>
               <name>spark-worker</name>
             </package>
             <package>
