@@ -164,7 +164,6 @@ class MapReduce2ServiceCheckDefault(MapReduce2ServiceCheck):
 
     ExecuteHadoop(run_wordcount_job,
                   tries=1,
-                  try_sleep=5,
                   user=params.smokeuser,
                   bin_dir=params.execute_path,
                   conf_dir=params.hadoop_conf_dir,
