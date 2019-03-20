@@ -21,6 +21,7 @@ Ambari Agent
 
 from resource_management.libraries.script.script import Script
 from resource_management.libraries.resources.hdfs_resource import HdfsResource
+from resource_management.core.resources.system import Execute, Directory, File, Link
 from resource_management.libraries.functions import stack_select
 from resource_management.libraries.functions.constants import StackFeature
 from resource_management.libraries.functions.stack_features import check_stack_feature
@@ -87,6 +88,9 @@ class HistoryServerDefault(HistoryServer):
 
     if params.stack_version_formatted_major and check_stack_feature(StackFeature.COPY_TARBALL_TO_HDFS, params.stack_version_formatted_major):
       # MC Hammer said, "Can't touch this"
+      Execute('tar -czf /tmp/mapreduce.tar.gz -C /usr/lib/ ./hadoop')
+      Execute('mv /tmp/mapreduce.tar.gz /usr/lib/hadoop/')
+
       resource_created = copy_to_hdfs(
         "mapreduce",
         params.user_group,

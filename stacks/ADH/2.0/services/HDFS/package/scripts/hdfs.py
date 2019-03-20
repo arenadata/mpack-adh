@@ -153,8 +153,6 @@ def hdfs(name=None):
        content=Template("slaves.j2")
   )
 
-  Execute('tar -czf /tmp/mapreduce.tar.gz -C /usr/lib/ ./hadoop')
-  Execute('mv /tmp/mapreduce.tar.gz /usr/lib/hadoop/')
   Execute('ln -sf /usr/lib/hadoop-hdfs/bin/hdfs /usr/lib/hadoop/bin/hdfs')
 
   install_lzo_if_needed()
