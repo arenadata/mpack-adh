@@ -1,103 +1,154 @@
 {
   "services": [
-    {
-      "name": "ATLAS",
-      "configurations": [
-        {
-          "application-properties": {
-            "atlas.authentication.method.kerberos": "true",
-            "atlas.kafka.sasl.kerberos.service.name": "${kafka-env/kafka_user}",
-            "atlas.kafka.security.protocol": "PLAINTEXTSASL",
-            "atlas.jaas.KafkaClient.loginModuleName": "com.sun.security.auth.module.Krb5LoginModule",
-            "atlas.jaas.KafkaClient.loginModuleControlFlag": "required",
-            "atlas.jaas.KafkaClient.option.useKeyTab": "true",
-            "atlas.jaas.KafkaClient.option.storeKey": "true",
-            "atlas.jaas.KafkaClient.option.serviceName": "${kafka-env/kafka_user}",
-            "atlas.solr.kerberos.enable": "true",
-            "atlas.server.ha.zookeeper.acl" : "auth:"
-          }
-        },
-        {
-          "ranger-atlas-audit": {
-            "xasecure.audit.jaas.Client.loginModuleName": "com.sun.security.auth.module.Krb5LoginModule",
-            "xasecure.audit.jaas.Client.loginModuleControlFlag": "required",
-            "xasecure.audit.jaas.Client.option.useKeyTab": "true",
-            "xasecure.audit.jaas.Client.option.storeKey": "false",
-            "xasecure.audit.jaas.Client.option.serviceName": "solr",
-            "xasecure.audit.destination.solr.force.use.inmemory.jaas.config": "true"
-          }
-        }
-      ],
-      "auth_to_local_properties" : [
-        "application-properties/atlas.authentication.method.kerberos.name.rules|new_lines_escaped"
-      ],
-      "components": [
-        {
-          "name": "ATLAS_SERVER",
-          "identities": [
-            {
-              "name": "atlas",
-              "principal": {
-                "value": "atlas/_HOST@${realm}",
-                "type" : "service",
-                "configuration": "application-properties/atlas.jaas.KafkaClient.option.principal",
-                "local_username" : "${atlas-env/metadata_user}"
-              },
-              "keytab": {
-                "file": "${keytab_dir}/atlas.service.keytab",
-                "owner": {
-                  "name": "${atlas-env/metadata_user}",
-                  "access": "r"
-                },
-                "group": {
-                  "name": "${cluster-env/user_group}",
-                  "access": ""
-                },
-                "configuration": "application-properties/atlas.jaas.KafkaClient.option.keyTab"
-              }
-            },
-            {
-              "name": "atlas_auth",
-              "reference": "/ATLAS/ATLAS_SERVER/atlas",
-              "principal": {
-                "configuration": "application-properties/atlas.authentication.principal"
-              },
-              "keytab": {
-                "configuration": "application-properties/atlas.authentication.keytab"
-              }
-            },
-            {
-              "name": "atlas_atlas_server_spnego",
-              "reference": "/spnego",
-              "principal": {
-                "value": "HTTP/_HOST@${realm}",
-                "configuration": "application-properties/atlas.authentication.method.kerberos.principal"
-              },
-              "keytab": {
-                "configuration": "application-properties/atlas.authentication.method.kerberos.keytab"
-              }
-            },
-            {
-              "name": "ranger_atlas_audit",
-              "reference": "/ATLAS/ATLAS_SERVER/atlas",
-              "principal": {
-                "configuration": "ranger-atlas-audit/xasecure.audit.jaas.Client.option.principal"
-              },
-              "keytab": {
-                "configuration": "ranger-atlas-audit/xasecure.audit.jaas.Client.option.keyTab"
-              }
-            },
-            {
-              "name": "atlas_atlas_server_kafka_broker",
-              "reference": "/KAFKA/KAFKA_BROKER/kafka_broker"
-            },
-            {
-              "name": "atlas_atlas_server_infra-solr",
-              "reference": "/AMBARI_INFRA_SOLR/INFRA_SOLR/infra-solr"
-            }
-          ]
-        }
-      ]
-    }
-  ]
+	{
+		"name": "ATLAS",
+			"configurations": [
+			{
+				"application-properties": {
+					"atlas.authentication.method.kerberos": "true",
+					"atlas.kafka.sasl.kerberos.service.name": "${kafka-env/kafka_user}",
+					"atlas.kafka.security.protocol": "PLAINTEXTSASL",
+					"atlas.jaas.KafkaClient.loginModuleName": "com.sun.security.auth.module.Krb5LoginModule",
+					"atlas.jaas.KafkaClient.loginModuleControlFlag": "required",
+					"atlas.jaas.KafkaClient.option.useKeyTab": "true",
+					"atlas.jaas.KafkaClient.option.storeKey": "true",
+					"atlas.jaas.KafkaClient.option.serviceName": "${kafka-env/kafka_user}",
+					"atlas.solr.kerberos.enable": "true",
+					"atlas.server.ha.zookeeper.acl" : "auth:"
+				}
+			},
+		        {
+			      "kafka-broker": {
+			              "authorizer.class.name": "kafka.security.auth.SimpleAclAuthorizer",
+			              "principal.to.local.class":"kafka.security.auth.KerberosPrincipalToLocal",
+			              "super.users": "user:${kafka-env/kafka_user}",
+			              "security.inter.broker.protocol": "SASL_PLAINTEXT",
+			              "zookeeper.set.acl": "true"
+			          }
+		        },
+			{
+				"ranger-atlas-audit": {
+					"xasecure.audit.jaas.Client.loginModuleName": "com.sun.security.auth.module.Krb5LoginModule",
+					"xasecure.audit.jaas.Client.loginModuleControlFlag": "required",
+					"xasecure.audit.jaas.Client.option.useKeyTab": "true",
+					"xasecure.audit.jaas.Client.option.storeKey": "false",
+					"xasecure.audit.jaas.Client.option.serviceName": "solr",
+					"xasecure.audit.destination.solr.force.use.inmemory.jaas.config": "true"
+				}
+			}
+		],
+			"auth_to_local_properties" : [
+				"application-properties/atlas.authentication.method.kerberos.name.rules|new_lines_escaped"
+				],
+			"components": [
+        	{
+	          "name": "KAFKA_BROKER",
+	          "identities": [
+        	    {
+	              "name": "kafka_broker",
+	              "principal": {
+        	        "value": "${kafka-env/kafka_user}/_HOST@${realm}",
+        	       	 "type": "service",
+	                "configuration": "kafka-env/kafka_principal_name"
+	              },
+        	      "keytab": {
+	                "file": "${keytab_dir}/kafka.service.keytab",
+        	        "owner": {
+	                  "name": "${kafka-env/kafka_user}",
+	                  "access": "r"
+        	        },
+	                "group": {
+        	          "name": "${cluster-env/user_group}",
+	                  "access": ""
+        	        },
+	                "configuration": "kafka-env/kafka_keytab"
+        	      }
+	            },
+	            {
+	              "name": "kafka_kafka_broker_kafka_broker",
+	              "reference": "/KAFKA/KAFKA_BROKER/kafka_broker",
+	              "principal": {
+	                "configuration": "ranger-kafka-audit/xasecure.audit.jaas.Client.option.principal"
+	              },
+	              "keytab": {
+	                "configuration": "ranger-kafka-audit/xasecure.audit.jaas.Client.option.keyTab"
+	              }
+	            },
+	            {
+	              "name": "kafka_kafka_broker_hdfs",
+	              "reference": "/HDFS/NAMENODE/hdfs",
+	              "when" : {
+	                "contains" : ["services", "HDFS"]
+	              }
+	            }
+	          ]
+	        },
+			{
+				"name": "ATLAS_SERVER",
+				"identities": [
+				{
+					"name": "atlas",
+					"principal": {
+						"value": "atlas/_HOST@${realm}",
+						"type" : "service",
+						"configuration": "application-properties/atlas.jaas.KafkaClient.option.principal",
+						"local_username" : "${atlas-env/metadata_user}"
+					},
+					"keytab": {
+						"file": "${keytab_dir}/atlas.service.keytab",
+						"owner": {
+							"name": "${atlas-env/metadata_user}",
+							"access": "r"
+						},
+						"group": {
+							"name": "${cluster-env/user_group}",
+							"access": ""
+						},
+						"configuration": "application-properties/atlas.jaas.KafkaClient.option.keyTab"
+					}
+				},
+				{
+					"name": "atlas_auth",
+					"reference": "/ATLAS/ATLAS_SERVER/atlas",
+					"principal": {
+						"configuration": "application-properties/atlas.authentication.principal"
+					},
+					"keytab": {
+						"configuration": "application-properties/atlas.authentication.keytab"
+					}
+				},
+				{
+					"name": "atlas_atlas_server_spnego",
+					"reference": "/spnego",
+					"principal": {
+						"value": "HTTP/_HOST@${realm}",
+						"configuration": "application-properties/atlas.authentication.method.kerberos.principal"
+					},
+					"keytab": {
+						"configuration": "application-properties/atlas.authentication.method.kerberos.keytab"
+					}
+				},
+				{
+					"name": "ranger_atlas_audit",
+					"reference": "/ATLAS/ATLAS_SERVER/atlas",
+					"principal": {
+						"configuration": "ranger-atlas-audit/xasecure.audit.jaas.Client.option.principal"
+					},
+					"keytab": {
+						"configuration": "ranger-atlas-audit/xasecure.audit.jaas.Client.option.keyTab"
+					}
+				},
+				{
+					"name": "atlas_atlas_server_kafka_broker",
+					"reference": "/KAFKA/KAFKA_BROKER/kafka_broker"
+				},
+				{
+					"name": "atlas_atlas_server_infra-solr",
+					"reference": "/AMBARI_INFRA_SOLR/INFRA_SOLR/infra-solr"
+				}
+				]
+			}
+		]
+	}
+	]
 }
