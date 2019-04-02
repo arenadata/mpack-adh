@@ -30,6 +30,7 @@ from ambari_commons import OSConst
 from ambari_commons.os_family_impl import OsFamilyFuncImpl, OsFamilyImpl
 from resource_management.libraries.functions.default import default
 from resource_management.core.exceptions import ClientComponentHasNoStatus
+from resource_management.core.resources.system import Execute
 
 class PigClient(Script):
   def configure(self, env):
@@ -46,12 +47,14 @@ class PigClientLinux(PigClient):
     import params
     env.set_params(params)
 
-    if params.version and check_stack_feature(StackFeature.ROLLING_UPGRADE, params.version): 
+    if params.version and check_stack_feature(StackFeature.ROLLING_UPGRADE, params.version):
       stack_select.select_packages(params.version)
 
   def install(self, env):
     self.install_packages(env)
     self.configure(env)
+    Execute(('tar', '-czf', '/usr/lib/pig/pig.tar.gz', '-C', '/usr/lib/pig/lib/', '.'), sudo = True)
+
 
 @OsFamilyImpl(os_family=OSConst.WINSRV_FAMILY)
 class PigClientWindows(PigClient):
