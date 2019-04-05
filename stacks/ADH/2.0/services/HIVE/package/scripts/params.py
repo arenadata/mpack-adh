@@ -52,7 +52,8 @@ from resource_management.libraries.functions.stack_features import get_stack_fea
 from resource_management.libraries.resources.hdfs_resource import HdfsResource
 from resource_management.libraries.script.script import Script
 
-
+host_sys_prepped = default("/ambariLevelParams/host_sys_prepped", False)
+sysprep_skip_hive_schema_create = host_sys_prepped and default("/configurations/cluster-env/sysprep_skip_hive_schema_create", False)
 sysprep_skip_copy_tarballs_hdfs = get_sysprep_skip_copy_tarballs_hdfs()
 retryAble = default("/commandParams/command_retry_enabled", False)
 
@@ -659,6 +660,9 @@ if security_enabled:
 hive_cluster_token_zkstore = default("/configurations/hive-site/hive.cluster.delegation.token.store.zookeeper.znode", None)
 jaas_file = os.path.join(hive_config_dir, 'zkmigrator_jaas.conf')
 hive_zk_namespace = default("/configurations/hive-site/hive.zookeeper.namespace", None)
+
+zk_principal_name = default("/configurations/zookeeper-env/zookeeper_principal_name", "zookeeper/_HOST@EXAMPLE.COM")
+zk_principal_user = zk_principal_name.split('/')[0]
 
 # ranger hive plugin section start
 

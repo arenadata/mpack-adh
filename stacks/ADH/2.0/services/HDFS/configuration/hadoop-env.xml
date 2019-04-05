@@ -408,6 +408,10 @@
       export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:/usr/lib/ranger-yarn-plugin/lib/*
       fi
 
+      if [ -d "/usr/lib/ranger-hive-plugin/" ]; then
+      export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:/usr/lib/ranger-hive-plugin/lib/*
+      fi
+      
       # Setting path to hdfs command line
       export HADOOP_LIBEXEC_DIR={{hadoop_libexec_dir}}
 

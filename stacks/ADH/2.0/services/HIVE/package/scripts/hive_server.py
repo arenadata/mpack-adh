@@ -100,6 +100,12 @@ class HiveServer(Script):
         params.hdfs_user,
         skip=params.sysprep_skip_copy_tarballs_hdfs) or resource_created
 
+      resource_created = copy_to_hdfs(
+        "yarn",
+        params.user_group,
+        params.hdfs_user,
+        skip=params.sysprep_skip_copy_tarballs_hdfs) or resource_created
+
       if resource_created:
         params.HdfsResource(None, action="execute")
 
