@@ -372,6 +372,32 @@
           ]
         }
       },
+      "FLINK": {
+        "FLINK_MASTER": {
+          "STACK-SELECT-PACKAGE": "flink-job-manager",
+          "INSTALL": [
+            "flink-jobmanager"
+          ],
+          "PATCH": [
+            "flink-jobmanager"
+          ],
+          "STANDARD": [
+            "flink-jobmanager"
+          ]
+        },
+        "FLINK_TASKMANAGER": {
+          "STACK-SELECT-PACKAGE": "flink-task-manager",
+          "INSTALL": [
+            "flink-taskmanager"
+          ],
+          "PATCH": [
+            "flink-taskmanager"
+          ],
+          "STANDARD": [
+            "flink-taskmanager"
+          ]
+        }
+      },
       "PIG": {
         "PIG": {
           "STACK-SELECT-PACKAGE": "pig-client",
