@@ -374,7 +374,7 @@
       },
       "FLINK": {
         "FLINK_MASTER": {
-          "STACK-SELECT-PACKAGE": "flink-job-manager",
+          "STACK-SELECT-PACKAGE": "flink-jobmanager",
           "INSTALL": [
             "flink-jobmanager"
           ],
@@ -386,7 +386,7 @@
           ]
         },
         "FLINK_TASKMANAGER": {
-          "STACK-SELECT-PACKAGE": "flink-task-manager",
+          "STACK-SELECT-PACKAGE": "flink-taskmanager",
           "INSTALL": [
             "flink-taskmanager"
           ],
