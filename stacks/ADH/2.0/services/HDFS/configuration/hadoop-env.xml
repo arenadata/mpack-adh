@@ -412,6 +412,10 @@
       export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:/usr/lib/ranger-hive-plugin/lib/*
       fi
 
+      if [ -d "/usr/lib/ranger-hbase-plugin/" ]; then
+      export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:/usr/lib/ranger-hbase-plugin/lib/*
+      fi
+      
       if [ -d "/usr/lib/atlas-server/" ]; then
       export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:/usr/lib/atlas-server/hook/hive/*:/usr/lib/atlas-server/hook/hbase/*
       fi
