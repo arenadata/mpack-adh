@@ -244,7 +244,7 @@ class HiveServerInteractive(Script):
       else:
         Logger.info("Setting slider_placement: 4, as llap_daemon_container_size : {0} <= 0.5 * "
                     "YARN NodeManager Memory({1})".format(params.llap_daemon_container_size, params.yarn_nm_mem))
-      cmd += format(" --service-placement {slider_placement} --skiphadoopversion --skiphbasecp --instances {params.num_llap_daemon_running_nodes}")
+      cmd += format(" --service-placement {slider_placement} --skiphadoopversion --auxhbase=false --skiphbasecp --instances {params.num_llap_daemon_running_nodes}")
 
       # Setup the logger for the ga version only
       cmd += format(" --logger {params.llap_logger}")

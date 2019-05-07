@@ -202,7 +202,7 @@
   <property>
     <name>yarn.nodemanager.aux-services</name>
     <!-- TODO HDP 3.0, restore back to "mapreduce_shuffle,spark_shuffle,spark2_shuffle" after Spark is added to HDP 3.0 stack. -->
-    <value>mapreduce_shuffle</value>
+    <value>mapreduce_shuffle,timeline_collector</value>
     <description>Auxilliary services of NodeManager. A valid service name should only contain a-zA-Z0-9_ and cannot start with numbers</description>
     <on-ambari-upgrade add="false"/>
   </property>
