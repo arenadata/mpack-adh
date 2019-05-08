@@ -142,7 +142,7 @@
               </auto-deploy>
             </dependency>
           </dependencies>
-          
+
           <configuration-dependencies>
             <config-type>resource-types</config-type>
             <config-type>container-executor</config-type>
@@ -212,6 +212,9 @@
             </package>
             <package>
               <name>hadoop-hdfs</name>
+            </package>
+            <package>
+              <name>hadoop-yarn-service-dep</name>
             </package>
             <package>
               <name>ranger-yarn-plugin</name>
