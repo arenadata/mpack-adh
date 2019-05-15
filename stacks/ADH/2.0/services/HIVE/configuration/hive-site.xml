@@ -114,8 +114,8 @@ limitations under the License.
   </property>
   <property>
     <name>hive.tez.java.opts</name>
-    <value>-server -Djava.net.preferIPv4Stack=true -XX:NewRatio=8 -XX:+UseNUMA -XX:+UseG1GC -XX:+ResizeTLAB -XX:+PrintGCDetails -verbose:gc -XX:+PrintGCTimeStamps</value>
-    <description>Java command line options for Tez.</description>
+    <value>-server -Xmx545m -Djava.net.preferIPv4Stack=true -XX:NewRatio=8 -XX:+UseNUMA -XX:+PrintGCDetails -verbose:gc -XX:+PrintGCTimeStamps</value>
+    <description>Java command line options for Tez. The -Xmx parameter value is generally 80% of hive.tez.container.size.</description>
     <on-ambari-upgrade add="false"/>
   </property>
   <property>
@@ -232,6 +232,21 @@ limitations under the License.
     <name>hive.mapjoin.bucket.cache.size</name>
     <value>10000</value>
     <description/>
+    <on-ambari-upgrade add="false"/>
+  </property>
+  <property>
+    <name>hive.security.authorization.manager</name>
+    <value>org.apache.hadoop.hive.ql.security.authorization.plugin.sqlstd.SQLStdConfOnlyAuthorizerFactory</value>
+    <description>
+      The Hive client authorization manager class name. The user defined authorization class should implement
+      interface org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider.
+    </description>
+    <depends-on>
+      <property>
+        <type>hive-env</type>
+        <name>hive_security_authorization</name>
+      </property>
+    </depends-on>
     <on-ambari-upgrade add="false"/>
   </property>
   <property>
@@ -1170,6 +1185,37 @@ limitations under the License.
     <on-ambari-upgrade add="false"/>
   </property>
   <property>
+    <name>hive.security.authorization.enabled</name>
+    <value>false</value>
+    <description>enable or disable the Hive client authorization</description>
+    <display-name>Enable Authorization</display-name>
+    <value-attributes>
+      <type>boolean</type>
+    </value-attributes>
+    <depends-on>
+      <property>
+        <type>hive-env</type>
+        <name>hive_security_authorization</name>
+      </property>
+    </depends-on>
+    <on-ambari-upgrade add="false"/>
+  </property>
+  <property>
+    <name>hive.security.authenticator.manager</name>
+    <value>org.apache.hadoop.hive.ql.security.ProxyUserAuthenticator</value>
+    <description>
+      hive client authenticator manager class name. The user defined authenticator should implement
+      interface org.apache.hadoop.hive.ql.security.HiveAuthenticationProvider.
+    </description>
+    <depends-on>
+      <property>
+        <type>hive-env</type>
+        <name>hive_security_authorization</name>
+      </property>
+    </depends-on>
+    <on-ambari-upgrade add="false"/>
+  </property>
+  <property>
     <name>hive.security.metastore.authorization.manager</name>
     <display-name>Hive Authorization Manager</display-name>
     <value>org.apache.hadoop.hive.ql.security.authorization.StorageBasedAuthorizationProvider</value>
@@ -1405,6 +1451,12 @@ limitations under the License.
       </entries>
       <selection-cardinality>1</selection-cardinality>
     </value-attributes>
+    <on-ambari-upgrade add="false"/>
+  </property>
+  <property>
+    <name>hive.conf.restricted.list</name>
+    <value>hive.security.authenticator.manager,hive.security.authorization.manager,hive.users.in.admin.role</value>
+    <description>Comma separated list of configuration options which are immutable at runtime</description>
     <on-ambari-upgrade add="false"/>
   </property>
   <property>

@@ -68,7 +68,7 @@ def hive_interactive(name = None):
                           action = "create_on_execute",
                           owner = params.hive_user,
                           group = params.user_group,
-                          mode = 01755
+                          mode = 0755
       )
 
     if not is_empty(params.tez_hook_proto_base_directory):
@@ -122,8 +122,6 @@ def hive_interactive(name = None):
                       owner = params.hive_user,
                       mode = params.hive_hdfs_user_mode
   )
-
-  params.HdfsResource(None, action="execute")
 
   # list of properties that should be excluded from the config
   # this approach is a compromise against adding a dedicated config

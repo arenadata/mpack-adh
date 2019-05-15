@@ -262,8 +262,8 @@ class AtlasRecommender(service_advisor.ServiceAdvisor):
       putAtlasApplicationProperty('atlas.graph.index.search.solr.zookeeper-url', "")
 
     # Kafka section
-    if "KAFKA" in servicesList and 'kafka-broker' in services['configurations']:
-      kafka_hosts = self.getHostNamesWithComponent("KAFKA", "KAFKA_BROKER", services)
+    if 'kafka-broker' in services['configurations']:
+      kafka_hosts = self.getHostNamesWithComponent("ATLAS", "KAFKA_BROKER", services)
 
       if 'port' in services['configurations']['kafka-broker']['properties']:
         kafka_broker_port = services['configurations']['kafka-broker']['properties']['port']

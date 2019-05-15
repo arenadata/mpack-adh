@@ -479,7 +479,7 @@
   </property>
   <property>
     <name>offsets.topic.replication.factor</name>
-    <value>3</value>
+    <value>1</value>
     <description>The replication factor for the offsets topic (set higher to ensure availability).
     To ensure that the effective replication factor of the offsets topic is the configured value,
     the number of alive brokers has to be at least the replication factor at the time of the

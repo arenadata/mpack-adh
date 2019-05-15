@@ -32,8 +32,10 @@ from ambari_commons import OSConst
 
 class SqoopClient(Script):
   def install(self, env):
+    import params
     self.install_packages(env)
     self.configure(env)
+    Execute(('tar', '-czf', '/usr/lib/sqoop/sqoop.tar.gz', '-C', params.sqoop_lib, '.'), sudo = True)
 
   def configure(self, env):
     import params

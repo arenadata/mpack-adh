@@ -52,6 +52,7 @@ class TezClient(Script):
     env.set_params(params)
     Execute('tar -czf /tmp/tez.tar.gz -C /usr/lib/tez ./ --exclude=conf')
     Execute('mv /tmp/tez.tar.gz /usr/lib/tez/lib/')
+    Execute('if [ ! -f "/usr/lib/hadoop/mapreduce.tar.gz" ]; then tar -czf /tmp/mapreduce.tar.gz -C /usr/lib/ ./hadoop && mv /tmp/mapreduce.tar.gz /usr/lib/hadoop/; fi')
     tez(config_dir)
 
   def status(self, env):

@@ -75,6 +75,7 @@ class MetadataServer(Script):
     no_op_test = format('ls {params.pid_file} >/dev/null 2>&1 && ps -p `cat {params.pid_file}` >/dev/null 2>&1')
     atlas_hbase_setup_command = format("cat {atlas_hbase_setup} | hbase shell -n")
     atlas_kafka_setup_command = format("bash {atlas_kafka_setup}")
+    atlas_solr_setup_command = format("/usr/lib/ambari-infra-solr-client/solrCloudCli.sh --zookeeper-connect-string {zookeeper_quorum}/infra-solr --upload-config --config-dir /etc/atlas/conf/solr/ --config-set atlas_configs --retry 30 --interval 5")
     secure_atlas_hbase_setup_command = format("kinit -kt {hbase_user_keytab} {hbase_principal_name}; ") + atlas_hbase_setup_command
     # in case if principal was distributed across several hosts, pattern need to be replaced to right one
     secure_atlas_kafka_setup_command = format("kinit -kt {kafka_keytab} {kafka_principal_name}; ").replace("_HOST", params.hostname) + atlas_kafka_setup_command
@@ -111,6 +112,8 @@ class MetadataServer(Script):
           )
         except Fail:
           pass  # do nothing and do not block Atlas start, fail logs would be available via Execute internals
+
+      Execute(atlas_solr_setup_command, user=params.metadata_user)
 
       Execute(daemon_cmd,
               user=params.metadata_user,

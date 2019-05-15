@@ -80,7 +80,7 @@ def hdfs(name=None):
     tc_mode = None
     tc_owner = params.hdfs_user
 
-  if "hadoop-policy" in params.config['configurations']:
+  if "hadoop-policy" in params.config['configurations'] and os.path.exists(params.hadoop_conf_dir):
     XmlConfig("hadoop-policy.xml",
               conf_dir=params.hadoop_conf_dir,
               configurations=params.config['configurations']['hadoop-policy'],
@@ -89,7 +89,7 @@ def hdfs(name=None):
               group=params.user_group
     )
 
-  if "ssl-client" in params.config['configurations']:
+  if "ssl-client" in params.config['configurations'] and os.path.exists(params.hadoop_conf_dir):
     XmlConfig("ssl-client.xml",
               conf_dir=params.hadoop_conf_dir,
               configurations=params.config['configurations']['ssl-client'],
@@ -113,7 +113,7 @@ def hdfs(name=None):
               group=params.user_group
     )
 
-  if "ssl-server" in params.config['configurations']:
+  if "ssl-server" in params.config['configurations'] and os.path.exists(params.hadoop_conf_dir):
     XmlConfig("ssl-server.xml",
               conf_dir=params.hadoop_conf_dir,
               configurations=params.config['configurations']['ssl-server'],
@@ -122,15 +122,17 @@ def hdfs(name=None):
               group=params.user_group
     )
 
-  XmlConfig("hdfs-site.xml",
+  if os.path.exists(params.hadoop_conf_dir):
+    XmlConfig("hdfs-site.xml",
             conf_dir=params.hadoop_conf_dir,
             configurations=params.config['configurations']['hdfs-site'],
             configuration_attributes=params.config['configurationAttributes']['hdfs-site'],
             owner=params.hdfs_user,
             group=params.user_group
-  )
+    )
 
-  XmlConfig("core-site.xml",
+  if os.path.exists(params.hadoop_conf_dir):
+    XmlConfig("core-site.xml",
             conf_dir=params.hadoop_conf_dir,
             configurations=params.config['configurations']['core-site'],
             configuration_attributes=params.config['configurationAttributes']['core-site'],
@@ -138,7 +140,7 @@ def hdfs(name=None):
             group=params.user_group,
             mode=0644,
             xml_include_file=params.mount_table_xml_inclusion_file_full_path
-  )
+    )
 
   if params.mount_table_content:
      File(params.mount_table_xml_inclusion_file_full_path,
@@ -148,13 +150,12 @@ def hdfs(name=None):
           mode=0644
      )
 
-  File(os.path.join(params.hadoop_conf_dir, 'slaves'),
+  if os.path.exists(params.hadoop_conf_dir):
+    File(os.path.join(params.hadoop_conf_dir, 'slaves'),
        owner=tc_owner,
        content=Template("slaves.j2")
-  )
+    )
 
-  Execute('tar -czf /tmp/mapreduce.tar.gz -C /usr/lib/ ./hadoop')
-  Execute('mv /tmp/mapreduce.tar.gz /usr/lib/hadoop/')
   Execute('ln -sf /usr/lib/hadoop-hdfs/bin/hdfs /usr/lib/hadoop/bin/hdfs')
 
   install_lzo_if_needed()
@@ -247,7 +248,7 @@ def hdfs(component=None):
                   username=params.hdfs_user,
                   password=Script.get_password(params.hdfs_user))
 
-  if "hadoop-policy" in params.config['configurations']:
+  if "hadoop-policy" in params.config['configurations'] and os.path.exists(params.hadoop_conf_dir):
     XmlConfig("hadoop-policy.xml",
               conf_dir=params.hadoop_conf_dir,
               configurations=params.config['configurations']['hadoop-policy'],
@@ -256,10 +257,10 @@ def hdfs(component=None):
               configuration_attributes=params.config['configurationAttributes']['hadoop-policy']
     )
 
-  XmlConfig("hdfs-site.xml",
+    XmlConfig("hdfs-site.xml",
             conf_dir=params.hadoop_conf_dir,
             configurations=params.config['configurations']['hdfs-site'],
             owner=params.hdfs_user,
             mode="f",
             configuration_attributes=params.config['configurationAttributes']['hdfs-site']
-  )
+    )
