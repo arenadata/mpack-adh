@@ -1,12 +1,12 @@
 {
   "type" : "full-release",
-  "name" : "adh-ambari-mpack",
-  "version": "1.6.0.1-27",
+  "name" : "adh-ambari-mpack-fns",
+  "version": "1.6.1.2-71",
   "branch": "UNKNOWN",
-  "description" : "ADH Ambari Management Pack",
+  "description" : "ADH Ambari Management Pack for FNS",
   "prerequisites": {
-    "min-ambari-version" : "2.6.1.0",
-    "max-ambari-version" : "2.6.2.0"
+    "min-ambari-version" : "2.6.2.0",
+    "max-ambari-version" : ""
   },
   "artifacts": [
     {

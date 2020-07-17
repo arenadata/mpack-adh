@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<metainfo>
+    <schemaVersion>2.0</schemaVersion>
+    <services>
+        <service>
+            <name>NIFI</name>
+            <displayName>NiFi</displayName>
+            <comment>Apache NiFi is an easy to use, powerful, and reliable system to process and distribute data.</comment>
+            <version>1.6.0.1.6</version>
+          </service>
+    </services>
+</metainfo>
